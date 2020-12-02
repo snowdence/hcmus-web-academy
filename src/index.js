@@ -10,7 +10,7 @@ const port = process.env.PORT || 3000;
 const publicDirectory = path.join(__dirname, "public");
 const viewDirectory = path.join(publicDirectory, "views");
 // Config server use library middleware
-app.use(morgan("combined"));
+//app.use(morgan("combined"));
 app.use(express.static(publicDirectory));
 
 //Config hbs
@@ -36,6 +36,8 @@ app.set("view engine", "hbs");
 app.set("views", path.join(__dirname, "views"));
 
 app.get("/", (req, res) => {
+  console.log(req.query);
+
   const data = {
     title: "Trang chủ",
     username: "admin",
