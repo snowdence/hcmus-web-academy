@@ -8,7 +8,7 @@ const exphbs = require("express-handlebars");
 // Config PORT, constant
 const port = process.env.PORT || 3000;
 const publicDirectory = path.join(__dirname, "public");
-
+const viewDirectory = path.join(publicDirectory, "views");
 // Config server use library middleware
 app.use(morgan("combined"));
 app.use(express.static(publicDirectory));
@@ -21,6 +21,13 @@ app.engine(
   exphbs({
     defaultLayout: "main",
     extname: ".hbs",
+    // viewEngine: {
+    //   extName: ".hbs",
+    //   partialsDir: path.join(viewDirectory, "partials"),
+    //   layoutsDir: path.join(viewDirectory, "layouts"),
+    //   defaultLayout: "main.hbs",
+    // },
+    viewPath: viewDirectory,
   })
 );
 
@@ -29,7 +36,12 @@ app.set("view engine", "hbs");
 app.set("views", path.join(__dirname, "views"));
 
 app.get("/", (req, res) => {
-  res.render("pages/home");
+  const data = {
+    title: "Trang chủ",
+    username: "admin",
+    password: "admin",
+  };
+  res.render("pages/home", data);
 });
 
 app.listen(port, () => {
