@@ -27,7 +27,11 @@
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "express-handlebars": "^5.2.0",
-    "mongoose": "^5.11.2"
+    "express-promise-router": "^4.0.1",
+    "express-session": "^1.17.1",
+    "mongoose": "^5.11.2",
+    "passport": "^0.4.1",
+    "passport-local": "^1.0.0"
   },
   "devDependencies": {
     "gulp-nodemon": "^2.5.0",

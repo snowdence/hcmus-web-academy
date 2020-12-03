@@ -7,6 +7,12 @@
 
 const UserModel = require("../models/User");
 
+/**
+ * get all user use promise style
+ * @param  {} req
+ * @param  {} res
+ * @param  {} next
+ */
 const getIndex = (req, res, next) => {
   UserModel.find({})
     .then((users) => {
@@ -39,6 +45,7 @@ const newUser = (req, res, next) => {
     message: "POST request to user root",
   });
 };
+
 module.exports = {
   getIndex: getIndex,
   newUser,
