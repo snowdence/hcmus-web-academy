@@ -5,6 +5,9 @@ const morgan = require("morgan");
 const app = express();
 const exphbs = require("express-handlebars");
 
+//router
+const userRoute = require("./routes/user");
+
 // Config PORT, constant
 const port = process.env.PORT || 3000;
 const publicDirectory = path.join(__dirname, "public");
@@ -34,6 +37,10 @@ app.engine(
 //set engine hbs as view engine
 app.set("view engine", "hbs");
 app.set("views", path.join(__dirname, "views"));
+
+//config router
+
+app.use("/user", userRoute);
 
 app.get("/", (req, res) => {
   console.log(req.query);

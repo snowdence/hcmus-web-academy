@@ -25,7 +25,8 @@
   "dependencies": {
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
-    "express-handlebars": "^5.2.0"
+    "express-handlebars": "^5.2.0",
+    "mongoose": "^5.11.2"
   },
   "devDependencies": {
     "gulp-nodemon": "^2.5.0",
