@@ -4,7 +4,16 @@ const express = require("express");
 const morgan = require("morgan");
 const app = express();
 const exphbs = require("express-handlebars");
-
+const mongoClient = require("mongoose");
+const bodyParser = require("body-parser");
+// connect mongo
+mongoClient
+  .connect("mongodb://localhost:27017/hwa", {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
+  .then(() => console.log("[SUCCESS] Connected to mongoDB"))
+  .catch(() => console.error("Error mongodb"));
 //router
 const userRoute = require("./routes/user");
 
@@ -15,6 +24,8 @@ const viewDirectory = path.join(publicDirectory, "views");
 // Config server use library middleware
 //app.use(morgan("combined"));
 app.use(express.static(publicDirectory));
+
+app.use(bodyParser.json());
 
 //Config hbs
 
