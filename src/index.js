@@ -9,10 +9,13 @@ const passport = require("passport");
 const bodyParser = require("body-parser");
 const localStrategy = require("passport-local").Strategy;
 const session = require("express-session");
+var flash = require("connect-flash");
+
 // connect mongo
 mongoClient
   .connect("mongodb://localhost:27017/hwa", {
     useNewUrlParser: true,
+    useCreateIndex: true,
     useUnifiedTopology: true,
   })
   .then(() => console.log("[SUCCESS] Connected to mongoDB"))
@@ -23,6 +26,8 @@ mongoClient
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(
   session({
+    resave: false,
+    saveUninitialized: true,
     secret: "secret",
     cookie: {
       maxAge: 1000 * 60 * 10,
@@ -31,7 +36,7 @@ app.use(
 );
 app.use(passport.initialize());
 app.use(passport.session());
-
+app.use(flash());
 const userRoute = require("./routes/user");
 const webRoute = require("./routes/web");
 const { Passport } = require("passport");
@@ -49,11 +54,15 @@ app.use(bodyParser.json());
 //Config hbs
 
 //create engine name <hbs> with constructor exphbs({config option})
+const supportHelper = require("./views/helpers/helper");
+
 app.engine(
   "hbs",
   exphbs({
     defaultLayout: "main",
     extname: ".hbs",
+    helpers: supportHelper.helpers,
+
     // viewEngine: {
     //   extName: ".hbs",
     //   partialsDir: path.join(viewDirectory, "partials"),
