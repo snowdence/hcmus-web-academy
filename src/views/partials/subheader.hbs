@@ -9,7 +9,7 @@
 			<div class="d-flex flex-column">
 
 				<!--begin::Title-->
-				<h2 class="text-white font-weight-bold my-2 mr-5">Dashboard Hello - {{user.username}}</h2>
+				<h2 class="text-white font-weight-bold my-2 mr-5">Dashboard</h2>
 
 				<!--end::Title-->
 
@@ -22,7 +22,24 @@
 		<!--end::Info-->
 
 
+		{{#if user}}
+
+		{{else}}
+		{{!-- begin::Toolbar --}}
+
+		<div class="d-flex align-items-center">
+			<!--begin::Button-->
+			<a href="/login" class="btn btn-white font-weight-bold py-3 px-6 mr-2">Đăng nhập</a>
+			<!--end::Button-->
+			<!--begin::Button-->
+			<a href="/registry" class="btn btn-white font-weight-bold py-3 px-6 mr-2">Đăng ký</a>
+
+			<!--end::Butotn-->
+		</div>
+		{{!-- end::Toolbar --}}
+		{{/if}}
 	</div>
 </div>
+
 
 <!--end::Subheader-->

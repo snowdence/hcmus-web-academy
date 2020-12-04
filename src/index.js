@@ -12,13 +12,15 @@ const session = require("express-session");
 var flash = require("connect-flash");
 const userInfoMiddleware = require("./middleware/user-info");
 
+const User = require("./models/User");
 passport.use(
-  new localStrategy((username, password, done) => {
-    if (username == "admin" && password == "admin") {
-      return done(null, { username, password });
-    } else {
-      return done(null, false);
+  new localStrategy(async (username, password, done) => {
+    const user = await User.findOne({ username: username });
+
+    if (!user || !user.password || password != user.password) {
+      return done(null, false, { error: "Sai email hoặc mật khẩu" });
     }
+    return done(null, user);
   })
 );
 
@@ -26,8 +28,13 @@ passport.serializeUser((user, done) => {
   done(null, user.username);
 });
 
-passport.deserializeUser((username, done) => {
-  return done(null, { username: username });
+passport.deserializeUser(async (username, done) => {
+  const user = await User.findOne({ username: username });
+  if (!user) {
+    return done(null, false);
+  }
+
+  return done(null, user.toObject());
 });
 const cookieParser = require("cookie-parser");
 

@@ -1,5 +1,15 @@
 var register = function (Handlebars) {
   var helpers = {
+    getTypeAccountHelper: (e) => {
+      switch (e) {
+        case 0:
+          return "Quản trị viên (Admin)";
+        case 1:
+          return "Học viên";
+        case 2:
+          return "Giáo viên";
+      }
+    },
     runtime: (runtime) => {
       if (!runtime || !runtime > 0) {
         return "";
