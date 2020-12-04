@@ -5,7 +5,7 @@
 <head>
   <base href="../../../../">
   <meta charset="utf-8" />
-  <title>Login Page 4 | Keenthemes</title>
+  <title>HWA - Đăng nhập</title>
   <meta name="description" content="Login page example" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
   <link rel="canonical" href="https://keenthemes.com/metronic" />
@@ -37,7 +37,7 @@
         style="background-image: url('assets/media/bg/bg-3.jpg');">
         <div class="login-form text-center p-7 position-relative overflow-hidden">
           <!--begin::Login Header-->
-          <div class="d-flex flex-center mb-15">
+          <div class="d-flex flex-center mb-10">
             <a href="/">
               {{!-- <img src="assets/media/logos/logo-letter-13.png" class="max-h-75px" alt="" /> --}}
               <img src="img/logo.png" class="max-h-150px" alt="" />
@@ -46,9 +46,8 @@
           <!--end::Login Header-->
           <!--begin::Login Sign in form-->
           <div class="login-signin">
-            <div class="mb-20">
-              <h3>Login </h3>
-
+            <div class="mb-10">
+              <h1>Đăng nhập </h1>
             </div>
             <form class="form" action="/login" method="POST" id="kt_login_signin_form">
               {{#if message}}
@@ -81,18 +80,17 @@
                 <div class="checkbox-inline">
                   <label class="checkbox m-0 text-muted">
                     <input type="checkbox" name="remember" />
-                    <span></span>Remember me</label>
+                    <span></span>Ghi nhớ thông tin</label>
                 </div>
                 <a href="javascript:;" id="kt_login_forgot" class="text-muted text-hover-primary">Forget Password ?</a>
               </div>
               <button id="kt_login_signin_submit" type="submit"
-                class="btn btn-primary font-weight-bold px-9 py-4 my-3 mx-4">Sign
-                In</button>
+                class="btn btn-primary font-weight-bold px-9 py-4 my-3 mx-4">Đăng nhập</button>
             </form>
             <div class="mt-10">
-              <span class="opacity-70 mr-4">Don't have an account yet?</span>
-              <a href="javascript:;" id="kt_login_signup" class="text-muted text-hover-primary font-weight-bold">Sign
-                Up!</a>
+              <span class="opacity-70 mr-4">Bạn không có tài khoản?</span>
+              <a href="javascript:;" id="kt_login_signup" class="text-muted text-hover-primary font-weight-bold">Đăng
+                ký!</a>
             </div>
           </div>
           <!--end::Login Sign in form-->
