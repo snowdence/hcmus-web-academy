@@ -3,7 +3,15 @@ const express = require("express");
 const router = express.Router();
 const passport = require("passport");
 const authenticationMiddleware = require("../middleware/authentication");
-router.route("/").get((req, res) => res.render("pages/home"));
+router.route("/").get((req, res) => {
+  if (req.isAuthenticated()) {
+    console.log(req.user);
+  } else {
+    console.log("Not login");
+  }
+  res.render("pages/home");
+});
+
 router
   .route("/login")
   .get((req, res) => {
@@ -21,7 +29,7 @@ router
       failureRedirect: "/login",
       successRedirect: "/",
       failureFlash: true,
-      failureFlash: "Please check username or password!!!",
+      failureFlash: "Tài khoản hoặc mật khẩu không chính xác",
     })
   );
 

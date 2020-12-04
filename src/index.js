@@ -10,6 +10,26 @@ const bodyParser = require("body-parser");
 const localStrategy = require("passport-local").Strategy;
 const session = require("express-session");
 var flash = require("connect-flash");
+const userInfoMiddleware = require("./middleware/user-info");
+
+passport.use(
+  new localStrategy((username, password, done) => {
+    if (username == "admin" && password == "admin") {
+      return done(null, { username, password });
+    } else {
+      return done(null, false);
+    }
+  })
+);
+
+passport.serializeUser((user, done) => {
+  done(null, user.username);
+});
+
+passport.deserializeUser((username, done) => {
+  return done(null, { username: username });
+});
+const cookieParser = require("cookie-parser");
 
 // connect mongo
 mongoClient
@@ -23,20 +43,37 @@ mongoClient
 //router
 
 //passport
+app.use(cookieParser());
+
 app.use(bodyParser.urlencoded({ extended: true }));
+//use session to save
+/*
 app.use(
   session({
     resave: false,
-    saveUninitialized: true,
+    saveUninitialized: false,
     secret: "secret",
     cookie: {
       maxAge: 1000 * 60 * 10,
     },
   })
 );
+*/
+const cookieSession = require("cookie-session");
+app.use(
+  cookieSession({
+    name: "session",
+    keys: ["screat"],
+
+    // Cookie Options
+    maxAge: 24 * 60 * 60 * 1000, // 24 hours
+  })
+);
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
+
+app.use(userInfoMiddleware());
 const userRoute = require("./routes/user");
 const webRoute = require("./routes/web");
 const { Passport } = require("passport");
@@ -78,9 +115,19 @@ app.set("view engine", "hbs");
 app.set("views", path.join(__dirname, "views"));
 
 //config router
+// add to
+// app.use(function (req, res, next) {
+//   var render = res.render;
+//   res.render = function (view, locals, cb) {
+//     if (typeof locals == "object") locals.user = req.user;
+//     render.call(res, view, locals, cb);
+//   };
+//   next();
+// });
 
 app.use("/user", userRoute);
 app.use("/", webRoute);
+
 // app.get("/", (req, res) => {
 //   console.log(req.query);
 
@@ -94,22 +141,4 @@ app.use("/", webRoute);
 
 app.listen(port, () => {
   console.log(`HWA listen att http://localhost:${port}`);
-});
-
-passport.use(
-  new localStrategy((username, password, done) => {
-    if (username == "admin" && password == "admin") {
-      return done(null, { username, password });
-    } else {
-      return done(null, false);
-    }
-  })
-);
-
-passport.serializeUser((user, done) => {
-  done(null, user.username);
-});
-
-passport.deserializeUser((username, done) => {
-  return done(null, { username });
 });
