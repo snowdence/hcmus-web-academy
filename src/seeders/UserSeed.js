@@ -9,7 +9,7 @@ mongoClient
     useUnifiedTopology: true,
   })
   .then(() => console.log("[SUCCESS] Connected to mongoDB"))
-  .catch(() => console.error("Error mongodb"));
+  .catch((err) => console.error("Error mongodb:", err));
 
 const faker = require("faker");
 const User = require("../models/user");
@@ -35,7 +35,7 @@ const list_default = [
     fullname: "Vũ Minh Châu",
     avatar:
       "https://scontent.fsgn4-1.fna.fbcdn.net/v/t1.0-9/107566490_753563212082043_7893256089881654921_o.jpg?_nc_cat=103&ccb=2&_nc_sid=a4a2d7&_nc_ohc=5ZSalFYTu90AX8OU_Q5&_nc_oc=AQnXayAAPuxCiRl6n4XSVTigR8AyZtHqd8e19JeNzRKOSpqk4xW0qCu2Ba0utv4Ag4E&_nc_ht=scontent.fsgn4-1.fna&oh=c4d4ad7a7365d110523ebcd0d9621e83&oe=5FF39A9D",
-    role: 0,
+    role: 1,
     phone: faker.phone.phoneNumber("84(123) 456 789 '"),
     verified: true,
   },
@@ -57,7 +57,7 @@ let seed = function () {
       email: faker.internet.email(),
       fullname: faker.name.findName(),
       avatar: faker.image.avatar(),
-      role: 1,
+      role: 2,
       phone: faker.phone.phoneNumber("84(###) ### ###'"),
       verified: true,
     };

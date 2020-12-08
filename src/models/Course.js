@@ -1,9 +1,16 @@
-const mongoose = require("moongoose");
+const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 const CourseSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
+  },
+  overview: {
+    type: String,
+  },
+  sub_category: {
+    type: Schema.Types.ObjectId,
+    ref: "SubCategory",
   },
   author_id: {
     type: Schema.Types.ObjectId,
@@ -12,9 +19,7 @@ const CourseSchema = new mongoose.Schema({
   thumbnail: {
     type: String,
   },
-  overview: {
-    type: String,
-  },
+
   description: {
     type: String,
   },
@@ -29,16 +34,16 @@ const CourseSchema = new mongoose.Schema({
   price: {
     type: Number,
   },
-  discount: {
+  price_discount: {
     type: Number,
   },
   created_at: {
     type: Date,
-    required: true,
+    default: Date.now,
   },
   updated_at: {
     type: Date,
-    require: true,
+    default: Date.now,
   },
 });
 const Course = mongoose.model("Course", CourseSchema);
