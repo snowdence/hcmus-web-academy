@@ -1,6 +1,15 @@
 const userSeed = require("./UserSeed");
+const categorySeed = require("./CategorySeed");
+const courseSeed = require("./CourseSeed");
 
 async function dbSeed() {
-  await userSeed.execute();
+  try {
+    await userSeed();
+    await categorySeed();
+    await courseSeed();
+    console.log("OK");
+  } catch (err) {
+    console.log("[SEED INDEX]" + err);
+  }
 }
 dbSeed();

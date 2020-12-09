@@ -81,9 +81,18 @@ async function up() {
 async function down() {
   const data = await User.collection.drop();
 }
-const execute = () => {
-  down();
-  up();
+const execute = async () => {
+  try {
+    await down();
+  } catch (err) {
+    console.log("error" + err);
+  }
+
+  try {
+    await up();
+  } catch (err) {
+    console.log("error" + err);
+  }
 };
-execute();
+//execute();
 module.exports = execute;

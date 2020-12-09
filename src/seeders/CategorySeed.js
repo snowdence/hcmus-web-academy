@@ -103,5 +103,5 @@ const execute = async () => {
     `[CategorySeed] Completed!!! Success  ${success} Error: ${error}`
   );
 };
-execute();
+//execute();
 module.exports = execute;
