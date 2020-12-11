@@ -46,7 +46,28 @@ const newUser = (req, res, next) => {
   });
 };
 
+const getUserProfile = (req, res, next) =>{
+  res.render("pages/user/personal-info", {
+    userAvatar: req.user.avatar,
+    userFullname: req.user.fullname,
+    userPhone: req.user.phone,
+    userEmail: req.user.email,
+  });
+}
+
+const postUserProfile = (req, res, next) =>{
+  console.log(req.body)
+  res.render("pages/user/personal-info", {
+    userAvatar: req.body.profile_avatar,
+    userFullname: req.body.fullname,
+    userPhone: req.body.phone,
+    userEmail: req.body.email,
+  })
+}
+
 module.exports = {
   getIndex: getIndex,
   newUser,
+  getUserProfile,
+  postUserProfile,
 };

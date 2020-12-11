@@ -93,14 +93,13 @@
                         <!--begin::User-->
                         <div class="d-flex align-items-center">
                             <div class="symbol symbol-60 symbol-xxl-100 mr-5 align-self-start align-self-xxl-center">
-                                <div class="symbol-label" style="background-image:url('assets/media/users/300_21.jpg')">
+                                <div class="symbol-label" style="background-image:url({{userAvatar}})">
                                 </div>
                                 <i class="symbol-badge bg-success"></i>
                             </div>
                             <div>
                                 <a href="#"
-                                    class="font-weight-bolder font-size-h5 text-dark-75 text-hover-primary">James
-                                    Jones</a>
+                                    class="font-weight-bolder font-size-h5 text-dark-75 text-hover-primary">{{userFullname}}</a>
                                 <div class="text-muted">Application Developer</div>
                                 <div class="mt-2">
                                     <a href="#"
@@ -115,16 +114,16 @@
                         <div class="py-9">
                             <div class="d-flex align-items-center justify-content-between mb-2">
                                 <span class="font-weight-bold mr-2">Email:</span>
-                                <a href="#" class="text-muted text-hover-primary">matt@fifestudios.com</a>
+                                <a href="#" class="text-muted text-hover-primary">{{userEmail}}</a>
                             </div>
                             <div class="d-flex align-items-center justify-content-between mb-2">
                                 <span class="font-weight-bold mr-2">Phone:</span>
-                                <span class="text-muted">44(76)34254578</span>
+                                <span class="text-muted">{{userPhone}}</span>
                             </div>
-                            <div class="d-flex align-items-center justify-content-between">
+                            {{!-- <div class="d-flex align-items-center justify-content-between">
                                 <span class="font-weight-bold mr-2">Location:</span>
                                 <span class="text-muted">Melbourne</span>
-                            </div>
+                            </div> --}}
                         </div>
                         <!--end::Contact-->
                         <!--begin::Nav-->
@@ -280,7 +279,7 @@
                     </div>
                     <!--end::Header-->
                     <!--begin::Form-->
-                    <form id="personal-info-form" class="form">
+                    <form id="personal-info-form" class="form" method="POST">
                         <!--begin::Body-->
                         <div class="card-body">
                             <div class="row">
@@ -295,7 +294,7 @@
                                     <div class="image-input image-input-outline" id="kt_profile_avatar"
                                         style="background-image: url(assets/media/users/blank.png)">
                                         <div class="image-input-wrapper"
-                                            style="background-image: url(assets/media/users/300_21.jpg)"></div>
+                                            style="background-image: url({{userAvatar}})"></div>
                                         <label
                                             class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
                                             data-action="change" data-toggle="tooltip" title=""
@@ -322,7 +321,7 @@
                                 <label class="col-xl-3 col-lg-3 col-form-label">Full Name</label>
                                 <div class="col-lg-9 col-xl-6">
                                     <input class="form-control form-control-lg form-control-solid" type="text"
-                                        value="" / name="fullname">
+                                        value="{{userFullname}}" / name="fullname">
                                 </div>
                             </div>
 
@@ -342,7 +341,7 @@
                                             </span>
                                         </div>
                                         <input type="text" class="form-control form-control-lg form-control-solid"
-                                            value="" placeholder="Phone"/>
+                                            value="{{userPhone}}" placeholder="Phone" name="phone"/>
                                     </div>
                                     <span class="form-text text-muted">We'll never share your email with anyone
                                         else.</span>
@@ -358,7 +357,7 @@
                                             </span>
                                         </div>
                                         <input type="text" class="form-control form-control-lg form-control-solid"
-                                            value="nick.bold@loop.com" placeholder="Email" />
+                                            value="{{userEmail}}" placeholder="Email" name="email"/>
                                     </div>
                                 </div>
                             </div>
