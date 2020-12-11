@@ -134,7 +134,6 @@ app.set("views", path.join(__dirname, "views"));
 // });
 
 app.use("/user", userRoute);
-app.use("/custom", userRoute);
 app.use("/", webRoute);
 
 // app.get("/", (req, res) => {

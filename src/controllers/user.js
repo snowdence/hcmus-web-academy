@@ -46,14 +46,6 @@ const newUser = (req, res, next) => {
   });
 };
 
-const getUserProfile = (req, res, next) =>{
-  res.render("pages/user/personal-info", {
-    userAvatar: req.user.avatar,
-    userFullname: req.user.fullname,
-    userPhone: req.user.phone,
-    userEmail: req.user.email,
-  });
-}
 
 const postUserProfile = (req, res, next) =>{
   console.log(req.body)
@@ -68,6 +60,5 @@ const postUserProfile = (req, res, next) =>{
 module.exports = {
   getIndex: getIndex,
   newUser,
-  getUserProfile,
   postUserProfile,
 };
