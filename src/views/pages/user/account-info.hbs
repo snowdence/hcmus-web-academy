@@ -93,14 +93,13 @@
                         <!--begin::User-->
                         <div class="d-flex align-items-center">
                             <div class="symbol symbol-60 symbol-xxl-100 mr-5 align-self-start align-self-xxl-center">
-                                <div class="symbol-label" style="background-image:url('assets/media/users/300_21.jpg')">
+                                <div class="symbol-label" style="background-image:url({{userAvatar}})">
                                 </div>
                                 <i class="symbol-badge bg-success"></i>
                             </div>
                             <div>
                                 <a href="#"
-                                    class="font-weight-bolder font-size-h5 text-dark-75 text-hover-primary">James
-                                    Jones</a>
+                                    class="font-weight-bolder font-size-h5 text-dark-75 text-hover-primary">{{userFullname}}</a>
                                 <div class="text-muted">Application Developer</div>
                                 <div class="mt-2">
                                     <a href="#"
@@ -115,11 +114,11 @@
                         <div class="py-9">
                             <div class="d-flex align-items-center justify-content-between mb-2">
                                 <span class="font-weight-bold mr-2">Email:</span>
-                                <a href="#" class="text-muted text-hover-primary">matt@fifestudios.com</a>
+                                <a href="#" class="text-muted text-hover-primary">{{userEmail}}</a>
                             </div>
                             <div class="d-flex align-items-center justify-content-between mb-2">
                                 <span class="font-weight-bold mr-2">Phone:</span>
-                                <span class="text-muted">44(76)34254578</span>
+                                <span class="text-muted">{{userPhone}}</span>
                             </div>
                             <div class="d-flex align-items-center justify-content-between">
                                 <span class="font-weight-bold mr-2">Location:</span>
@@ -230,30 +229,7 @@
                                     <span class="navi-text font-size-lg">Change Password</span>
                                 </a>
                             </div>
-                            <div class="navi-item mb-2">
-                                <a href="/user/email-settings" class="navi-link py-4">
-                                    <span class="navi-icon mr-2">
-                                        <span class="svg-icon">
-                                            <!--begin::Svg Icon | path:assets/media/svg/icons/Communication/Mail-opened.svg-->
-                                            <svg xmlns="http://www.w3.org/2000/svg"
-                                                xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px"
-                                                viewBox="0 0 24 24" version="1.1">
-                                                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                                    <rect x="0" y="0" width="24" height="24"></rect>
-                                                    <path
-                                                        d="M6,2 L18,2 C18.5522847,2 19,2.44771525 19,3 L19,12 C19,12.5522847 18.5522847,13 18,13 L6,13 C5.44771525,13 5,12.5522847 5,12 L5,3 C5,2.44771525 5.44771525,2 6,2 Z M7.5,5 C7.22385763,5 7,5.22385763 7,5.5 C7,5.77614237 7.22385763,6 7.5,6 L13.5,6 C13.7761424,6 14,5.77614237 14,5.5 C14,5.22385763 13.7761424,5 13.5,5 L7.5,5 Z M7.5,7 C7.22385763,7 7,7.22385763 7,7.5 C7,7.77614237 7.22385763,8 7.5,8 L10.5,8 C10.7761424,8 11,7.77614237 11,7.5 C11,7.22385763 10.7761424,7 10.5,7 L7.5,7 Z"
-                                                        fill="#000000" opacity="0.3"></path>
-                                                    <path
-                                                        d="M3.79274528,6.57253826 L12,12.5 L20.2072547,6.57253826 C20.4311176,6.4108595 20.7436609,6.46126971 20.9053396,6.68513259 C20.9668779,6.77033951 21,6.87277228 21,6.97787787 L21,17 C21,18.1045695 20.1045695,19 19,19 L5,19 C3.8954305,19 3,18.1045695 3,17 L3,6.97787787 C3,6.70173549 3.22385763,6.47787787 3.5,6.47787787 C3.60510559,6.47787787 3.70753836,6.51099993 3.79274528,6.57253826 Z"
-                                                        fill="#000000"></path>
-                                                </g>
-                                            </svg>
-                                            <!--end::Svg Icon-->
-                                        </span>
-                                    </span>
-                                    <span class="navi-text font-size-lg">Email settings</span>
-                                </a>
-                            </div>
+                            
                             
                             
                         </div>
@@ -276,19 +252,19 @@
                                 settings</span>
                         </div>
                         <div class="card-toolbar">
-                            <button type="reset" class="btn btn-success mr-2">Save Changes</button>
-                            <a href ="/"><button type="reset" class="btn btn-secondary">Cancel</button></a>
+                            <button type="submit" class="btn btn-success mr-2" form="account-info-form">Save Changes</button>
+                            <button type="reset" class="btn btn-secondary" form="account-info-form">Cancel</button>
                         </div>
                     </div>
                     <!--end::Header-->
                     <!--begin::Form-->
-                    <form class="form">
+                    <form class="form" id="account-info-form" method="POST">
                         <div class="card-body">
                             <!--begin::Heading-->
                             <div class="row">
-                                <label class="col-xl-3"></label>
+                                <label class=""></label>
                                 <div class="col-lg-9 col-xl-6">
-                                    <h5 class="font-weight-bold mb-6">Account:</h5>
+                                    <u><h3 class="font-weight-bold mb-6">Account</h3></u>
                                 </div>
                             </div>
                             <!--begin::Form Group-->
@@ -296,7 +272,7 @@
                                 <label class="col-xl-3 col-lg-3 col-form-label">Username</label>
                                 <div class="col-lg-9 col-xl-6">
                                     {{!-- <div class="spinner spinner-sm spinner-success spinner-right"> --}}
-                                        <input class="form-control form-control-lg form-control-solid" type="text" value="nick84">
+                                        <input class="form-control form-control-lg form-control-solid" type="text" value="{{userName}}" name="username">
                                     {{!-- </div> --}}
                                 </div>
                             </div>
@@ -311,7 +287,7 @@
                                             </span>
                                         </div>
                                         <input type="text" class="form-control form-control-lg form-control-solid"
-                                            value="nick.watson@loop.com" placeholder="Email">
+                                            value="{{userEmail}}" placeholder="Email" name="email">
                                     </div>
                                     <span class="form-text text-muted">Email will not be publicly displayed.
                                         <a href="#" class="font-weight-bold">Learn more</a>.</span>
@@ -570,9 +546,9 @@
                             <div class="separator separator-dashed my-5"></div>
                             <!--begin::Form Group-->
                             <div class="row">
-                                <label class="col-xl-3"></label>
+                                <label></label>
                                 <div class="col-lg-9 col-xl-6">
-                                    <h5 class="font-weight-bold mb-6">Security:</h5>
+                                    <u><h3 class="font-weight-bold mb-6">Security</h3></u>
                                 </div>
                             </div>
                             <!--begin::Form Group-->

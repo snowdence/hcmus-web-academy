@@ -12,15 +12,22 @@ router.route("/personal-info").get((req, res) => {
 }).post(UserController.postUserProfile);
 
 router.route("/account-info").get((req,res)=>{
-    res.render("pages/user/account-info");
-});
-
-router.route("/email-settings").get((req,res)=>{
-    res.render("pages/user/email-settings");
+    res.render("pages/user/account-info", {
+        userName: req.user.username,
+        userEmail: req.user.email,
+        userFullname: req.user.fullname,
+        userAvatar: req.user.avatar,
+        userPhone: req.user.phone,
+    });
 });
 
 router.route("/change-password").get((req,res)=>{
-    res.render("pages/user/change-password");
+    res.render("pages/user/change-password", {
+        userAvatar: req.user.avatar,
+        userFullname: req.user.fullname,
+        userPhone: req.user.phone,
+        userEmail: req.user.email,
+    });
 });
 
 router.route("/profile").get((req,res)=>{

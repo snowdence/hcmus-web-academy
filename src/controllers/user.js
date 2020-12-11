@@ -57,10 +57,10 @@ const postUserProfile = (req, res, next) =>{
       userFullname: req.body.fullname,
       userPhone: req.body.phone,
       userEmail: req.body.email,
+      isUpdateSuccessfully: true,
     })
   }
   else{
-    console.log(req.body)
     res.render("pages/user/personal-info", {
       userAvatar: req.body.profile_avatar,
       userFullname: req.body.fullname,
@@ -69,6 +69,8 @@ const postUserProfile = (req, res, next) =>{
     })
   }
 }
+
+
 
 module.exports = {
   getIndex: getIndex,
