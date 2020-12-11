@@ -5,6 +5,7 @@
  * Async/Await (Promises)
  */
 
+const User = require("../models/User");
 const UserModel = require("../models/User");
 
 /**
@@ -48,13 +49,25 @@ const newUser = (req, res, next) => {
 
 
 const postUserProfile = (req, res, next) =>{
-  console.log(req.body)
-  res.render("pages/user/personal-info", {
-    userAvatar: req.body.profile_avatar,
-    userFullname: req.body.fullname,
-    userPhone: req.body.phone,
-    userEmail: req.body.email,
-  })
+  UserModel.updateOne({fullname: req.user.fullname}, req.body).then().catch((err) => next(err));
+
+  if(req.body.profile_avatar === ''){
+    res.render("pages/user/personal-info", {
+      userAvatar: req.user.avatar,
+      userFullname: req.body.fullname,
+      userPhone: req.body.phone,
+      userEmail: req.body.email,
+    })
+  }
+  else{
+    console.log(req.body)
+    res.render("pages/user/personal-info", {
+      userAvatar: req.body.profile_avatar,
+      userFullname: req.body.fullname,
+      userPhone: req.body.phone,
+      userEmail: req.body.email,
+    })
+  }
 }
 
 module.exports = {

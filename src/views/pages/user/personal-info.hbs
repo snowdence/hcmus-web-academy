@@ -274,7 +274,7 @@
                         </div>
                         <div class="card-toolbar">
                             <button type="submit" class="btn btn-success mr-2" form="personal-info-form">Save Changes</button>
-                            <a href = "/"><button type="reset" class="btn btn-secondary">Cancel</button></a>
+                            <button type="reset" class="btn btn-secondary" form="personal-info-form">Cancel</button>
                         </div>
                     </div>
                     <!--end::Header-->
@@ -300,7 +300,7 @@
                                             data-action="change" data-toggle="tooltip" title=""
                                             data-original-title="Change avatar">
                                             <i class="fa fa-pen icon-sm text-muted"></i>
-                                            <input type="file" name="profile_avatar" accept=".png, .jpg, .jpeg" />
+                                            <input type="file" id="profile_avatar" name="profile_avatar" accept=".png, .jpg, .jpeg" value="url({{userAvatar}})"/>
                                             <input type="hidden" name="profile_avatar_remove" />
                                         </label>
                                         <span
