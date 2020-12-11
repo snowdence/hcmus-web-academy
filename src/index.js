@@ -99,6 +99,7 @@ app.use(bodyParser.json());
 
 //create engine name <hbs> with constructor exphbs({config option})
 const supportHelper = require("./views/helpers/helper");
+const user = require("./controllers/user");
 
 app.engine(
   "hbs",
@@ -133,6 +134,7 @@ app.set("views", path.join(__dirname, "views"));
 // });
 
 app.use("/user", userRoute);
+app.use("/custom", userRoute);
 app.use("/", webRoute);
 
 // app.get("/", (req, res) => {
