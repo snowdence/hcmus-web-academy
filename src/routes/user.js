@@ -19,7 +19,7 @@ router.route("/account-info").get((req,res)=>{
         userAvatar: req.user.avatar,
         userPhone: req.user.phone,
     });
-});
+}).post(UserController.postUserAccount);
 
 router.route("/change-password").get((req,res)=>{
     res.render("pages/user/change-password", {

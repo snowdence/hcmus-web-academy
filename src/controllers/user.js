@@ -70,10 +70,21 @@ const postUserProfile = (req, res, next) =>{
   }
 }
 
-
+const postUserAccount = (req, res, next) =>{
+  UserModel.updateOne({username: req.user.username}, req.body).then().catch((err) => next(err));
+  res.render("pages/user/account-info", {
+    userAvatar: req.user.avatar,
+    userFullname: req.user.fullname,
+    userPhone: req.user.phone,
+    userEmail: req.body.email,
+    isUpdateSuccessfully: true,
+    userName: req.body.username,
+  })
+}
 
 module.exports = {
   getIndex: getIndex,
   newUser,
   postUserProfile,
+  postUserAccount,
 };
