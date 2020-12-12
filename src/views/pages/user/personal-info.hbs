@@ -227,7 +227,7 @@
                                     <span class="navi-text font-size-lg">Change Password</span>
                                 </a>
                             </div>
-                            
+
 
                         </div>
                         <!--end::Nav-->
@@ -257,24 +257,26 @@
                     </div>
                     <!--end::Header-->
                     <!--begin::Form-->
-                    {{#if isUpdateSuccessfully}}
-                    <div class="alert alert-custom alert-light-success fade show mb-10" role="alert">
-                        <div class="fa fa-check-circle mt-1" style="color: #69D7E3" >
-                            <span class="pl-5"></span>
-                        </div>
-                        <div class="alert-text font-weight-bold"><h4>Update Successfully!</h4></div>
-                        <div class="alert-close">
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">
-                                    <i class="ki ki-close"></i>
-                                </span>
-                            </button>
-                        </div>
-                    </div>
-                    {{/if}}
                     <form id="personal-info-form" class="form" method="POST">
                         <!--begin::Body-->
                         <div class="card-body">
+                            {{#if isUpdateSuccessfully}}
+                            <div class="alert alert-custom alert-light-success fade show mb-10" role="alert">
+                                <div class="fa fa-check-circle mt-1" style="color: #69D7E3">
+                                    <span class="pl-5"></span>
+                                </div>
+                                <div class="alert-text font-weight-bold">
+                                    <h4>Update Successfully!</h4>
+                                </div>
+                                <div class="alert-close">
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">
+                                            <i class="ki ki-close"></i>
+                                        </span>
+                                    </button>
+                                </div>
+                            </div>
+                            {{/if}}
                             <div class="row">
                                 <label></label>
                                 <div class="col-lg-9 col-xl-6">
