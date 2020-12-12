@@ -24,7 +24,7 @@ const list_default = [
     avatar:
       "https://avatars0.githubusercontent.com/u/26925860?s=460&u=06af4e5d2369adbd8468ae843e5d6be3dfd9f70f&v=4",
     role: 0,
-    phone: faker.phone.phoneNumber("84(123) 456 789 '"),
+    phone: faker.phone.phoneNumber("84(123) 456 789"),
     verified: true,
   },
 

@@ -1,12 +1,12 @@
-const userSeed = require("./UserSeed");
-const categorySeed = require("./CategorySeed");
-const courseSeed = require("./CourseSeed");
+const user = require("./UserSeed");
+const category = require("./CategorySeed");
+const course = require("./CourseSeed");
 
 async function dbSeed() {
   try {
-    await userSeed();
-    await categorySeed();
-    await courseSeed();
+    await user();
+    await category();
+    await course();
     console.log("OK");
   } catch (err) {
     console.log("[SEED INDEX]" + err);
