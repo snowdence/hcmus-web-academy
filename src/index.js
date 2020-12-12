@@ -99,6 +99,7 @@ app.use(bodyParser.json());
 
 //create engine name <hbs> with constructor exphbs({config option})
 const supportHelper = require("./views/helpers/helper");
+const user = require("./controllers/user");
 
 app.engine(
   "hbs",
