@@ -82,9 +82,46 @@ const postUserAccount = (req, res, next) =>{
   })
 }
 
+const postUserChangePassword = (req, res, next) =>{
+  
+  if(req.user.password === req.body.curPassword && req.body.password === req.body.verPassword){
+    UserModel.updateOne({username: req.user.username}, req.body).then().catch((err) => next(err));
+    res.render("pages/user/change-password", {
+      userAvatar: req.user.avatar,
+      userFullname: req.user.fullname,
+      userPhone: req.user.phone,
+      userEmail: req.user.email,
+      isUpdateSuccessfully: true,
+    });
+  }
+  else{
+    if(req.user.password !== req.body.curPassword){
+      res.render("pages/user/change-password", {
+        userAvatar: req.user.avatar,
+        userFullname: req.user.fullname,
+        userPhone: req.user.phone,
+        userEmail: req.user.email,
+        isFail: true,
+        message: "Wrong password! Please enter again!",
+      });
+    }
+    else{
+      res.render("pages/user/change-password", {
+        userAvatar: req.user.avatar,
+        userFullname: req.user.fullname,
+        userPhone: req.user.phone,
+        userEmail: req.user.email,
+        isFail: true,
+        message: "Verified password doesn't match! Check it again",
+      });
+    }
+  }
+}
+
 module.exports = {
   getIndex: getIndex,
   newUser,
   postUserProfile,
   postUserAccount,
+  postUserChangePassword
 };
