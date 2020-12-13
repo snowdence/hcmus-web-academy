@@ -28,7 +28,7 @@ router.route("/change-password").get((req,res)=>{
         userPhone: req.user.phone,
         userEmail: req.user.email,
     });
-});
+}).post(UserController.postUserChangePassword);
 
 router.route("/profile").get((req,res)=>{
     res.render("pages/user/profile");
