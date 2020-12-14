@@ -33,6 +33,10 @@ router
     })
   );
 
+router.route("/registry").get((req, res) => {
+  res.render("pages/registry", { layout: null });
+});
+
 router.route("/logout").get(function (req, res) {
   req.logout();
   res.redirect("/");

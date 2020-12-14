@@ -11,8 +11,12 @@ const localStrategy = require("passport-local").Strategy;
 const session = require("express-session");
 var flash = require("connect-flash");
 const userInfoMiddleware = require("./middleware/user-info");
-
+const cookieParser = require("cookie-parser");
+const userRoute = require("./routes/user.route");
+const webRoute = require("./routes/web.route");
 const User = require("./models/User");
+
+//PassportJS config
 passport.use(
   new localStrategy(async (username, password, done) => {
     const user = await User.findOne({ username: username });
@@ -36,11 +40,12 @@ passport.deserializeUser(async (username, done) => {
 
   return done(null, user.toObject());
 });
-const cookieParser = require("cookie-parser");
+
+//PassportJS end config
 
 // connect mongo
 mongoClient
-  .connect("mongodb://localhost:27017/hwa", {
+  .connect(process.env.MONGODB_URI, {
     useNewUrlParser: true,
     useCreateIndex: true,
     useUnifiedTopology: true,
@@ -53,6 +58,7 @@ mongoClient
 app.use(cookieParser());
 
 app.use(bodyParser.urlencoded({ extended: true }));
+
 //use session to save
 /*
 app.use(
@@ -66,6 +72,8 @@ app.use(
   })
 );
 */
+
+//use cookie to save
 const cookieSession = require("cookie-session");
 app.use(
   cookieSession({
@@ -81,9 +89,6 @@ app.use(passport.session());
 app.use(flash());
 
 app.use(userInfoMiddleware());
-const userRoute = require("./routes/user");
-const webRoute = require("./routes/web");
-const { Passport } = require("passport");
 
 // Config PORT, constant
 const port = process.env.PORT || 3000;
@@ -99,6 +104,7 @@ app.use(bodyParser.json());
 
 //create engine name <hbs> with constructor exphbs({config option})
 const supportHelper = require("./views/helpers/helper");
+const user = require("./controllers/user");
 
 app.engine(
   "hbs",
@@ -121,30 +127,8 @@ app.engine(
 app.set("view engine", "hbs");
 app.set("views", path.join(__dirname, "views"));
 
-//config router
-// add to
-// app.use(function (req, res, next) {
-//   var render = res.render;
-//   res.render = function (view, locals, cb) {
-//     if (typeof locals == "object") locals.user = req.user;
-//     render.call(res, view, locals, cb);
-//   };
-//   next();
-// });
-
 app.use("/user", userRoute);
 app.use("/", webRoute);
-
-// app.get("/", (req, res) => {
-//   console.log(req.query);
-
-//   const data = {
-//     title: "Trang chủ",
-//     username: "admin",
-//     password: "admin",
-//   };
-//   res.render("pages/home", data);
-// });
 
 app.listen(port, () => {
   console.log(`HWA listen att http://localhost:${port}`);

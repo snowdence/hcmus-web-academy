@@ -3,11 +3,11 @@ var register = function (Handlebars) {
     getTypeAccountHelper: (e) => {
       switch (e) {
         case 0:
-          return "Quản trị viên (Admin)";
+          return "Administrator";
         case 1:
-          return "Học viên";
+          return "Teacher";
         case 2:
-          return "Giáo viên";
+          return "Student";
       }
     },
     runtime: (runtime) => {
