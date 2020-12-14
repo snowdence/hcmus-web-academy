@@ -28,12 +28,19 @@ HWA Final Project  - Web course HCMUS
 
 ## Description
 controllers: xử lý request, logic, trả về kết quả
+
 models: Chứa các model schema của các bảng trong DB
+
 public: Chứa các css, js, img
+
 routes: Cấu hình route express với url tương ứng
+
 scss: Dùng scss cho web
+
 utils: Các module hỗ trợ, nếu cần thiết thì thêm vào đây
+
 views: Chứa template hbs để render
+
   - helpers: chứa module custom helper cho template hbs
   - layouts: Các layout xây dựng
   - pages: Chứa các file hbs tương ứng với các trang (phần main content)
