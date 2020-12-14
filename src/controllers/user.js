@@ -5,7 +5,6 @@
  * Async/Await (Promises)
  */
 
-const User = require("../models/User");
 const UserModel = require("../models/User");
 
 /**
@@ -47,45 +46,37 @@ const newUser = (req, res, next) => {
   });
 };
 
+const postUserProfile = (req, res, next) => {
+  UserModel.updateOne({ fullname: req.user.fullname }, req.body)
+    .then()
+    .catch((err) => next(err));
 
-const postUserProfile = (req, res, next) =>{
-  UserModel.updateOne({fullname: req.user.fullname}, req.body).then().catch((err) => next(err));
-
-  if(req.body.profile_avatar === ''){
+  if (req.body.profile_avatar === "") {
     res.render("pages/user/personal-info", {
       userAvatar: req.user.avatar,
       userFullname: req.body.fullname,
       userPhone: req.body.phone,
       userEmail: req.body.email,
       isUpdateSuccessfully: true,
-    })
-  }
-  else{
+    });
+  } else {
     res.render("pages/user/personal-info", {
       userAvatar: req.body.profile_avatar,
       userFullname: req.body.fullname,
       userPhone: req.body.phone,
       userEmail: req.body.email,
-    })
+    });
   }
-}
+};
 
-const postUserAccount = (req, res, next) =>{
-  UserModel.updateOne({username: req.user.username}, req.body).then().catch((err) => next(err));
-  res.render("pages/user/account-info", {
-    userAvatar: req.user.avatar,
-    userFullname: req.user.fullname,
-    userPhone: req.user.phone,
-    userEmail: req.body.email,
-    isUpdateSuccessfully: true,
-    userName: req.body.username,
-  })
-}
-
-const postUserChangePassword = (req, res, next) =>{
-  
-  if(req.user.password === req.body.curPassword && req.body.password === req.body.verPassword){
-    UserModel.updateOne({username: req.user.username}, req.body).then().catch((err) => next(err));
+const postUserChangePassword = (req, res, next) => {
+  if (
+    req.user.password === req.body.curPassword &&
+    req.body.password === req.body.verPassword
+  ) {
+    UserModel.updateOne({ username: req.user.username }, req.body)
+      .then()
+      .catch((err) => next(err));
     res.render("pages/user/change-password", {
       userAvatar: req.user.avatar,
       userFullname: req.user.fullname,
@@ -93,9 +84,8 @@ const postUserChangePassword = (req, res, next) =>{
       userEmail: req.user.email,
       isUpdateSuccessfully: true,
     });
-  }
-  else{
-    if(req.user.password !== req.body.curPassword){
+  } else {
+    if (req.user.password !== req.body.curPassword) {
       res.render("pages/user/change-password", {
         userAvatar: req.user.avatar,
         userFullname: req.user.fullname,
@@ -104,8 +94,7 @@ const postUserChangePassword = (req, res, next) =>{
         isFail: true,
         message: "Wrong password! Please enter again!",
       });
-    }
-    else{
+    } else {
       res.render("pages/user/change-password", {
         userAvatar: req.user.avatar,
         userFullname: req.user.fullname,
@@ -116,12 +105,11 @@ const postUserChangePassword = (req, res, next) =>{
       });
     }
   }
-}
+};
 
 module.exports = {
   getIndex: getIndex,
   newUser,
   postUserProfile,
-  postUserAccount,
-  postUserChangePassword
+  postUserChangePassword,
 };
