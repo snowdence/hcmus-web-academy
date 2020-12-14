@@ -127,6 +127,9 @@ app.engine(
 app.set("view engine", "hbs");
 app.set("views", path.join(__dirname, "views"));
 
+const adminRoute = require("./routes/admin.route");
+app.use("/admin", adminRoute);
+
 app.use("/user", userRoute);
 app.use("/", webRoute);
 
