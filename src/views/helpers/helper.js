@@ -10,9 +10,12 @@ var register = function (Handlebars) {
           return "Student";
       }
     },
-    'pagination': function (currentPage, totalPage, size, options) {
+    pagination: function (currentPage, totalPage, size, options) {
       var startPage, endPage, context;
 
+      currentPage = parseInt(currentPage) || currentPage;
+      totalPage = parseInt(totalPage) || totalPage;
+      size = parseInt(size) || size;
       if (arguments.length === 3) {
         options = size;
         size = 5;
@@ -22,7 +25,7 @@ var register = function (Handlebars) {
       endPage = currentPage + Math.floor(size / 2);
 
       if (startPage <= 0) {
-        endPage -= (startPage - 1);
+        endPage -= startPage - 1;
         startPage = 1;
       }
 
@@ -46,7 +49,7 @@ var register = function (Handlebars) {
       for (var i = startPage; i <= endPage; i++) {
         context.pages.push({
           page: i,
-          isCurrent: i === currentPage,
+          isCurrent: i == currentPage,
         });
       }
       if (endPage === totalPage) {
@@ -55,7 +58,7 @@ var register = function (Handlebars) {
 
       return options.fn(context);
     },
-    'compare': function (lvalue, operator, rvalue, options) {
+    compare: function (lvalue, operator, rvalue, options) {
       //compare hbs sipport
       var operators, result;
 
@@ -70,19 +73,39 @@ var register = function (Handlebars) {
       }
 
       operators = {
-        '==': function (l, r) { return l == r; },
-        '===': function (l, r) { return l === r; },
-        '!=': function (l, r) { return l != r; },
-        '!==': function (l, r) { return l !== r; },
-        '<': function (l, r) { return l < r; },
-        '>': function (l, r) { return l > r; },
-        '<=': function (l, r) { return l <= r; },
-        '>=': function (l, r) { return l >= r; },
-        'typeof': function (l, r) { return typeof l == r; }
+        "==": function (l, r) {
+          return l == r;
+        },
+        "===": function (l, r) {
+          return l === r;
+        },
+        "!=": function (l, r) {
+          return l != r;
+        },
+        "!==": function (l, r) {
+          return l !== r;
+        },
+        "<": function (l, r) {
+          return l < r;
+        },
+        ">": function (l, r) {
+          return l > r;
+        },
+        "<=": function (l, r) {
+          return l <= r;
+        },
+        ">=": function (l, r) {
+          return l >= r;
+        },
+        typeof: function (l, r) {
+          return typeof l == r;
+        },
       };
 
       if (!operators[operator]) {
-        throw new Error("Handlerbars Helper 'compare' doesn't know the operator " + operator);
+        throw new Error(
+          "Handlerbars Helper 'compare' doesn't know the operator " + operator
+        );
       }
 
       result = operators[operator](lvalue, rvalue);
@@ -92,27 +115,38 @@ var register = function (Handlebars) {
       } else {
         return options.inverse(this);
       }
-
     },
-    "when": function (operand_1, operator, operand_2, options) {
+    when: function (operand_1, operator, operand_2, options) {
       var operators = {
-        '==': function (l, r) { return l == r; },
-        '!=': function (l, r) { return l != r; },
-        '>': function (l, r) { return Number(l) > Number(r); },
-        '||': function (l, r) { return l || r; },
-        '&&': function (l, r) { return l && r; },
-        '%': function (l, r) { return (l % r) === 0; }
-      }
-        , result = operators[operator](operand_1, operand_2);
+          "==": function (l, r) {
+            return l == r;
+          },
+          "!=": function (l, r) {
+            return l != r;
+          },
+          ">": function (l, r) {
+            return Number(l) > Number(r);
+          },
+          "||": function (l, r) {
+            return l || r;
+          },
+          "&&": function (l, r) {
+            return l && r;
+          },
+          "%": function (l, r) {
+            return l % r === 0;
+          },
+        },
+        result = operators[operator](operand_1, operand_2);
 
       if (result) return options.fn(this);
       else return options.inverse(this);
     },
     clg: (obj) => {
-      console.log("[DEBUG] " + obj)
+      console.log("[DEBUG] " + obj);
     },
     isAdmin: (e) => {
-      return (e) && e.role == 0
+      return e && e.role == 0;
     },
     runtime: (runtime) => {
       if (!runtime || !runtime > 0) {
