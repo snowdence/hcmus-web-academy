@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const schema = mongoose.Schema;
+const Schema = mongoose.Schema;
 
 const UserSchema = new mongoose.Schema({
   username: {
@@ -31,6 +31,12 @@ const UserSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
+  list_courses: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Course",
+    },
+  ],
 });
 
 const User = mongoose.model("User", UserSchema);
