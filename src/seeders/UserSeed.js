@@ -24,7 +24,7 @@ const list_default = [
     avatar:
       "https://avatars0.githubusercontent.com/u/26925860?s=460&u=06af4e5d2369adbd8468ae843e5d6be3dfd9f70f&v=4",
     role: 0,
-    phone: faker.phone.phoneNumber("84(123) 456 789"),
+    phone: faker.phone.phoneNumber("84123 456 789"),
     verified: true,
   },
 
@@ -36,7 +36,7 @@ const list_default = [
     avatar:
       "https://scontent.fsgn4-1.fna.fbcdn.net/v/t1.0-9/107566490_753563212082043_7893256089881654921_o.jpg?_nc_cat=103&ccb=2&_nc_sid=a4a2d7&_nc_ohc=5ZSalFYTu90AX8OU_Q5&_nc_oc=AQnXayAAPuxCiRl6n4XSVTigR8AyZtHqd8e19JeNzRKOSpqk4xW0qCu2Ba0utv4Ag4E&_nc_ht=scontent.fsgn4-1.fna&oh=c4d4ad7a7365d110523ebcd0d9621e83&oe=5FF39A9D",
     role: 1,
-    phone: faker.phone.phoneNumber("84(123) 456 789 '"),
+    phone: faker.phone.phoneNumber("84(123) 456 789"),
     verified: true,
   },
 ];

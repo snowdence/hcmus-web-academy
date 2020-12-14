@@ -10,6 +10,7 @@ router
       userFullname: req.user.fullname,
       userPhone: req.user.phone,
       userEmail: req.user.email,
+      title: "Personal Information"
     });
   })
   .post(UserController.postUserProfile);

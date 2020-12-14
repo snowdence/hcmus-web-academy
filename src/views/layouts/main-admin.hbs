@@ -80,9 +80,19 @@ License: You must have a valid license purchased only from themeforest(the above
           <!--[html-partial:include:{"file":"partials/_subheader.html"}]/-->
           {{> subheader}}
           <!--[html-partial:include:{"file":"partials/_content.html"}]/-->
-          {{> admin/aside-admin}}
+          <div class="d-flex flex-column-fluid">
+            <!--begin::Container-->
+            <div class="container">
+                <!--begin::Profile Overview-->
+                <div class="d-flex flex-row">
+                  
+                    {{> admin/aside-admin}}
 
-          {{{body}}}
+                    {{{body}}}
+                </div>
+            </div>
+          </div>
+
         </div>
 
         <!--end::Content-->
