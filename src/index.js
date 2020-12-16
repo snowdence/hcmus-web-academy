@@ -44,7 +44,7 @@ passport.deserializeUser(async (username, done) => {
 //PassportJS end config
 
 // connect mongo
-mongoClient
+var db = mongoClient
   .connect(process.env.MONGODB_URI, {
     useNewUrlParser: true,
     useCreateIndex: true,
@@ -52,6 +52,7 @@ mongoClient
   })
   .then(() => console.log("[SUCCESS] Connected to mongoDB"))
   .catch(() => console.error("Error mongodb"));
+
 //router
 
 //passport

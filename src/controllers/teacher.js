@@ -1,34 +1,24 @@
 const UserModel = require("../models/User")
 const CourseModel = require("../models/Course")
 
-// const getIndex =  (req, res, next) => {
-
-//     UserModel.find({})
-//     .lean()
-//     .then((users) => {
-//         res.render("pages/teacher/index", {
-//             users : users,
-//             count : users.length
-//         });    
-
-//       console.log("Founded users: ", users);
-//     })
-//     .catch((err) => next(err));
-
-// };
 const viewCourse =  (req, res, next) => {
 
-    console.log(req.user)
     var curPage = req.query.page
     if(curPage == undefined) curPage = 1
-    CourseModel.find({"author_id": req.user._id})
-    .lean()
-    .then((courses) => {
- 
-        res.render("pages/teacher/course", {
-            courses : courses
-        });
-     // console.log("Founded course: ", courses);
+    CourseModel.count({})
+    .then((num) => {
+        CourseModel.find({"author_id": req.user._id}).limit(4).skip(4*(curPage-1))
+        .lean()
+        .then((courses) => {
+            var nPage = Math.floor(num / 6)
+            if(courses.length % 6) nPage++
+            var pages = Array.from({length: nPage}, (_, i) => i + 1)
+            res.render("pages/teacher/course", {
+                courses : courses,
+                curPage: curPage,
+                pages: pages
+            });
+        })
     })
     .catch((err) => next(err));
 

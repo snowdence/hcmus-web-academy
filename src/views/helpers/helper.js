@@ -169,10 +169,16 @@ var register = function (Handlebars) {
       else return false
     },
     isEqual: (a, b) =>{
-      console.log("helper: ",  a,  b)
       if(String(b) === String(a)) return true
-      
       else return false
+    },
+    Prev: (a)=>{
+      if (parseInt(a) == 1) return 1
+      return parseInt(a) - 1
+    },
+    Next: (a, courses)=>{
+      if (parseInt(a) == courses.length) return a
+      return parseInt(a) + 1
     },
   };
 
