@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const UserController = require("../controllers/user");
-
+//user/personal-info
 router
   .route("/personal-info")
   .get((req, res) => {

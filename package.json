@@ -39,14 +39,15 @@
     "passport-local": "^1.0.0"
   },
   "devDependencies": {
-    "gulp-nodemon": "^2.5.0",
-    "livereload": "^0.9.1",
-    "reload": "^3.1.1",
     "browser-sync": "^2.26.13",
     "connect-livereload": "^0.6.1",
     "gulp": "^4.0.2",
+    "gulp-nodemon": "^2.5.0",
+    "livereload": "^0.9.1",
     "morgan": "^1.10.0",
     "node-sass": "^5.0.0",
-    "nodemon": "^2.0.6"
+    "nodemon": "^2.0.6",
+    "reload": "^3.1.1",
+    "video.js": "^7.10.2"
   }
 }

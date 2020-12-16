@@ -97,7 +97,6 @@ const viewDirectory = path.join(publicDirectory, "views");
 // Config server use library middleware
 //app.use(morgan("combined"));
 app.use(express.static(publicDirectory));
-
 app.use(bodyParser.json());
 
 //Config hbs
@@ -128,8 +127,10 @@ app.set("view engine", "hbs");
 app.set("views", path.join(__dirname, "views"));
 
 const adminRoute = require("./routes/admin.route");
-app.use("/admin", adminRoute);
+const teacherRoute = require("./routes/teacher.route")
 
+app.use("/admin", adminRoute);
+app.use("/teacher", teacherRoute)
 app.use("/user", userRoute);
 app.use("/", webRoute);
 

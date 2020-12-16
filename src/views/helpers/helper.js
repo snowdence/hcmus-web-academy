@@ -164,6 +164,16 @@ var register = function (Handlebars) {
     bar: function () {
       return "BAR";
     },
+    isEndRow: (num, total) => {
+      if (num % 2 || num == total-1) return true
+      else return false
+    },
+    isEqual: (a, b) =>{
+      console.log("helper: ",  a,  b)
+      if(String(b) === String(a)) return true
+      
+      else return false
+    },
   };
 
   if (Handlebars && typeof Handlebars.registerHelper === "function") {
