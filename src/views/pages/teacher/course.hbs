@@ -21,8 +21,8 @@
                             <!--begin::Info-->
                             <div class="d-flex flex-column mr-auto">
                                 <!--begin: Title-->
-                                <a href="#" class="card-title text-hover-success font-weight-bolder font-size-h5 text-dark mb-1">{{this.name}}</a>
-                                <span class="text-muted font-weight-bold">Creates Limitless possibilities</span>
+                                <a href="/teacher/course/{{this.slug}}" class="card-title text-hover-success font-weight-bolder font-size-h5 text-dark mb-1">{{this.name}}</a>
+                                <span class="text-muted font-weight-bold">{{this.overview}}</span>
                                 <!--end::Title-->
                             </div>
                             <!--end::Info-->
@@ -102,7 +102,7 @@
                             <div class="mr-12 d-flex flex-column mb-7">
                                 <span class="font-weight-bolder mb-4">Học Phí</span>
                                 <span class="font-weight-bolder font-size-h5 pt-1">
-                                <span class="font-weight-bold text-dark-50">$</span>{{this.price}}</span>
+                                <span class="font-weight-bold text-dark-50"><s>$</span>{{this.price}}</span></s>
                             </div>
 
                             <!--end::Item-->
@@ -167,7 +167,7 @@
                                 <a href="#" class="font-weight-bolder text-success ml-2">648 Comments</a>
                             </div>
                         </div>
-                        <a href="http://localhost:3000" class ="mt-5 mt-sm-0 mr-auto mr-sm-0 ml-sm-auto">
+                        <a href="/teacher/course/{{this.slug}}" class ="mt-5 mt-sm-0 mr-auto mr-sm-0 ml-sm-auto">
                             <button type="button" class="btn btn-success btn-sm text-uppercase font-weight-bolder ">Xem chi tiết</button>
                         </a>
                     </div>

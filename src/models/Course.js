@@ -48,6 +48,16 @@ const CourseSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+  chapter:{
+    type: [Schema.Types.ObjectId],
+    ref: "Chapter"
+  },
+
+  slug: { 
+    type: String, 
+    slug: 'name', 
+    unique:true 
+  }
 });
 const Course = mongoose.model("Course", CourseSchema);
 module.exports = Course;

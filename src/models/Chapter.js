@@ -1,23 +1,21 @@
-const mongoose = require("moongoose");
+const mongoose = require("mongoose");
+const Lesson = require("./Lesson");
 const Schema = mongoose.Schema;
 const ChapterSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
   },
-  picture: {
-    type: String,
-  },
-  overview: {
-    type: String,
-  },
-  description: {
-    type: String,
-  },
-  course: {
-    type: Schema.Types.ObjectId,
-    ref: "Course",
-  },
+    lesson:[
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Lesson"
+    }
+  ],
+  // course: {
+  //   type: Schema.Types.ObjectId,
+  //   ref: "Course",
+  // },
 });
-const Chapter = mongoose.model("Chapter", ChapterSchema);
+const Chapter = mongoose.model("chapter", ChapterSchema);
 module.exports = Chapter;
