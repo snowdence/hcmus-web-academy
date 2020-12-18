@@ -107,9 +107,30 @@ const postUserChangePassword = (req, res, next) => {
   }
 };
 
+const getUserProfile = (req, res, next) => {
+  res.render("pages/user/personal-info", {
+    userAvatar: req.user.avatar,
+    userFullname: req.user.fullname,
+    userPhone: req.user.phone,
+    userEmail: req.user.email,
+    title: "Personal Information"
+  });
+}
+
+const getUserChangePassword = (req, res, next) => {
+  res.render("pages/user/change-password", {
+    userAvatar: req.user.avatar,
+    userFullname: req.user.fullname,
+    userPhone: req.user.phone,
+    userEmail: req.user.email,
+  });
+}
+
 module.exports = {
   getIndex: getIndex,
   newUser,
   postUserProfile,
   postUserChangePassword,
+  getUserProfile,
+  getUserChangePassword,
 };
