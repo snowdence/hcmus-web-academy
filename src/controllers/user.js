@@ -123,6 +123,7 @@ const getUserChangePassword = (req, res, next) => {
     userFullname: req.user.fullname,
     userPhone: req.user.phone,
     userEmail: req.user.email,
+    title: "Change Password",
   });
 }
 
