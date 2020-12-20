@@ -1,3 +1,4 @@
+<link rel="stylesheet" href="/css/home_img.css">
 <!--begin::Entry-->
 <div class="d-flex flex-column-fluid">
 
@@ -44,23 +45,54 @@
 
       </div>
       {{!-- end::search --}}
-      <div class="mt-10 mr-4 ml-4 pr-4 pl-4 card card-custom gutter-b card-stretch">
+      <div class="mt-15 mr-4 ml-4 pr-4 pl-4 card card-custom gutter-b card-stretch">
         <u>
-          <h2 class="mt-7 ml-2">Top 4 courses in the week</h2>
+          <h2 class="mt-7 ml-2">Top 5 courses in the week</h2>
         </u>
-        <div class="mt-7 d-flex flex-row">
+
+        <style>
+          .tooltip-detail{
+            text-align: left;
+          }
+        </style>
+        <div class="mt-7 d-flex flex-row ">
           {{#each top5Courses}}
-          <div class="d-flex flex-column">
-            <img class="mr-1 ml-1 pl-1 pr-1" src="{{this.thumbnail}}" alt="{{this.name}}" />
-            <div class="mr-1 ml-1 mt-5 mb-8 pl-1 pr-1">
-              <h6>{{this.name}}</h6>
+            <div class="d-flex flex-column" data-html="true" data-container="body" data-toggle="tooltip" data-placement="right" 
+            title="
+              <div class='tooltip-detail'>
+                Teacher: author<br>
+                Price: {{this.price}}<br>
+                Discount: {{this.price_discount}}<br> 
+                Category: <br>
+                Review: {{this.overview}}<br>
+                Number of reviews:
+              </div>
+            ">
+              <img class="mr-1 ml-1 pl-1 pr-1" src="{{this.thumbnail}}" alt="{{this.name}}" />
+              {{!-- <div class="box-content">
+                <div class="content">
+                  <div class="post mt-5">
+                    Teacher: <br>
+                    Price: {{this.price}}<br>
+                    Discount: {{this.price_discount}}<br>
+                    Category: <br>
+                    Review: <br>
+                    Number of reviews: 
+                  </div>
+                  
+                </div>
+              </div> --}}
+              <div class="mr-1 ml-1 mt-5 mb-8 pl-1 pr-1">
+                <a href=""><u><h6>{{this.name}}</h6></u></a>
+              </div>
             </div>
-          </div>
-          {{/each}}
+          
+            {{/each}}
+          
         </div>
       </div>
 
-      <div class="mt-10 mr-4 ml-4 pr-4 pl-4 card card-custom gutter-b card-stretch">
+      <div class="mt-8 mr-4 ml-4 pr-4 pl-4 card card-custom gutter-b card-stretch">
         <u>
           <h2 class="mt-7 ml-2">Top 10 popular online courses</h2>
         </u>
@@ -71,10 +103,20 @@
               <div class="d-flex flex-row">
                 {{#each top10Courses}}
                 {{#if (checkIndex @index)}}
-                <div class="d-flex flex-column">
+                <div class="d-flex flex-column" data-html="true" data-container="body" data-toggle="tooltip" data-placement="right" 
+            title="
+              <div class='tooltip-detail'>
+                Teacher: author<br>
+                Price: {{this.price}}<br>
+                Discount: {{this.price_discount}}<br> 
+                Category: <br>
+                Review: {{this.overview}}<br>
+                Number of reviews:
+              </div>
+            ">
                   <img class="mr-1 ml-1 pl-1 pr-1" src="{{this.thumbnail}}" alt="{{this.name}}" />
                   <div class="mr-1 ml-1 mt-5 mb-8 pl-1 pr-1">
-                    <h6>{{this.name}}</h6>
+                    <a href=""><u><h6>{{this.name}}</h6></u></a>
                   </div>
                 </div>
                 {{/if}}
@@ -86,10 +128,20 @@
                 {{#each top10Courses}}
                 {{#if (checkIndex @index)}}
                 {{else}}
-                <div class="d-flex flex-column">
+                <div class="d-flex flex-column" data-html="true" data-container="body" data-toggle="tooltip" data-placement="right" 
+            title="
+              <div class='tooltip-detail'>
+                Teacher: author<br>
+                Price: {{this.price}}<br>
+                Discount: {{this.price_discount}}<br> 
+                Category: <br>
+                Review: {{this.overview}}<br>
+                Number of reviews:
+              </div>
+            ">
                   <img class="mr-1 ml-1 pl-1 pr-1" src="{{this.thumbnail}}" alt="{{this.name}}" />
                   <div class="mr-1 ml-1 mt-5 mb-8 pl-1 pr-1">
-                    <h6>{{this.name}}</h6>
+                    <a href=""><u><h6>{{this.name}}</h6></u></a>
                   </div>
                 </div>
                 {{/if}}
@@ -105,6 +157,77 @@
           <span class="sr-only">Previous</span>
         </a>
         <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next"
+          style="width: 1.5%; filter: invert(1); height: 100%;">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="sr-only">Next</span>
+        </a>
+      </div>
+
+      <div class="mt-8 mr-4 ml-4 pr-4 pl-4 card card-custom gutter-b card-stretch">
+        <u>
+          <h2 class="mt-7 ml-2">Top 10 popular online courses</h2>
+        </u>
+        <div id="carouselExampleControls2" class="mt-7 carousel slide" data-ride="carousel">
+          <div class="carousel-inner">
+
+            <div class="carousel-item active">
+              <div class="d-flex flex-row">
+                {{#each top10NewCourses}}
+                {{#if (checkIndex @index)}}
+                <div class="d-flex flex-column" data-html="true" data-container="body" data-toggle="tooltip" data-placement="right" 
+            title="
+              <div class='tooltip-detail'>
+                Teacher: author<br>
+                Price: {{this.price}}<br>
+                Discount: {{this.price_discount}}<br> 
+                Category: <br>
+                Review: {{this.overview}}<br>
+                Number of reviews:
+              </div>
+            ">
+                  <img class="mr-1 ml-1 pl-1 pr-1" src="{{this.thumbnail}}" alt="{{this.name}}" />
+                  <div class="mr-1 ml-1 mt-5 mb-8 pl-1 pr-1">
+                    <a href=""><u><h6>{{this.name}}</h6></u></a>
+                  </div>
+                </div>
+                {{/if}}
+                {{/each}}
+              </div>
+            </div>
+            <div class="carousel-item">
+              <div class="d-flex flex-row">
+                {{#each top10NewCourses}}
+                {{#if (checkIndex @index)}}
+                {{else}}
+                <div class="d-flex flex-column" data-html="true" data-container="body" data-toggle="tooltip" data-placement="right" 
+            title="
+              <div class='tooltip-detail'>
+                Teacher: author<br>
+                Price: {{this.price}}<br>
+                Discount: {{this.price_discount}}<br> 
+                Category: <br>
+                Review: {{this.overview}}<br>
+                Number of reviews:
+              </div>
+            ">
+                  <img class="mr-1 ml-1 pl-1 pr-1" src="{{this.thumbnail}}" alt="{{this.name}}" />
+                  <div class="mr-1 ml-1 mt-5 mb-8 pl-1 pr-1">
+                    <a href=""><u><h6>{{this.name}}</h6></u></a>
+                  </div>
+                </div>
+                {{/if}}
+                {{/each}}
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <a class="carousel-control-prev " href="#carouselExampleControls2" role="button" data-slide="prev"
+          style="width: 1.5%; filter: invert(1); height: 100%;">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#carouselExampleControls2" role="button" data-slide="next"
           style="width: 1.5%; filter: invert(1); height: 100%;">
           <span class="carousel-control-next-icon" aria-hidden="true"></span>
           <span class="sr-only">Next</span>
