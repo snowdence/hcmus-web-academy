@@ -187,6 +187,9 @@ var register = function (Handlebars) {
         s = s.substr(1)
       }
       return s
+    },
+    subDescription: (s) =>{
+      return s.substr(0,500)
     }
   };
 

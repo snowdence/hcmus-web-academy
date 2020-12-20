@@ -48,7 +48,7 @@ const CourseSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
-  chapter:{
+  chapters:{
     type: [Schema.Types.ObjectId],
     ref: "Chapter"
   },

@@ -3,10 +3,21 @@ box-shadow: 0 0 25px 0 rgba(20, 27, 201, .05);
 cursor: pointer;
 background: linear-gradient(to right, #83a4d4, #b6fbff)
 }
-
-tr:nth-of-type(odd) {
-  background: linear-gradient(to right, #ffefba, #ffffff);
+.settings2:hover {
+  box-shadow: 0 0 25px 0 rgba(20, 27, 201, .05);
+  cursor: pointer;
+  background: linear-gradient(to right, rgba(187,250,229,1) 39%, rgba(255,255,255,1) 100%);
+  }
+.telegram{
+  background: linear-gradient(to left, #1c92d2, #f2fcfe);
 }
+.roseanna{
+  background: linear-gradient(to left, rgba(187,250,229,1) 39%, rgba(255,255,255,1) 100%);
+}
+tr:nth-of-type(odd) {
+  background: linear-gradient(to left, rgba(187,250,229,1) 39%, rgba(255,255,255,1) 100%);
+}
+
 #module #collapseExample.collapse:not(.show) {
   display: block;
   height: 3rem;
@@ -21,8 +32,8 @@ tr:nth-of-type(odd) {
   line-height: 1.5;
 }
 
-#summary p.collapse:not(.show) {
-    height: 42px !important;
+#summary .collapse:not(.show) {
+    height: 200px !important;
     overflow: hidden;
   
     display: -webkit-box;
@@ -30,16 +41,16 @@ tr:nth-of-type(odd) {
     -webkit-box-orient: vertical;  
 }
 
-#summary p.collapsing {
+#summary .collapsing {
     min-height: 42px !important;
 }
 
 #summary a.collapsed:after  {
-    content: '+ Read More';
+    content: '+ Xem thêm';
 }
 
 #summary a:not(.collapsed):after {
-    content: '- Read Less';
+    content: '- Ẩn bớt';
 }
 
 #fade {

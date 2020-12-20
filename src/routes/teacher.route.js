@@ -9,5 +9,8 @@ router.get('/course/', TeacherController.viewCourse)
 
 router.get('/course/:slug', TeacherController.courseDetail)
 
+router.get('/course/:slug/edit', TeacherController.courseEdit)
+
+router.post('/course/:slug/edit', TeacherController.editCourse)
 
 module.exports = router;
