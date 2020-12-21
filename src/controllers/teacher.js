@@ -97,38 +97,41 @@ const courseDetail = async(req, res, next) => {
     );
  }
  const editCourse = async(req, res, next) => {
-    //res.json(req.body)  
+    res.json(req.body)  
     CourseModel.findOne({_id: req.body.id})
         .lean()
         .then(async course =>{
-            let chaps_id = req.body.chapters.map(a => a.id);
-            let chaps_deleted = req.body.chapters.filter( function( el ) {
-                return chaps_id.indexOf( el ) < 0;
-              });
-              //......
-              //...... delete chapters in db
-              //....
-              
-            var newCourse = JSON.parse(JSON.stringify(req.body))
-            newCourse.chapters = chaps_id
-            console.log("test: ", newCourse)
-
-            CourseModel.updateOne({_id: req.body.id}, newCourse, {upsert: true})
-            .then(num => console.log(num))
-            for(chapter of req.body.chapters)
+            var newData = req.body
+            for(chapter of newData.chapters)
             {
+                for(lesson of chapter.lessons ){
+                    if (lesson.id == "new") 
+                    {
+                        lesson.id = new mongoose.Types.ObjectId()
+                    }
+                    await LessonModel.updateOne({_id: lesson.id}, lesson, {upsert: true})
+                    .then(num =>{
+                        console.log(num)
+                    })
 
-                var chap = await ChapterModel.findOne({_id: chapter.id}).lean()
-                let lessons_id = chapter.lessons.map(a => a.id);
-                let chaps_deleted = chap.lessons.filter( function( el ) {
-                return lessons_id.indexOf( el ) < 0;
-              });
+                }
+                var lessons_id = chapter.lessons.map(a => a.id), lessons_deleted
+                if(chapter.id == "new")
+                {
+                    chapter.id = new mongoose.Types.ObjectId()
+                } 
+                else
+                {
+                    var chap = await ChapterModel.findOne({_id: chapter.id}).lean()
+                    lessons_deleted = chap.lessons.filter( function( el ) {
+                        return lessons_id.indexOf( el ) < 0;
+                    })
+                }
                     //....
                     //...... delete lessons in db
                     //....
-                var newChapter = JSON.parse(JSON.stringify(chapter))
-     
-
+                var newChapter = JSON.parse(JSON.stringify(chapter))  
+                   
                 newChapter.lessons = lessons_id
 
                 await ChapterModel.updateOne({_id: chapter.id}, newChapter, {upsert: true})
@@ -136,17 +139,25 @@ const courseDetail = async(req, res, next) => {
                     console.log(num)
                 })
 
-                for(lesson of chapter.lessons ){
-                    await LessonModel.updateOne({_id: lesson.id}, lesson, {upsert: true})
-                    .then(num =>{
-                        console.log(num)
-                    })
-
-                }
-
             }
+            let chaps_id = newData.chapters.map(a => a.id);
+            let chaps_deleted = course.chapters.filter( function( el ) {
+                return chaps_id.indexOf( el ) < 0;
+              });
+              //......
+              //...... delete chapters in db
+              //....       
+
+            //console.log("lessons: ", lessons)
+
+            var newCourse = JSON.parse(JSON.stringify(newData))
+            newCourse.chapters = chaps_id
+            console.log("test: ", newCourse)
+
+            CourseModel.updateOne({_id: newData.id}, newCourse, {upsert: true})
+            .then(num => console.log(num))
         })
-    res.redirect('/teacher/course/Python')
+   // res.redirect('/teacher/course/Python')
 
  }
 

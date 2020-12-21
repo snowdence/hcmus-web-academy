@@ -1,3 +1,5 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
 <div class="container">
     <div class="row">
         <div class="col-lg-5">
@@ -97,137 +99,119 @@
                 <form action="" method="POST">
                     <input type="text" hidden name="id" value="{{course._id}}"> 
 
-                     <div class="card-body">
-                        <div class="accordion accordion-light accordion-light-borderless accordion-svg-toggle" id="">
+                    <div class="card-body">
+                        <div class="chap-container accordion accordion-light accordion-svg-toggle" id="">
     {{#each chapters}}
-    <input hidden type="text" name="chapters[{{@index}}][id]" value="{{_id}}"> 
 
     <!--begin::Card-->
-                        <div class="card">
-                            <div class="card-header settings telegram"  id="h{{startWCh _id}}">
-                                <div class="card-title text-dark collapsed ">
-                                    <span class="svg-icon svg-icon-primary"  data-toggle="collapse" data-target="#{{startWCh _id}}" aria-expanded="false" aria-controls="{{startWCh _id}}" role="button">
-                                        <!--begin::Svg Icon | path:assets/media/svg/icons/Navigation/Angle-double-right.svg-->
-                                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
-                                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                                <polygon points="0 0 24 0 24 24 0 24"></polygon>
-                                                <path d="M12.2928955,6.70710318 C11.9023712,6.31657888 11.9023712,5.68341391 12.2928955,5.29288961 C12.6834198,4.90236532 13.3165848,4.90236532 13.7071091,5.29288961 L19.7071091,11.2928896 C20.085688,11.6714686 20.0989336,12.281055 19.7371564,12.675721 L14.2371564,18.675721 C13.863964,19.08284 13.2313966,19.1103429 12.8242777,18.7371505 C12.4171587,18.3639581 12.3896557,17.7313908 12.7628481,17.3242718 L17.6158645,12.0300721 L12.2928955,6.70710318 Z" fill="#000000" fill-rule="nonzero"></path>
-                                                <path d="M3.70710678,15.7071068 C3.31658249,16.0976311 2.68341751,16.0976311 2.29289322,15.7071068 C1.90236893,15.3165825 1.90236893,14.6834175 2.29289322,14.2928932 L8.29289322,8.29289322 C8.67147216,7.91431428 9.28105859,7.90106866 9.67572463,8.26284586 L15.6757246,13.7628459 C16.0828436,14.1360383 16.1103465,14.7686056 15.7371541,15.1757246 C15.3639617,15.5828436 14.7313944,15.6103465 14.3242754,15.2371541 L9.03007575,10.3841378 L3.70710678,15.7071068 Z" fill="#000000" fill-rule="nonzero" opacity="0.3" transform="translate(9.000003, 11.999999) rotate(-270.000000) translate(-9.000003, -11.999999)"></path>
-                                            </g>
-                                        </svg>
-                                        <!--end::Svg Icon-->
-                                    </span> 
-                                    <div class="card-label text-dark" >
-                                        <label data-toggle="collapse" data-target="#{{startWCh _id}}" aria-expanded="false" aria-controls="{{startWCh _id}}" role="button" class="col-lg-3 col-form-label text-lg-right ">Tên chương:</label>
-                                        <div class="col-lg-7">
-                                            <input type="text" class="form-control" value="{{name}}" name="chapters[{{@index}}][name]" value="{{name}}">
-                                        </div>
-                                        <span class = "float-right mr-4 text-dark-50" >
-                                        {{lessons.length}} Bài học
-                                        </span>
-                                        <div class="col-lg-2 d-flex flex-row">
-                                            <button type="button"  class="btn btn-icon btn-outline-success h-50 w-50">
-                                                <i class="flaticon-plus"></i>
-                                            </button>
-                                            <button type="button" class="btn btn-icon btn-outline-danger h-50 w-50" onclick="alert('hello')">
-                                                <i class="flaticon2-line"></i>
-                                            </button>
-                                      
-
-
+                            <div class="card chapter{{@index}}">
+                                <input hidden type="text" name="chapters[{{@index}}][id]" value="{{_id}}"> 
+                                <div class="card-header settings telegram"  id="h{{startWCh _id}}">
+                                    <div class="card-title text-dark collapsed ">
+                                        <span class="svg-icon svg-icon-primary"  data-toggle="collapse" data-target="#{{startWCh _id}}" aria-expanded="false" aria-controls="{{startWCh _id}}" role="button">
+                                            <!--begin::Svg Icon | path:assets/media/svg/icons/Navigation/Angle-double-right.svg-->
+                                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                    <polygon points="0 0 24 0 24 24 0 24"></polygon>
+                                                    <path d="M12.2928955,6.70710318 C11.9023712,6.31657888 11.9023712,5.68341391 12.2928955,5.29288961 C12.6834198,4.90236532 13.3165848,4.90236532 13.7071091,5.29288961 L19.7071091,11.2928896 C20.085688,11.6714686 20.0989336,12.281055 19.7371564,12.675721 L14.2371564,18.675721 C13.863964,19.08284 13.2313966,19.1103429 12.8242777,18.7371505 C12.4171587,18.3639581 12.3896557,17.7313908 12.7628481,17.3242718 L17.6158645,12.0300721 L12.2928955,6.70710318 Z" fill="#000000" fill-rule="nonzero"></path>
+                                                    <path d="M3.70710678,15.7071068 C3.31658249,16.0976311 2.68341751,16.0976311 2.29289322,15.7071068 C1.90236893,15.3165825 1.90236893,14.6834175 2.29289322,14.2928932 L8.29289322,8.29289322 C8.67147216,7.91431428 9.28105859,7.90106866 9.67572463,8.26284586 L15.6757246,13.7628459 C16.0828436,14.1360383 16.1103465,14.7686056 15.7371541,15.1757246 C15.3639617,15.5828436 14.7313944,15.6103465 14.3242754,15.2371541 L9.03007575,10.3841378 L3.70710678,15.7071068 Z" fill="#000000" fill-rule="nonzero" opacity="0.3" transform="translate(9.000003, 11.999999) rotate(-270.000000) translate(-9.000003, -11.999999)"></path>
+                                                </g>
+                                            </svg>
+                                            <!--end::Svg Icon-->
+                                        </span> 
+                                        <div class="card-label text-dark" >
+                                            <label data-toggle="collapse" data-target="#{{startWCh _id}}" aria-expanded="false" aria-controls="{{startWCh _id}}" role="button" class="col-lg-3 col-form-label text-lg-right ">Tên chương:</label>
+                                            <div class="col-lg-7">
+                                                <input type="text" class="form-control col-lg-20" value="{{name}}" name="chapters[{{@index}}][name]" value="{{name}}">
+                                            </div>
+                                            <span class = "float-right mr-4 text-dark-50" >
+                                            {{lessons.length}} Bài học
+                                            </span>
+                                            <div class="col-lg-2 d-flex flex-row">
+                                                <button type="button"  class="btn btn-icon btn-outline-success h-50 w-50 btn-add-lesson" chap="{{@index}}">
+                                                    <i class="flaticon-plus"></i>
+                                                </button>
+                                                <button type="button" name="" class="btn btn-icon btn-outline-danger h-50 w-50 btn-dlt-course" chap="{{@index}}" >
+                                                    <i class="flaticon2-line"></i>
+                                                </button>
+                                
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div id="{{startWCh _id}}" class="collapse" aria-labelledby="h{{startWCh _id}}" data-parent="" style="">
-                        
-                                <div class="table-responsive">
-                                    <table class="table table-borderless table-vertical-center">
-                                        
-                                        <tbody>
-                                            {{#each lessons}}
-                                            <input hidden lessonIndex = "{{@index}}" type="text" name="chapters[{{@../index}}][lessons][{{@index}}][id]" value="{{_id}}">
-                                            <tr class="settings2">
-                                                <td class="pt-0 py-5 ">
-                                                    <div class="symbol symbol-45 symbol-light-success mr-2">
-                                                        <span class="symbol-label">
-                                                            <span class="svg-icon svg-icon-2x svg-icon-success">
-                                                                <!--begin::Svg Icon | path:assets/media/svg/icons/Media/Playlist1.svg-->
-                                                                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
-                                                                    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                                                        <rect x="0" y="0" width="24" height="24"></rect>
-                                                                        <path d="M8.97852058,18.8007059 C8.80029331,20.0396328 7.53473012,21 6,21 C4.34314575,21 3,19.8807119 3,18.5 C3,17.1192881 4.34314575,16 6,16 C6.35063542,16 6.68722107,16.0501285 7,16.1422548 L7,5.93171093 C7,5.41893942 7.31978104,4.96566617 7.78944063,4.81271925 L13.5394406,3.05418311 C14.2638626,2.81827161 15,3.38225531 15,4.1731748 C15,4.95474642 15,5.54092513 15,5.93171093 C15,6.51788965 14.4511634,6.89225606 14,7 C13.3508668,7.15502181 11.6842001,7.48835515 9,8 L9,18.5512168 C9,18.6409956 8.9927193,18.7241187 8.97852058,18.8007059 Z" fill="#000000" fill-rule="nonzero"></path>
-                                                                        <path d="M16,9 L20,9 C20.5522847,9 21,9.44771525 21,10 C21,10.5522847 20.5522847,11 20,11 L16,11 C15.4477153,11 15,10.5522847 15,10 C15,9.44771525 15.4477153,9 16,9 Z M14,13 L20,13 C20.5522847,13 21,13.4477153 21,14 C21,14.5522847 20.5522847,15 20,15 L14,15 C13.4477153,15 13,14.5522847 13,14 C13,13.4477153 13.4477153,13 14,13 Z M14,17 L20,17 C20.5522847,17 21,17.4477153 21,18 C21,18.5522847 20.5522847,19 20,19 L14,19 C13.4477153,19 13,18.5522847 13,18 C13,17.4477153 13.4477153,17 14,17 Z" fill="#000000" opacity="0.3"></path>
-                                                                    </g>
-                                                                </svg>
-                                                                <!--end::Svg Icon-->
-                                                            </span>
-                                                        </span>
-                                                    </div>
-                                                </td>
-                                                <td></td>
-                                                <td>
-                                                   <table>
-                                                        <div class="row">
-                                                            <div class="text-dark-75 font-weight-bolder mb-1 font-size-lg" >
-                                                                <label class="col-lg-4 col-form-label text-lg-left">Tên bài học:</label>
-                                                                
-                                                                <div class="col-lg-8">
-                                                                    <input lessonIndex = "{{@index}}" type="text" name="chapters[{{@../index}}][lessons][{{@index}}][name]" value="{{name}}">                                                        
-                                                                </div>
-
-                                                            </div>
-                                                        </div>
-                                                        <div class="row " >
-                                                            <div class="text-dark-75 font-weight-bolder mb-1 font-size-lg" >
-
-                                                            <label data-toggle="modal" data-target="#myModal" class="col-lg-4 col-form-label text-lg-left">URL Video:</label>
-                                                            
-                                                            <div class="col-lg-8">
-                                                                <input lessonIndex = "{{@index}}" type="text" name="chapters[{{@../index}}][lessons][{{@index}}][video]" value="{{video}}">                                                        </div>
-
-                                                            </div>
-                                                            </div>
-                                                        </div>
-                                                   </table>
-                                                </td>
-
-                                                <!--Video Modal -->
-                                                <div id="myModal" class="modal fade center" role="dialog" >
-                                                    <div class="modal-dialog">
-                                                    <!-- Modal content-->
-                                                    <div class="modal-content">
-                                                        <div class="modal-body">
-                                                        <video id="my-video" class="video-js" controls preload="video-js vjs-default-skin vjs-big-play-centered" width="640" height="264" poster="" data-setup='{}'>
-                                                            <source src="/video/{{video}}" type='video/mp4'>
-                                                            </video>
-                                                        </div>  
-                                                    </div>
-                                                    </div>
-                                                </div>
-                                                <!--Video Modal -->
-
-
-                                                <td></td>
-                                                <td class="text-left">
-                                                    <span class="text-dark-75 font-weight-bolder d-block font-size-lg">Time</span>
-                                                    <span class="text-muted font-weight-bold d-block font-size-sm">Time</span>
-                                                </td>
+                                <div id="{{startWCh _id}}" class="collapse" aria-labelledby="h{{startWCh _id}}" data-parent="" style="">
+                            
+                                    <div class="table-responsive">
+                                        <table class="table table-borderless table-vertical-center">
                                             
-                                            </tr>
-                                            {{/each}}
-                                        </tbody>
-                    <!--end::Tbody-->
-                                    </table>
+                                            <tbody class="chapterBody{{@index}}" numLesson="{{lessons.length}}">
+                                               
+                                                {{#each lessons}}
+                                                <tr class="settings2 chapter{{@../index}} lesson{{@index}}">
+                                                    <td class="pt-0 py-5 ">
+                                                        <div class="symbol symbol-45 symbol-light-success mr-2">
+                                                            <span class="symbol-label">
+                                                                <span class="svg-icon svg-icon-2x svg-icon-success">
+                                                                    <!--begin::Svg Icon | path:assets/media/svg/icons/Media/Playlist1.svg-->
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                                                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                                            <rect x="0" y="0" width="24" height="24"></rect>
+                                                                            <path d="M8.97852058,18.8007059 C8.80029331,20.0396328 7.53473012,21 6,21 C4.34314575,21 3,19.8807119 3,18.5 C3,17.1192881 4.34314575,16 6,16 C6.35063542,16 6.68722107,16.0501285 7,16.1422548 L7,5.93171093 C7,5.41893942 7.31978104,4.96566617 7.78944063,4.81271925 L13.5394406,3.05418311 C14.2638626,2.81827161 15,3.38225531 15,4.1731748 C15,4.95474642 15,5.54092513 15,5.93171093 C15,6.51788965 14.4511634,6.89225606 14,7 C13.3508668,7.15502181 11.6842001,7.48835515 9,8 L9,18.5512168 C9,18.6409956 8.9927193,18.7241187 8.97852058,18.8007059 Z" fill="#000000" fill-rule="nonzero"></path>
+                                                                            <path d="M16,9 L20,9 C20.5522847,9 21,9.44771525 21,10 C21,10.5522847 20.5522847,11 20,11 L16,11 C15.4477153,11 15,10.5522847 15,10 C15,9.44771525 15.4477153,9 16,9 Z M14,13 L20,13 C20.5522847,13 21,13.4477153 21,14 C21,14.5522847 20.5522847,15 20,15 L14,15 C13.4477153,15 13,14.5522847 13,14 C13,13.4477153 13.4477153,13 14,13 Z M14,17 L20,17 C20.5522847,17 21,17.4477153 21,18 C21,18.5522847 20.5522847,19 20,19 L14,19 C13.4477153,19 13,18.5522847 13,18 C13,17.4477153 13.4477153,17 14,17 Z" fill="#000000" opacity="0.3"></path>
+                                                                        </g>
+                                                                    </svg>
+                                                                    <!--end::Svg Icon-->
+                                                                </span>
+                                                            </span>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <table>
+                                                            <input hidden class="chapter{{@../index}} lesson{{@index}}" type="text" name="chapters[{{@../index}}][lessons][{{@index}}][id]" value="{{_id}}">
+                                                            
+                                                            <div class="row">
+                                                                <div class="text-dark-75 font-weight-bolder mb-1 font-size-lg" >
+                                                                    <label class="col-lg-4 col-form-label text-lg-left">Tên bài học:</label>
+                                                                    
+                                                                    <div class="col-lg-8">
+                                                                        <input class="chapter{{@../index}} lesson{{@index}} form-control col-lg-20" type="text" name="chapters[{{@../index}}][lessons][{{@index}}][name]" value="{{name}}">
+                                                                    </div>
+
+                                                                </div>
+                                                            </div>
+                                                            <div class="row " >
+                                                                <div class="text-dark-75 font-weight-bolder mb-1 font-size-lg" >
+
+                                                                <label data-toggle="modal" data-target="#myModal" class="col-lg-4 col-form-label text-lg-left">URL Video:</label>
+                                                                
+                                                                    <div class="col-lg-8">
+                                                                        <input class="chapter{{@../index}} lesson{{@index}} form-control col-lg-20"  type="text" name="chapters[{{@../index}}][lessons][{{@index}}][video]" value="{{video}}">                                                        
+                                                                    </div>
+
+                                                                </div>
+                                                            </div>
+                                                        </table>
+                                                    </td>
+                                                   
+                                                    <td class="text-left">
+                                                        <span class="text-dark-75 font-weight-bolder d-block font-size-lg">Time</span>
+                                                        <button type="button" name="" class="btn btn-icon btn-outline-danger h-50 w-50 btn-dlt-lesson" lesson="{{@index}}" chap="{{@../index}}" >
+                                                            <i class="flaticon2-line"></i>
+                                                        </button>
+                                                    </td>
+                                                
+                                                </tr>
+                                                {{/each}}
+                                            </tbody>
+                        <!--end::Tbody-->
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
     {{/each}}
     <!--end::Card-->
                         </div>
-                
                     </div>
-
                     <div class="card-body roseanna">
                         <h2>Mô tả khóa học</h2>
 
@@ -248,39 +232,103 @@
             <!--end::Card-->
         </div>
     </div>
-
 </div>
+ <table hidden >
+     <tbody>
+         <tr class="templateLesson">
+            <td class="pt-0 py-5 ">
+                {{!-- <div class="symbol symbol-45 symbol-light-success mr-2">
+                    <span class="symbol-label">
+                        <span class="svg-icon svg-icon-2x svg-icon-success">
+                            <!--begin::Svg Icon | path:assets/media/svg/icons/Media/Playlist1.svg-->
+                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                    <rect x="0" y="0" width="24" height="24"></rect>
+                                    <path d="M8.97852058,18.8007059 C8.80029331,20.0396328 7.53473012,21 6,21 C4.34314575,21 3,19.8807119 3,18.5 C3,17.1192881 4.34314575,16 6,16 C6.35063542,16 6.68722107,16.0501285 7,16.1422548 L7,5.93171093 C7,5.41893942 7.31978104,4.96566617 7.78944063,4.81271925 L13.5394406,3.05418311 C14.2638626,2.81827161 15,3.38225531 15,4.1731748 C15,4.95474642 15,5.54092513 15,5.93171093 C15,6.51788965 14.4511634,6.89225606 14,7 C13.3508668,7.15502181 11.6842001,7.48835515 9,8 L9,18.5512168 C9,18.6409956 8.9927193,18.7241187 8.97852058,18.8007059 Z" fill="#000000" fill-rule="nonzero"></path>
+                                    <path d="M16,9 L20,9 C20.5522847,9 21,9.44771525 21,10 C21,10.5522847 20.5522847,11 20,11 L16,11 C15.4477153,11 15,10.5522847 15,10 C15,9.44771525 15.4477153,9 16,9 Z M14,13 L20,13 C20.5522847,13 21,13.4477153 21,14 C21,14.5522847 20.5522847,15 20,15 L14,15 C13.4477153,15 13,14.5522847 13,14 C13,13.4477153 13.4477153,13 14,13 Z M14,17 L20,17 C20.5522847,17 21,17.4477153 21,18 C21,18.5522847 20.5522847,19 20,19 L14,19 C13.4477153,19 13,18.5522847 13,18 C13,17.4477153 13.4477153,17 14,17 Z" fill="#000000" opacity="0.3"></path>
+                                </g>
+                            </svg>
+                            <!--end::Svg Icon-->
+                        </span>
+                    </span>
+                </div> --}}
+            </td>
+            <td>    
+                <table>
+                    <input hidden name="" type="text" class="id" value="new">
+                    
+                    <div class="row">
+                        <div class="text-dark-75 font-weight-bolder mb-1 font-size-lg" >
+                            <label class="col-lg-4 col-form-label text-lg-left">Tên bài học:</label>
+                            
+                            <div class="col-lg-8">
+                                <input name="" class="name form-control col-lg-20" type="text"  placeholder="Nhập Tên bài học">
+                            </div>
 
-<script>
-    var avatar4 = new KTImageInput('kt_image_4');
+                        </div>
+                    </div>
+                    <div class="row " >
+                        <div class="text-dark-75 font-weight-bolder mb-1 font-size-lg" >
 
-avatar4.on('cancel', function(imageInput) {
- swal.fire({
-  title: 'Image successfully canceled !',
-  type: 'success',
-  buttonsStyling: false,
-  confirmButtonText: 'Awesome!',
-  confirmButtonClass: 'btn btn-primary font-weight-bold'
- });
-});
+                        <label data-toggle="modal" data-target="#myModal" class="col-lg-4 col-form-label text-lg-left">URL Video:</label>
+                        
+                            <div class="col-lg-8">
+                                <input name="" class="video form-control col-lg-20"  type="text" placeholder="Nhập URL Video">                                                        
+                            </div>
 
-avatar4.on('change', function(imageInput) {
- swal.fire({
-  title: 'Image successfully changed !',
-  type: 'success',
-  buttonsStyling: false,
-  confirmButtonText: 'Awesome!',
-  confirmButtonClass: 'btn btn-primary font-weight-bold'
- });
-});
+                        </div>
+                    </div>
+                </table>
+            </td>
+        
+            <td class="text-left">
+                <span class="text-dark-75 font-weight-bolder d-block font-size-lg">Time</span>
+                <button type="button" name="" class="btn btn-icon btn-outline-danger h-50 w-50 btn-dlt-lesson" lesson="{{@index}}" chap="{{@../index}}" >
+                    <i class="flaticon2-line"></i>
+                </button>
+            </td>
+        </tr>
+     </tbody>
+        
+ </table>
+<script>   
 
-avatar4.on('remove', function(imageInput) {
- swal.fire({
-  title: 'Image successfully removed !',
-  type: 'error',
-  buttonsStyling: false,
-  confirmButtonText: 'Got it!',
-  confirmButtonClass: 'btn btn-primary font-weight-bold'
- });
-});
-</script>
+$(document).ready(function ()  
+{                
+    $('.btn-dlt-course').click(function(){
+        var chap = $(this).attr('chap')
+        alert(chap);
+        $('.chapter'+chap).remove()
+
+    })
+    $('.btn-dlt-lesson').click(function(){
+        var chap = $(this).attr('chap')
+        var lesson = $(this).attr('lesson')
+
+        alert(lesson);
+        $('.chapter'+chap +' .lesson'+lesson).remove()
+
+    })
+    $('.btn-add-lesson').click(function(){
+        var chap = $(this).attr('chap')
+        //var lesson =  $(this).attr('lesson')
+        var chapParent = $('.chapterBody'+chap)
+        var num = parseInt(chapParent.attr("numLesson") )
+
+        var newLesson = $('.templateLesson').clone(true)
+
+        newLesson.attr('hidden', false)
+        newLesson.attr('class', 'settings2 chapter'+chap +' lesson'+String(num))
+        newLesson.find('input').addClass('chapter'+chap +' lesson'+String(num))
+        newLesson.find('button').attr('chap', chap)
+        newLesson.find('button').attr('lesson', String(num))
+        newLesson.find('input.id').attr('name','chapters['+chap+'][lessons]['+String(num)+'][id]')
+        newLesson.find('input.name').attr('name','chapters['+chap+'][lessons]['+String(num)+'][name]')
+        newLesson.find('input.video').attr('name','chapters['+chap+'][lessons]['+String(num)+'][video]')
+
+        alert(newLesson.html())
+        chapParent.attr('numLesson', String(num+1)) 
+        chapParent.append(newLesson)
+    })                  
+});                 
+</script>  
