@@ -1,295 +1,301 @@
+
+<script src="https://cdn.ckeditor.com/ckeditor5/24.0.0/classic/ckeditor.js"></script>
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
+</script>
 <div class="container">
-    <div class="row">
-        <div class="col-lg-5">
-            <!--begin::Card-->
-            <div class="card card-custom">
-                <div class="card-header roseanna">
-                    <div class="card-title">
-                        <h3 class="card-label font-weight-bolder">Chỉnh sửa thông tin khóa học</h3>
+    <form method="POST" action="" enctype="multipart/form-data" >
+        <div class="row">
+            <div class="col-lg-5">
+                <!--begin::Card-->
+                <div class="card card-custom">
+                    <div class="card-header roseanna">
+                        <div class="card-title">
+                            <h3 class="card-label font-weight-bolder">Chỉnh sửa thông tin khóa học</h3>
+                        </div>
                     </div>
-                </div>
-                <!--begin::Form-->
-                <form method="POST" action="">
-                    <div class="card-body">
-                        <div class="form-group row">
-                            <label class="col-lg-3 col-form-label text-lg-right">Tên khóa học:</label>
-                            <div class="col-lg-7">
-                                <input type="text" class="form-control" value ="{{course.name}}" name="name">
-                                <span class="form-text text-muted">Please enter your full name</span>
+                    <!--begin::Form-->
+                        <input type="text" hidden name="id" value="{{course._id}}"> 
+
+                        <div class="card-body">
+                            <div class="form-group row">
+                                <label class="col-lg-3 col-form-label text-lg-right">Tên khóa học:</label>
+                                <div class="col-lg-7">
+                                    <input type="text" class="form-control" value ="{{course.name}}" name="name">
+                                    <span class="form-text text-muted">Vui lòng nhập tên khóa học</span>
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-lg-3 col-form-label text-lg-right">Chủ đề:</label>
-                            <div class="col-lg-7">
-                                <input type="email" class="form-control" placeholder="Chủ đề"  name="category">
-                                <span class="form-text text-muted">Please enter your email</span>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-lg-3 col-form-label text-lg-right">Giới thiệu:</label>
-                            <div class="col-lg-7">
-                                <textarea name="overview" class="form-control" rows="5" >{{course.overview}}</textarea>
-                                <span class="form-text text-muted">We'll never share your message with anyone else.</span>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-lg-3 col-form-label text-lg-right">Ảnh đại diện khóa học:</label>
-                            <div class="col-lg-7 col-xl-6">
-                                <div class="image-input image-input-outline image-input-changed" id="kt_image_4" style="background-image: url(assets/media/users/blank.png)">
-                                    <div class="image-input-wrapper" style="background-image:">
-                                    <label class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="change" data-toggle="tooltip" title="" data-original-title="Change avatar">
-                                        <i class="fa fa-pen icon-sm text-muted"></i>
-                                        <input type="file" name="profile_avatar" accept=".png, .jpg, .jpeg">
-                                        <input type="hidden" name="profile_avatar_remove">
-                                    </label>
-                                    <span class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="cancel" data-toggle="tooltip" title="" data-original-title="Cancel avatar">
-                                        <i class="ki ki-bold-close icon-xs text-muted"></i>
-                                    </span>
-                                    <span class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="remove" data-toggle="tooltip" title="" data-original-title="Remove avatar">
-                                        <i class="ki ki-bold-close icon-xs text-muted"></i>
-                                    </span>
+                            <div class="form-group row">
+                                    <label class="col-xl-3 col-lg-3 col-form-label text-right">Ảnh đại diện</label>
+                                    <div class="col-lg-9 col-xl-6">
+                                        <div class="image-input image-input-outline" id="kt_image_4" style="background-image: url(/img/{{course.thumbnail}})">
+                                            <div class="image-input-wrapper" style="background-image: url(/img/{{course.thumbnail}})"></div>
+                                            <label class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="change" data-toggle="tooltip" title="" data-original-title="Change avatar">
+                                                <i class="fa fa-pen icon-sm text-muted"></i>
+                                                <input id="thumbnail" value ="{{course.thumbnail}}" name="thumbnail" type="file" class="file" data-browse-on-zone-click="true" accept="image/*" >
+                                            </label>
+                                            <span class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="cancel" data-toggle="tooltip" title="Cancel avatar">
+                                                <i class="ki ki-bold-close icon-xs text-muted"></i>
+                                            </span>
+                                            <span class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="remove" data-toggle="tooltip" title="Remove avatar">
+                                                <i class="ki ki-bold-close icon-xs text-muted"></i>
+                                            </span>
+                                        </div>
                                     </div>
-                                    <span class="form-text text-muted">After image removal hidden input's value is set to "1"</span>
+                            </div>
+                            <div class="form-group row">
+                                    <label class="col-lg-3 col-form-label text-lg-right">Chủ đề:</label>
+                                    <div class="col-lg-7">
+                                        <div class="dropdown bootstrap-select form-control">
+                                            <select class="form-control selectpicker" id="{{sub._id}}" name ="sub_category" title="{{sub.name}}">
+                                                {{!-- <option class="bs-title-option" ></option> --}}
+                                                {{#each SubCategorys}}   
+                                                    <option value="{{_id}}"  >{{name}}</option>
+                                                {{/each}}		
+                                            </select>
+                                        </div>                                    
+                                        <span class="form-text text-muted">Chọn tên chủ đề </span>
+                                    </div>
+                                </div>
+                            <div class="form-group row">
+                                <label class="col-lg-3 col-form-label text-lg-right">Giới thiệu:</label>
+                                <div class="col-lg-7">
+                                    <textarea name="overview" class="form-control" rows="5" >{{course.overview}}</textarea>
+                                    <span class="form-text text-muted">Giới thiệu tổng quan về khóa học</span>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                    <label class="col-lg-3 col-form-label text-lg-right">Giá gốc:</label>                                
+                                    <div class="col-lg-5">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">
+                                                    <i class="fas fa-dollar-sign"></i>
+                                                </span>
+                                            </div>
+                                            <input type="text" name="price" class="form-control" value="{{course.price}}" placeholder="Giá tiền">
+                                        </div>
+                                    </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-lg-3 col-form-label text-lg-right">Giá khuyến mãi:</label>                                
+                                <div class="col-lg-5">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">
+                                                <i class="fas fa-dollar-sign"></i>
+                                            </span>
+                                        </div>
+                                        <input type="text" name="price_discount" class="form-control" value="{{course.price_discount}}" placeholder="Giá khuyến mãi">
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group row">
-                            <label class="col-lg-3 col-form-label text-lg-right">Upload Files:</label>
-                            <div class="col-lg-9">
-                                <div class="dropzone dropzone-multi" id="kt_dropzone_4">
-                                    <div class="dropzone-panel mb-lg-0 mb-2">
-                                        <a class="dropzone-select btn btn-light-primary font-weight-bold btn-sm dz-clickable">Attach files</a>
-                                        <a class="dropzone-upload btn btn-light-primary font-weight-bold btn-sm">Upload All</a>
-                                        <a class="dropzone-remove-all btn btn-light-primary font-weight-bold btn-sm">Remove All</a>
-                                    </div>
-                                    <div class="dropzone-items">
-                                        
-                                    </div>
-                                <div class="dz-default dz-message"><button class="dz-button" type="button">Drop files here to upload</button></div></div>
-                                <span class="form-text text-muted">Max file size is 1MB and max number of files is 5.</span>
+                        <div class="card-footer">
+                            <div class="row">
+                                <div class="col-lg-3"></div>
+                                <div class="col-lg-9">
+                                    <button type="submit" class="btn btn-light-primary mr-2">Lưu thay đổi</button>
+                                    <a href="/teacher/course/{{course.slug}}"  class="btn btn-primary">Hủy</a>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="card-footer">
-                        <div class="row">
-                            <div class="col-lg-3"></div>
-                            <div class="col-lg-9">
-                                <button type="submit" class="btn btn-light-primary mr-2">Lưu thay đổi</button>
-                                <a href="/teacher/course/{{course.slug}}"  class="btn btn-primary">Hủy</a>
-                            </div>
-                        </div>
-                    </div>
-                </form>
-                <!--end::Form-->
-            </div>
-            <!--end::Card-->
-        </div>
-        <div class="col-lg-7">
-            <!--begin::Card-->
-            <div class="card card-custom">
-                <div class="card-header roseanna">
-                    <div class="card-title">
-                        <h3 class="card-label font-weight-bolder">Chỉnh sửa nội dung khóa học</h3>
-                        <button type="button" class="btn btn-light-primary font-weight-bold mr-2 btn-add-course">Thêm chương mới</button>
-                    </div>
+                    <!--end::Form-->
                 </div>
-                <!--begin::Form-->
-               
-                <form action="" method="POST">
-                    <input type="text" hidden name="id" value="{{course._id}}"> 
+                <!--end::Card-->
+            </div>
+            <div class="col-lg-7">
+                <!--begin::Card-->
+                <div class="card card-custom">
+                    <div class="card-header roseanna">
+                        <div class="card-title">
+                            <h3 class="card-label font-weight-bolder">Chỉnh sửa nội dung khóa học</h3>
+                            <button type="button" class="btn btn-light-primary font-weight-bold mr-2 btn-add-chap">Thêm chương mới</button>
+                        </div>
+                    </div>
+                    <!--begin::Form-->
+                
 
-                    <div class="card-body">
-                        <div class="chap-container accordion accordion-light accordion-svg-toggle" numChapter="{{chapters.length}}">
-    {{#each chapters}}
+                        <div class="card-body">
+                            <div class="chap-container accordion accordion-light accordion-svg-toggle" numChapter="{{chapters.length}}">
+        {{#each chapters}}
 
-    <!--begin::Card-->
-                            <div class="card chapter{{@index}}">
-                                <input hidden type="text" name="chapters[{{@index}}][id]" value="{{_id}}"> 
-                                <div class="card-header settings telegram"  id="h{{startWCh _id}}">
-                                    <div class="card-title text-dark collapsed ">
-                                        <span class="svg-icon svg-icon-primary"  data-toggle="collapse" data-target="#{{startWCh _id}}" aria-expanded="false" aria-controls="{{startWCh _id}}" role="button">
-                                            <!--begin::Svg Icon | path:assets/media/svg/icons/Navigation/Angle-double-right.svg-->
-                                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
-                                                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                                    <polygon points="0 0 24 0 24 24 0 24"></polygon>
-                                                    <path d="M12.2928955,6.70710318 C11.9023712,6.31657888 11.9023712,5.68341391 12.2928955,5.29288961 C12.6834198,4.90236532 13.3165848,4.90236532 13.7071091,5.29288961 L19.7071091,11.2928896 C20.085688,11.6714686 20.0989336,12.281055 19.7371564,12.675721 L14.2371564,18.675721 C13.863964,19.08284 13.2313966,19.1103429 12.8242777,18.7371505 C12.4171587,18.3639581 12.3896557,17.7313908 12.7628481,17.3242718 L17.6158645,12.0300721 L12.2928955,6.70710318 Z" fill="#000000" fill-rule="nonzero"></path>
-                                                    <path d="M3.70710678,15.7071068 C3.31658249,16.0976311 2.68341751,16.0976311 2.29289322,15.7071068 C1.90236893,15.3165825 1.90236893,14.6834175 2.29289322,14.2928932 L8.29289322,8.29289322 C8.67147216,7.91431428 9.28105859,7.90106866 9.67572463,8.26284586 L15.6757246,13.7628459 C16.0828436,14.1360383 16.1103465,14.7686056 15.7371541,15.1757246 C15.3639617,15.5828436 14.7313944,15.6103465 14.3242754,15.2371541 L9.03007575,10.3841378 L3.70710678,15.7071068 Z" fill="#000000" fill-rule="nonzero" opacity="0.3" transform="translate(9.000003, 11.999999) rotate(-270.000000) translate(-9.000003, -11.999999)"></path>
-                                                </g>
-                                            </svg>
-                                            <!--end::Svg Icon-->
-                                        </span> 
-                                        <div class="card-label text-dark" >
-                                            <label data-toggle="collapse" data-target="#{{startWCh _id}}" aria-expanded="false" aria-controls="{{startWCh _id}}" role="button" class="col-lg-3 col-form-label text-lg-right ">Tên chương:</label>
-                                            <div class="col-lg-7">
-                                                <input type="text" class="form-control col-lg-20" value="{{name}}" name="chapters[{{@index}}][name]" value="{{name}}">
+        <!--begin::Card-->
+                                <div class="card chapter{{@index}}">
+                                    <input hidden type="text" name="chapters[{{@index}}][id]" value="{{_id}}"> 
+                                    <div class="card-header settings telegram"  id="h{{startWCh _id}}">
+                                        <div class="card-title text-dark collapsed ">
+                                            <span class="svg-icon svg-icon-primary"  data-toggle="collapse" data-target="#{{startWCh _id}}" aria-expanded="false" aria-controls="{{startWCh _id}}" role="button">
+                                                <!--begin::Svg Icon | path:assets/media/svg/icons/Navigation/Angle-double-right.svg-->
+                                                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                                    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                        <polygon points="0 0 24 0 24 24 0 24"></polygon>
+                                                        <path d="M12.2928955,6.70710318 C11.9023712,6.31657888 11.9023712,5.68341391 12.2928955,5.29288961 C12.6834198,4.90236532 13.3165848,4.90236532 13.7071091,5.29288961 L19.7071091,11.2928896 C20.085688,11.6714686 20.0989336,12.281055 19.7371564,12.675721 L14.2371564,18.675721 C13.863964,19.08284 13.2313966,19.1103429 12.8242777,18.7371505 C12.4171587,18.3639581 12.3896557,17.7313908 12.7628481,17.3242718 L17.6158645,12.0300721 L12.2928955,6.70710318 Z" fill="#000000" fill-rule="nonzero"></path>
+                                                        <path d="M3.70710678,15.7071068 C3.31658249,16.0976311 2.68341751,16.0976311 2.29289322,15.7071068 C1.90236893,15.3165825 1.90236893,14.6834175 2.29289322,14.2928932 L8.29289322,8.29289322 C8.67147216,7.91431428 9.28105859,7.90106866 9.67572463,8.26284586 L15.6757246,13.7628459 C16.0828436,14.1360383 16.1103465,14.7686056 15.7371541,15.1757246 C15.3639617,15.5828436 14.7313944,15.6103465 14.3242754,15.2371541 L9.03007575,10.3841378 L3.70710678,15.7071068 Z" fill="#000000" fill-rule="nonzero" opacity="0.3" transform="translate(9.000003, 11.999999) rotate(-270.000000) translate(-9.000003, -11.999999)"></path>
+                                                    </g>
+                                                </svg>
+                                                <!--end::Svg Icon-->
+                                            </span> 
+                                            <div class="card-label text-dark row" >
+                                                <label data-toggle="collapse" data-target="#{{startWCh _id}}" aria-expanded="false" aria-controls="{{startWCh _id}}" role="button" class="col-lg-3 col-form-label text-lg-right ">Tên chương:</label>
+                                                <input type="text" class="form-control col-lg-7" value="{{name}}" name="chapters[{{@index}}][name]" value="{{name}}">
+                                                <span class = " text-dark-50 col-lg-2" >
+
+                                                    <div class="d-flex flex-row justify-content-around">
+                                                        {{lessons.length}} Bài học
+                                                    </div>
+                            
+                                                    <div class="d-flex flex-row justify-content-around">
+                                                        <div class="dropdown dropdown-inline show" data-toggle="tooltip" data-placement="left" data-original-title="Thêm bài học">
+                                                            <i class="flaticon-add btn-add-lesson" chap="{{@index}}"></i>				
+                                                        </div>
+                                                        <div class="dropdown dropdown-inline show" data-toggle="tooltip" data-placement="left" data-original-title="Xóa chương">
+                                                            <i class="flaticon-delete btn-dlt-chap " chap="{{@index}}" ></i>
+                                                        </div>
+                                        
+                                                    </div>
+                                                </span>
                                             </div>
-                                            <span class = "float-right mr-4 text-dark-50" >
-                                            {{lessons.length}} Bài học
-                                            </span>
-                                            
-                                                <div class="col-lg-2 d-flex flex-row justify-content-around">
-                                                    <div class="dropdown dropdown-inline show" data-toggle="tooltip" data-placement="left" data-original-title="Thêm bài học">
-                                                        <i class="flaticon-add btn-add-lesson" chap="{{@index}}"></i>				
-                                                    </div>
-                                                    <div class="dropdown dropdown-inline show" data-toggle="tooltip" data-placement="left" data-original-title="Xóa chương">
-                                                        <i class="flaticon-delete btn-dlt-course " chap="{{@index}}" ></i>
-                                                    </div>
-                                    
-                                                </div>
+                                        </div>
+                                    </div>
+                                    <div id="{{startWCh _id}}" class="collapse" aria-labelledby="h{{startWCh _id}}" data-parent="" style="">
+                                
+                                        <div class="table-responsive">
+                                            <table class="table table-borderless table-vertical-center">
+                                                
+                                                <tbody class="chapterBody{{@index}}" numLesson="{{lessons.length}}">
+                                                    
+                                                    {{#each lessons}}
+                                                    <tr class="settings2 chapter{{@../index}} lesson{{@index}}">
+                                                        <td class="pt-0 py-5 ">
+                                                            <i class="fa fas fa-photo-video text-warning icon-xl"></i>
+                                                        </td>
+                                                        <td>
+                                                            <table >
+                                                                <input hidden class="chapter{{@../index}} lesson{{@index}}" type="text" name="chapters[{{@../index}}][lessons][{{@index}}][id]" value="{{_id}}">
+                                                                
+                                                                <div class="row text-dark-75 font-weight-bolder mb-1 font-size-lg">
+                                                                        <label class="col-lg-4 text-lg-left">Tên bài học:</label>
+                                                                        
+                                                                        <div class="col-lg-8">
+                                                                            <input class="chapter{{@../index}} lesson{{@index}} form-control col-lg-20" type="text" name="chapters[{{@../index}}][lessons][{{@index}}][name]" value="{{name}}">
+                                                                        </div>
+
+                                                                </div>
+                                                                <div class="row text-dark-75 font-weight-bolder mb-1 font-size-lg" >
+                                                                    <label data-toggle="modal" data-target="#myModal" class="col-lg-4 col-form-label text-lg-left">URL Video:</label>
+                                                                    
+                                                                        <div class="col-lg-8">
+                                                                            <input class="chapter{{@../index}} lesson{{@index}} form-control col-lg-20"  type="text" name="chapters[{{@../index}}][lessons][{{@index}}][video]" value="{{video}}">                                                        
+                                                                        
+                                                                        </div>
+                                                                </div>
+                                                            </table>
+                                                        </td>
+                                                    
+                                                        <td class="text-center">
+                                                            <span class="text-dark-75 font-weight-bolder d-block font-size-lg">Time</span>
+                                                            <div class="dropdown dropdown-inline show" data-toggle="tooltip" data-placement="left" data-original-title="Xóa bài học">
+                                                                <i class="flaticon-delete btn-dlt-lesson " lesson="{{@index}}" chap="{{@../index}}" ></i>
+                                                            </div>
+                                                            <span class="text-dark-50 d-block font-size-lg"> Xem trước 
+                                                            </span>
+                                                            {{#if preview}}
+
+                                                            <input class="form-check-input preview" type="checkbox" checked value="true"  name="chapters[{{@../index}}][lessons][{{@index}}][preview]">
+                                                            <input disabled hidden type="text" name="chapters[{{@../index}}][lessons][{{@index}}][preview]" value = "true" >
+
+                                                            {{else}}
+                                                            <input class="form-check-input preview" type="checkbox" value= "false" name="chapters[{{@../index}}][lessons][{{@index}}][preview]">
+                                                            <input hidden type="text" name="chapters[{{@../index}}][lessons][{{@index}}][preview]" value = "false" >
+
+                                                            {{/if}}
+
+                                                        </td>                         
+                                                    </tr>
+                                                    {{/each}}
+                                                </tbody>
+                            <!--end::Tbody-->
+                                            </table>
                                         </div>
                                     </div>
                                 </div>
-                                <div id="{{startWCh _id}}" class="collapse" aria-labelledby="h{{startWCh _id}}" data-parent="" style="">
-                            
-                                    <div class="table-responsive">
-                                        <table class="table table-borderless table-vertical-center">
-                                            
-                                            <tbody class="chapterBody{{@index}}" numLesson="{{lessons.length}}">
-                                               
-                                                {{#each lessons}}
-                                                <tr class="settings2 chapter{{@../index}} lesson{{@index}}">
-                                                    <td class="pt-0 py-5 ">
-                                                        <div class="symbol symbol-45 symbol-light-success mr-2">
-                                                            <span class="symbol-label">
-                                                                <span class="svg-icon svg-icon-2x svg-icon-success">
-                                                                    <!--begin::Svg Icon | path:assets/media/svg/icons/Media/Playlist1.svg-->
-                                                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
-                                                                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                                                            <rect x="0" y="0" width="24" height="24"></rect>
-                                                                            <path d="M8.97852058,18.8007059 C8.80029331,20.0396328 7.53473012,21 6,21 C4.34314575,21 3,19.8807119 3,18.5 C3,17.1192881 4.34314575,16 6,16 C6.35063542,16 6.68722107,16.0501285 7,16.1422548 L7,5.93171093 C7,5.41893942 7.31978104,4.96566617 7.78944063,4.81271925 L13.5394406,3.05418311 C14.2638626,2.81827161 15,3.38225531 15,4.1731748 C15,4.95474642 15,5.54092513 15,5.93171093 C15,6.51788965 14.4511634,6.89225606 14,7 C13.3508668,7.15502181 11.6842001,7.48835515 9,8 L9,18.5512168 C9,18.6409956 8.9927193,18.7241187 8.97852058,18.8007059 Z" fill="#000000" fill-rule="nonzero"></path>
-                                                                            <path d="M16,9 L20,9 C20.5522847,9 21,9.44771525 21,10 C21,10.5522847 20.5522847,11 20,11 L16,11 C15.4477153,11 15,10.5522847 15,10 C15,9.44771525 15.4477153,9 16,9 Z M14,13 L20,13 C20.5522847,13 21,13.4477153 21,14 C21,14.5522847 20.5522847,15 20,15 L14,15 C13.4477153,15 13,14.5522847 13,14 C13,13.4477153 13.4477153,13 14,13 Z M14,17 L20,17 C20.5522847,17 21,17.4477153 21,18 C21,18.5522847 20.5522847,19 20,19 L14,19 C13.4477153,19 13,18.5522847 13,18 C13,17.4477153 13.4477153,17 14,17 Z" fill="#000000" opacity="0.3"></path>
-                                                                        </g>
-                                                                    </svg>
-                                                                    <!--end::Svg Icon-->
-                                                                </span>
-                                                            </span>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <table>
-                                                            <input hidden class="chapter{{@../index}} lesson{{@index}}" type="text" name="chapters[{{@../index}}][lessons][{{@index}}][id]" value="{{_id}}">
-                                                            
-                                                            <div class="row">
-                                                                <div class="text-dark-75 font-weight-bolder mb-1 font-size-lg" >
-                                                                    <label class="col-lg-4 col-form-label text-lg-left">Tên bài học:</label>
-                                                                    
-                                                                    <div class="col-lg-8">
-                                                                        <input class="chapter{{@../index}} lesson{{@index}} form-control col-lg-20" type="text" name="chapters[{{@../index}}][lessons][{{@index}}][name]" value="{{name}}">
-                                                                    </div>
+        {{/each}}
+        <!--end::Card-->
+                            </div>
+                        </div>
+                        <div class="card card-custom roseanna px-7">
+                                <div class="card-header roseanna">
+                                    <h3 class="card-title">
+                                        Mô tả khóa học        
+                                    </h3>
+                                </div>
+                                <div id="toolbar-container"></div>
 
-                                                                </div>
-                                                            </div>
-                                                            <div class="row " >
-                                                                <div class="text-dark-75 font-weight-bolder mb-1 font-size-lg" >
-
-                                                                <label data-toggle="modal" data-target="#myModal" class="col-lg-4 col-form-label text-lg-left">URL Video:</label>
-                                                                
-                                                                    <div class="col-lg-8">
-                                                                        <input class="chapter{{@../index}} lesson{{@index}} form-control col-lg-20"  type="text" name="chapters[{{@../index}}][lessons][{{@index}}][video]" value="{{video}}">                                                        
-                                                                    </div>
-
-                                                                </div>
-                                                            </div>
-                                                        </table>
-                                                    </td>
-                                                   
-                                                    <td class="text-left">
-                                                        <span class="text-dark-75 font-weight-bolder d-block font-size-lg">Time</span>
-                                                        <div class="dropdown dropdown-inline show" data-toggle="tooltip" data-placement="left" data-original-title="Xóa bài học">
-                                                            <i class="flaticon-delete btn-dlt-lesson " lesson="{{@index}}" chap="{{@../index}}" ></i>
-                                                        </div>
-                                                    </td>
-                                                
-                                                </tr>
-                                                {{/each}}
-                                            </tbody>
-                        <!--end::Tbody-->
-                                        </table>
-                                    </div>
+                                <textarea name="description" id="editor">
+                                    {{course.description}}
+                                    </textarea>
+                                <div id="editor">
+                                </div>
+                        </div>
+                        <div class="card-footer">
+                            <div class="row">
+                                <div class="col-lg-2"></div>
+                                <div class="col-lg-10">
+                                <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
+                                <a href="/teacher/course/{{course.slug}}" class="btn btn-secondary">Hủy</a>
                                 </div>
                             </div>
-    {{/each}}
-    <!--end::Card-->
                         </div>
-                    </div>
-                    <div class="card-body roseanna">
-                        <h2>Mô tả khóa học</h2>
-
-                            <textarea name="description" class="form-control" data-provide="markdown" rows="10">        {{{course.description}}}</textarea>
-                    </div>
-                    <div class="card-footer">
-                        <div class="row">
-                            <div class="col-lg-2"></div>
-                            <div class="col-lg-10">
-                            <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
-                            <a href="/teacher/course/{{course.slug}}" class="btn btn-secondary">Hủy</a>
-                            </div>
-                        </div>
-                    </div>
-                </form>
-                <!--end::Form-->
+                    <!--end::Form-->
+                </div>
+                <!--end::Card-->
             </div>
-            <!--end::Card-->
         </div>
-    </div>
+    </form>
 </div>
- <table hidden >
+
+ <table >
      <tbody>
-         <tr class="templateLesson">
-            <td class="pt-0 py-5 ">
-                {{!-- <div class="symbol symbol-45 symbol-light-success mr-2">
-                    <span class="symbol-label">
-                        <span class="svg-icon svg-icon-2x svg-icon-success">
-                            <!--begin::Svg Icon | path:assets/media/svg/icons/Media/Playlist1.svg-->
-                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
-                                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                    <rect x="0" y="0" width="24" height="24"></rect>
-                                    <path d="M8.97852058,18.8007059 C8.80029331,20.0396328 7.53473012,21 6,21 C4.34314575,21 3,19.8807119 3,18.5 C3,17.1192881 4.34314575,16 6,16 C6.35063542,16 6.68722107,16.0501285 7,16.1422548 L7,5.93171093 C7,5.41893942 7.31978104,4.96566617 7.78944063,4.81271925 L13.5394406,3.05418311 C14.2638626,2.81827161 15,3.38225531 15,4.1731748 C15,4.95474642 15,5.54092513 15,5.93171093 C15,6.51788965 14.4511634,6.89225606 14,7 C13.3508668,7.15502181 11.6842001,7.48835515 9,8 L9,18.5512168 C9,18.6409956 8.9927193,18.7241187 8.97852058,18.8007059 Z" fill="#000000" fill-rule="nonzero"></path>
-                                    <path d="M16,9 L20,9 C20.5522847,9 21,9.44771525 21,10 C21,10.5522847 20.5522847,11 20,11 L16,11 C15.4477153,11 15,10.5522847 15,10 C15,9.44771525 15.4477153,9 16,9 Z M14,13 L20,13 C20.5522847,13 21,13.4477153 21,14 C21,14.5522847 20.5522847,15 20,15 L14,15 C13.4477153,15 13,14.5522847 13,14 C13,13.4477153 13.4477153,13 14,13 Z M14,17 L20,17 C20.5522847,17 21,17.4477153 21,18 C21,18.5522847 20.5522847,19 20,19 L14,19 C13.4477153,19 13,18.5522847 13,18 C13,17.4477153 13.4477153,17 14,17 Z" fill="#000000" opacity="0.3"></path>
-                                </g>
-                            </svg>
-                            <!--end::Svg Icon-->
-                        </span>
-                    </span>
-                </div> --}}
-            </td>
-            <td>    
-                <table>
-                    <input hidden name="" type="text" class="id" value="new">
-                    
-                    <div class="row">
-                        <div class="text-dark-75 font-weight-bolder mb-1 font-size-lg" >
-                            <label class="col-lg-4 col-form-label text-lg-left">Tên bài học:</label>
-                            
-                            <div class="col-lg-8">
-                                <input name="" class="name form-control col-lg-20" type="text"  placeholder="Nhập Tên bài học">
-                            </div>
-
-                        </div>
-                    </div>
-                    <div class="row " >
-                        <div class="text-dark-75 font-weight-bolder mb-1 font-size-lg" >
-
-                        <label data-toggle="modal" data-target="#myModal" class="col-lg-4 col-form-label text-lg-left">URL Video:</label>
+          <tr hidden class="templateLesson">
+                <td class="pt-0 py-5 ">
+                    <i class="fa fas fa-photo-video text-warning icon-xl"></i>
+                </td>
+                <td>
+                    <table >
+                        <input hidden class="id" type="text" value="new">
                         
-                            <div class="col-lg-8">
-                                <input name="" class="video form-control col-lg-20"  type="text" placeholder="Nhập URL Video">                                                        
-                            </div>
+                        <div class="row text-dark-75 font-weight-bolder mb-1 font-size-lg">
+                                <label class="col-lg-4 text-lg-left">Tên bài học:</label>
+                                
+                                <div class="col-lg-8">
+                                    <input class="name form-control col-lg-20" type="text"  >
+                                </div>
 
                         </div>
+                        <div class="row text-dark-75 font-weight-bolder mb-1 font-size-lg" >
+                            <label data-toggle="modal" data-target="#myModal" class="col-lg-4 col-form-label text-lg-left">URL Video:</label>
+                            
+                                <div class="col-lg-8">
+                                    <input class="video form-control col-lg-20"  type="text" >                                                        
+                                </div>
+                        </div>
+                    </table>
+                </td>
+            
+                <td class="text-center">
+                    <span class="text-dark-75 font-weight-bolder d-block font-size-lg">Time</span>
+                    <div class="dropdown dropdown-inline show" data-toggle="tooltip" data-placement="left" data-original-title="Xóa bài học">
+                        <i class="flaticon-delete btn-dlt-lesson "></i>
                     </div>
-                </table>
-            </td>
-        
-            <td class="text-left">
-                <span class="text-dark-75 font-weight-bolder d-block font-size-lg">Time</span>
-                <button type="button" name="" class="btn btn-icon btn-outline-danger h-50 w-50 btn-dlt-lesson" lesson="{{@index}}" chap="{{@../index}}" >
-                    <i class="flaticon2-line"></i>
-                </button>
-            </td>
-        </tr>
+                    <span class="text-dark-50 d-block font-size-lg"> Xem trước 
+                    </span>
+
+                    <input class="preview form-check-input" type="checkbox">
+                </td>                         
+            </tr>
      </tbody>
         
  </table>
@@ -309,32 +315,29 @@
                 </svg>
                 <!--end::Svg Icon-->
             </span> 
-            <div class="card-label text-dark" >
-                <label data-toggle="collapse" role="button" class="col-lg-3 col-form-label text-lg-right click">Tên chương:</label>
-                <div class="col-lg-7">
-                    <input type="text" class="form-control col-lg-20 name" name="" placeholder="Nhập tên chương">
-                </div>
-                
-                <div class="col-lg-2 d-flex flex-row justify-content-around">
-                    <div class="dropdown dropdown-inline show" data-toggle="tooltip" data-placement="left" data-original-title="Thêm bài học">
-                        <i class="flaticon-add btn-add-lesson" chap=""></i>				
+            <div class="card-label text-dark row" >
+                <label data-toggle="collapse" data-target="" aria-expanded="false" aria-controls="" role="button" class="col-lg-3 col-form-label text-lg-right click">Tên chương:</label>
+                <input type="text" class="name form-control col-lg-7" >
+                <span class = "text-dark-50 col-lg-2" >
+                    <div class="d-flex flex-row justify-content-around">
+                        <div class="dropdown dropdown-inline show" data-toggle="tooltip" data-placement="left" data-original-title="Thêm bài học">
+                            <i class="flaticon-add btn-add-lesson" chap=""></i>				
+                        </div>
+                        <div class="dropdown dropdown-inline show" data-toggle="tooltip" data-placement="left" data-original-title="Xóa chương">
+                            <i class="flaticon-delete btn-dlt-chap " chap="" ></i>
+                        </div>
+        
                     </div>
-                    <div class="dropdown dropdown-inline show" data-toggle="tooltip" data-placement="left" data-original-title="Xóa chương">
-                        <i class="flaticon-delete btn-dlt-course " chap="" ></i>
-                    </div>
-    
-                </div>
+                </span>
             </div>
         </div>
     </div>
     <div class="collapse target" >
-
         <div class="table-responsive">
             <table class="table table-borderless table-vertical-center">
                 
                 <tbody>
-                    
-        
+                      
                 </tbody>
 <!--end::Tbody-->
             </table>
@@ -343,11 +346,12 @@
 </div>
 
 
+
 <script>   
 
 $(document).ready(function ()  
 {                
-    $('.btn-dlt-course').click(function(){
+    $('.btn-dlt-chap').click(function(){
         var chap = $(this).attr('chap')
         alert(chap);
         $('.chapter'+chap).remove()
@@ -377,38 +381,61 @@ $(document).ready(function ()
         newLesson.find('input.id').attr('name','chapters['+chap+'][lessons]['+String(num)+'][id]')
         newLesson.find('input.name').attr('name','chapters['+chap+'][lessons]['+String(num)+'][name]')
         newLesson.find('input.video').attr('name','chapters['+chap+'][lessons]['+String(num)+'][video]')
-
-        alert(newLesson.html())
+        newLesson.find('input.preview').attr('name','chapters['+chap+'][lessons]['+String(num)+'][preview]')
         chapParent.attr('numLesson', String(num+1)) 
         chapParent.append(newLesson)
     })
-    $('.btn-add-course').click(function(){
+    $('.btn-add-chap').click(function(){
 
         console.log('hihihaha')
         //var lesson =  $(this).attr('lesson')
         var chapParent = $('.chap-container')
 
         var num = chapParent.attr("numChapter") 
-        alert(num)
         var newChapter = $('.chapterTemplate').clone(true)
-        alert(chapParent.html())
 
         newChapter.attr('hidden', false)
         newChapter.attr('class', 'card chapter'+num)
 
         newChapter.find('i').attr('chap', num)
-        newChapter.find('.click').attr({"data-toggle":"collapse", "data-target":"#newChap"+ num, "aria-expanded":"false", "aria-controls":"newChap"+String(num) })
-        
+        newChapter.find('.click').attr({"data-toggle":"collapse", "data-target":"#newChap"+ num, "aria-expanded":"false", "aria-controls":"newChap"+num })
+        newChapter.find('.click').attr({"data-toggle":"collapse", "data-target":"#newChap"+ num, "aria-expanded":"false", "aria-controls":"newChap"+num })
+
         newChapter.find('input.id').attr('name','chapters['+num+'][id]')
         newChapter.find('input.name').attr('name','chapters['+num+'][name]')
 
         newChapter.find('.telegram').attr('id','hNewChapters'+num)
+        
         newChapter.find('.target').attr({'id':'newChap'+num, 'aria-labelledby': 'hNewChapters'+num})
         newChapter.find('tbody').attr({'class':'chapterBody'+num, 'numLesson': '0'})
 
         chapParent.attr('numChapter', String(parseInt(num)+1))
         chapParent.append(newChapter)
 
-    })                            
+    })
+     //set initial state.
+    $('.preview').change(function() { 
+        $(this).val($(this).is(':checked'));
+        $(this).next().val($(this).is(':checked'));  
+        if($(this).is(':checked')) $(this).next().prop("disabled", true)
+        else $(this).next().prop("disabled", false)
+    });
+    
+    $('form').submit(function(){
+        if($('select').val()=='') $('select').val($('select').attr('id'))
+    })
 });                 
 </script>  
+
+<script>
+    ClassicEditor
+        .create( document.querySelector( '#editor' ) )
+        .catch( error => {
+            console.error( error );
+        } );
+</script>
+<script src="/assets/plugins/custom/prismjs/prismjs.bundle.js?v=7.1.7"></script>
+<script src="/assets/js/scripts.bundle.js?v=7.1.7"></script>
+
+<script src="/assets/js/pages/crud/file-upload/image-input.js?v=7.1.7"></script>
+

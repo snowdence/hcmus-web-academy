@@ -8,6 +8,10 @@ const LessonSchema = new mongoose.Schema({
   overview: {
     type: String,
   },
+  preview: {
+    type: Boolean,
+    default: false,
+  },
   video: {
     type: String,
   }
