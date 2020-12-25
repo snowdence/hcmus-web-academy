@@ -6,7 +6,7 @@ const ChapterSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-    lessons:[
+  lessons: [
     {
       type: Schema.Types.ObjectId,
       ref: "Lesson"
@@ -17,5 +17,5 @@ const ChapterSchema = new mongoose.Schema({
   //   ref: "Course",
   // },
 });
-const Chapter = mongoose.model("chapter", ChapterSchema);
+const Chapter = mongoose.model("Chapter", ChapterSchema);
 module.exports = Chapter;

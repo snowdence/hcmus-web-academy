@@ -1,16 +1,9 @@
 const express = require("express");
-
+const courseModels = require("../controllers/web")
 const router = express.Router();
 const passport = require("passport");
 const authenticationMiddleware = require("../middleware/authentication");
-router.route("/").get((req, res) => {
-  if (req.isAuthenticated()) {
-    console.log(req.user);
-  } else {
-    console.log("Not login");
-  }
-  res.render("pages/home");
-});
+router.route("/").get(courseModels.getHomePage);
 
 router
   .route("/login")

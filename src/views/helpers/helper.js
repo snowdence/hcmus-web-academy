@@ -180,16 +180,9 @@ var register = function (Handlebars) {
       if (parseInt(a) == courses.length) return a
       return parseInt(a) + 1
     },
-    startWCh: (n) =>{
-      s = String(n)
-      while(s[0] >= '0' && s[0] <= '9')
-      {
-        s = s.substr(1)
-      }
-      return s
-    },
-    subDescription: (s) =>{
-      return s.substr(0,500)
+    checkIndex: (index) => {
+      if(index < 5) return true;
+      return false;
     }
   };
 
