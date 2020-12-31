@@ -5,8 +5,7 @@ const passport = require("passport");
 const authenticationMiddleware = require("../middleware/authentication");
 router.route("/").get(courseModels.getHomePage);
 
-router
-  .route("/login")
+router.route("/login")
   .get((req, res) => {
     if (req.isAuthenticated()) {
       res.redirect("/");
@@ -38,4 +37,6 @@ router.route("/logout").get(function (req, res) {
 router.route("/loginOK").get(authenticationMiddleware(), (req, res) => {
   res.send("Login thanh cong");
 });
+
+router.route("/course-detail/:id").get(courseModels.courseDetail)
 module.exports = router;

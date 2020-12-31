@@ -180,6 +180,7 @@ var register = function (Handlebars) {
       if (parseInt(a) == courses.length) return a
       return parseInt(a) + 1
     },
+    //top course
     checkIndex: (index) => {
       if(index < 5) return true;
       return false;

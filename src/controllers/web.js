@@ -15,6 +15,17 @@ const getHomePage = async (req, res , next) => {
     
 }
 
+const courseDetail = async (req, res , next) => {
+    const query = courseModel.where({_id: req.params.id})
+    const course = await query.findOne().lean()
+    res.render("pages/courses/details", {
+        course,
+        title: 'Detail',
+    })
+    
+}
+
 module.exports = {
     getHomePage,
+    courseDetail,
 }

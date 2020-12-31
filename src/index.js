@@ -14,6 +14,7 @@ const userInfoMiddleware = require("./middleware/user-info");
 const cookieParser = require("cookie-parser");
 const userRoute = require("./routes/user.route");
 const webRoute = require("./routes/web.route");
+const studentRoute = require("./routes/student.route");
 const User = require("./models/User");
 
 //PassportJS config
@@ -45,13 +46,16 @@ passport.deserializeUser(async (username, done) => {
 
 // connect mongo
 var db = mongoClient
-  .connect(process.env.MONGODB_URI, {
+  .connect("mongodb://localhost:27017/hwa", {
     useNewUrlParser: true,
     useCreateIndex: true,
     useUnifiedTopology: true,
   })
   .then(() => console.log("[SUCCESS] Connected to mongoDB"))
-  .catch(() => console.error("Error mongodb"));
+  .catch(() => {
+    console.error("Error mongodb")
+    console.log(process.env.MONGODB_URI)
+  });
 
 //router
 
@@ -133,6 +137,7 @@ const teacherRoute = require("./routes/teacher.route")
 app.use("/admin", adminRoute);
 app.use("/teacher", teacherRoute)
 app.use("/user", userRoute);
+app.use("/student", studentRoute);
 app.use("/", webRoute);
 
 app.listen(port, () => {
