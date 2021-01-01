@@ -1,11 +1,8 @@
 const express = require("express");
 const router = express.Router();
+const studentController = require("../controllers/student");
 
-router.route("/wishlist").get((req, res)=>{
-    res.render("pages/student/wishlist", {
-        title: "Wishlist"
-    })
-});
+router.route("/wishlist").get(studentController.wishlist);
 
 router.route("/all-courses").get((req, res)=>{
     res.render("pages/student/all-courses", {
