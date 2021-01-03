@@ -62,13 +62,14 @@
                         <!--begin: Datatable-->
                         <div class="datatable datatable-bordered datatable-head-custom datatable-default datatable-primary datatable-loaded"
                             id="kt_datatable">
-                            <table class="datatable-table" style="display: block; border: 1px solid black">
+                            <table class="datatable-table" style="display: block; border: 1px solid black" id="table">
                                 <thead class="datatable-head">
                                     <tr class="datatable-row ml-4">
-                                        <th data-field="RecordID" class="datatable-cell-left datatable-cell datatable-cell-sort datatable-cell-sorted"
+                                        <th data-field="RecordID"
+                                            class="datatable-cell-left datatable-cell datatable-cell-sort datatable-cell-sorted"
                                             data-sort="asc">
                                             <span style="width: 20px;">#
-                                                
+
                                             </span>
                                         </th>
                                         <th data-field="OrderID" class="datatable-cell datatable-cell-sort">
@@ -88,25 +89,28 @@
                                         </th>
                                     </tr>
                                 </thead>
-                                {{#each top10Courses}} 
-                                <tbody class="datatable-body"
-                                    style="border-top: 1px solid black; border-bottom: 1px solid black;">
-                                    <tr data-row="0" class="datatable-row ml-4" style="">
-                                        <td class="datatable-cell-sorted datatable-cell-left datatable-cell"
-                                            data-field="RecordID" aria-label="1"><span style="width: 20px;"><span
-                                                    class="font-weight-bolder">{{@index}}</span></span></td>
-                                        <td data-field="OrderID" aria-label="64616-103" class="datatable-cell"><span
-                                                style="width: 350px;">
+                                <tbody class="datatable-body" style="" id="tbody">
+                                {{#each top10Courses}}
+                                
+                                    <tr data-row="{{@index}}" id="R{{@index}}" class="datatable-row ml-4" style="">
+                                        <td class="datatable-cell-sorted datatable-cell-left datatable-cell row-index" data-field="RecordID" aria-label="1">
+                                            <span class="font-weight-bolder" style="width: 20px;">
+                                                {{@index}}
+                                            </span>
+                                        </td>
+                                        <td data-field="OrderID" aria-label="64616-103" class="datatable-cell">
+                                            <span style="width: 350px;">
                                                 <div class="d-flex align-items-center">
                                                     <div class="symbol symbol-50 symbol-sm flex-shrink-0">
-                                                        <div class="symbol-label"> 
-                                                            <img class="h-75" src="{{this.thumbnail}}" alt="photo"> 
+                                                        <div class="symbol-label">
+                                                            <img class="h-75" src="{{this.thumbnail}}" alt="photo">
                                                         </div>
                                                     </div>
                                                     <div class="ml-4">
-                                                        <div class="text-dark-75 font-weight-bolder font-size-lg mb-0 ml-2">
+                                                        <div
+                                                            class="text-dark-75 font-weight-bolder font-size-lg mb-0 ml-2">
                                                             {{this.name}}
-                                                        </div> 
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </span></td>
@@ -117,7 +121,8 @@
                                         </td>
                                         <td data-field="ShipDate" aria-label="10/15/2017" class="datatable-cell">
                                             <span style="width: 258px;">
-                                                <div class="font-weight-bolder text-primary mb-0">{{this.created_at}}</div>
+                                                <div class="font-weight-bolder text-primary mb-0">{{this.created_at}}
+                                                </div>
                                             </span>
                                         </td>
                                         <td data-field="Status" aria-label="5" class="datatable-cell">
@@ -127,11 +132,13 @@
                                             </span>
                                         </td>
                                         <td data-field="Actions" data-autohide-disabled="false" aria-label="null" class="datatable-cell">
-                                            <span style="overflow: visible; position: relative; width: 85px;">
-                                                <a href="javascript:;"
-                                                    class="btn btn-sm btn-default btn-text-primary btn-hover-danger btn-icon" title="Delete"> 
-                                                    <span class="svg-icon svg-icon-md"> 
-                                                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
+                                            <span class="s" style="overflow: visible; position: relative; width: 85px;">
+                                                <button type="button"
+                                                    class="btn btn-sm btn-default btn-text-primary btn-hover-danger btn-icon remove"
+                                                    title="Delete">
+                                                    <span class="svg-icon svg-icon-md">
+                                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                                            xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
                                                             height="24px" viewBox="0 0 24 24" version="1.1">
                                                             <g stroke="none" stroke-width="1" fill="none"
                                                                 fill-rule="evenodd">
@@ -143,14 +150,15 @@
                                                                     d="M14,4.5 L14,4 C14,3.44771525 13.5522847,3 13,3 L11,3 C10.4477153,3 10,3.44771525 10,4 L10,4.5 L5.5,4.5 C5.22385763,4.5 5,4.72385763 5,5 L5,5.5 C5,5.77614237 5.22385763,6 5.5,6 L18.5,6 C18.7761424,6 19,5.77614237 19,5.5 L19,5 C19,4.72385763 18.7761424,4.5 18.5,4.5 L14,4.5 Z"
                                                                     fill="#000000" opacity="0.3"></path>
                                                             </g>
-                                                        </svg> 
-                                                    </span> 
-                                                </a>
+                                                        </svg>
+                                                    </span>
+                                                </button>
                                             </span>
                                         </td>
                                     </tr>
-                                </tbody>
+                                
                                 {{/each}}
+                                </tbody>
                             </table>
                             <div class="datatable-pager datatable-paging-loaded">
                                 <ul class="datatable-pager-nav my-2 mb-sm-0">
@@ -193,4 +201,56 @@
 </div>
 </div>
 <!--end::Container-->
-</div>
+</div> 
+  <script src= 
+"https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"> 
+  </script> 
+  <script src= 
+"https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"> 
+  </script> 
+  <script src= 
+"https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"> 
+  </script>   
+  <script>
+      $(document).ready(function () { 
+  
+      // Denotes total number of rows 
+      var rowIdx = 0; 
+  
+      // jQuery button click event to add a row 
+    
+      // jQuery button click event to remove a row. 
+      $('#tbody').on('click', '.remove', function () { 
+  
+        // Getting all the rows next to the row 
+        // containing the clicked button 
+        var child = $(this).closest('tr').nextAll(); 
+  
+        // Iterating across all the rows  
+        // obtained to change the index 
+        child.each(function () { 
+  
+          // Getting <tr> id. 
+          var id = $(this).attr('id'); 
+  
+          // Getting the <p> inside the .row-index class. 
+          var idx = $(this).children('.row-index').children('span'); 
+  
+          // Gets the row number from <tr> id. 
+          var dig = parseInt(id.substring(1)); 
+  
+          // Modifying row index. 
+          idx.html(`${dig - 1}`); 
+  
+          // Modifying row id. 
+          $(this).attr('id', `R${dig - 1}`); 
+        }); 
+  
+        // Removing the current row. 
+        $(this).closest('tr').remove(); 
+  
+        // Decreasing total number of rows by 1. 
+        rowIdx--; 
+      }); 
+    });  
+</script>
