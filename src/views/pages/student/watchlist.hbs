@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="../css/wishlist.css">
+<link rel="stylesheet" href="/css/watchlist.css">
 <div class="d-flex flex-column-fluid">
     <!--begin::Container-->
     <div class="container">
@@ -25,7 +25,7 @@
                                 <div class="wizard-wrapper">
                                     <div class="wizard-number">2</div>
                                     <div class="wizard-label">
-                                        <div class="wizard-title"><a href="/student/wishlist"><u>WishList</u></a></div>
+                                        <div class="wizard-title"><a href="/student/watchlist/1"><u>WatchList</u></a></div>
                                     </div>
                                 </div>
                             </div>
@@ -95,7 +95,7 @@
                                     <tr data-row="{{@index}}" id="R{{@index}}" class="datatable-row ml-4" style="">
                                         <td class="datatable-cell-sorted datatable-cell-left datatable-cell row-index" data-field="RecordID" aria-label="1">
                                             <span class="font-weight-bolder" style="width: 20px;">
-                                                {{@index}}
+                                                {{math @index '+' 1}}
                                             </span>
                                         </td>
                                         <td data-field="OrderID" aria-label="64616-103" class="datatable-cell">
@@ -169,20 +169,20 @@
                                     <li><a title="Previous"
                                             class="datatable-pager-link datatable-pager-link-prev datatable-pager-link-disabled"
                                             data-page="1" disabled="disabled"><i class="flaticon2-back"></i></a></li>
-                                    <li style="display: none;"><input type="text"
-                                            class="datatable-pager-input form-control" title="Page number"></li>
-                                    <li><a class="datatable-pager-link datatable-pager-link-number datatable-pager-link-active"
-                                            data-page="1" title="1">1</a></li>
-                                    <li><a class="datatable-pager-link datatable-pager-link-number" data-page="2"
-                                            title="2">2</a></li>
-                                    <li><a class="datatable-pager-link datatable-pager-link-number" data-page="3"
-                                            title="3">3</a></li>
-                                    <li><a class="datatable-pager-link datatable-pager-link-number" data-page="4"
-                                            title="4">4</a></li>
-                                    <li><a class="datatable-pager-link datatable-pager-link-number" data-page="5"
-                                            title="5">5</a></li>
-                                    <li><a title="Next" class="datatable-pager-link datatable-pager-link-next"
-                                            data-page="2"><i class="flaticon2-next"></i></a></li>
+                                    {{#each listpage}}
+                                    {{#if @index}}
+                                    <li>
+                                        <a href="/student/watchlist/{{@index}}" class="datatable-pager-link datatable-pager-link-number {{this}}"
+                                            data-page="{{@index}}" title="{{@index}}">{{@index}}
+                                        </a>
+                                    </li>
+                                    {{/if}}
+                                    {{/each}}
+                                    <li>
+                                        <a title="Next" class="datatable-pager-link datatable-pager-link-next" data-page="2">
+                                            <i class="flaticon2-next"></i>
+                                        </a>
+                                    </li>
                                     <li><a title="Last" class="datatable-pager-link datatable-pager-link-last"
                                             data-page="35"><i class="flaticon2-fast-next"></i></a></li>
                                 </ul>
@@ -213,43 +213,17 @@
   </script>   
   <script>
       $(document).ready(function () { 
-  
-      // Denotes total number of rows 
       var rowIdx = 0; 
-  
-      // jQuery button click event to add a row 
-    
-      // jQuery button click event to remove a row. 
       $('#tbody').on('click', '.remove', function () { 
-  
-        // Getting all the rows next to the row 
-        // containing the clicked button 
         var child = $(this).closest('tr').nextAll(); 
-  
-        // Iterating across all the rows  
-        // obtained to change the index 
         child.each(function () { 
-  
-          // Getting <tr> id. 
           var id = $(this).attr('id'); 
-  
-          // Getting the <p> inside the .row-index class. 
           var idx = $(this).children('.row-index').children('span'); 
-  
-          // Gets the row number from <tr> id. 
-          var dig = parseInt(id.substring(1)); 
-  
-          // Modifying row index. 
+          var dig = parseInt(id.substring(1));  
           idx.html(`${dig - 1}`); 
-  
-          // Modifying row id. 
           $(this).attr('id', `R${dig - 1}`); 
-        }); 
-  
-        // Removing the current row. 
+        });  
         $(this).closest('tr').remove(); 
-  
-        // Decreasing total number of rows by 1. 
         rowIdx--; 
       }); 
     });  

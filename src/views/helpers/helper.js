@@ -184,6 +184,25 @@ var register = function (Handlebars) {
     checkIndex: (index) => {
       if(index < 5) return true;
       return false;
+    },
+
+    progress: (index)=>{
+      return parseInt(index)*10;
+    },
+    //basic math helper
+    math: (a, opearator, b)=>{
+      if(opearator==='+'){
+        return parseInt(a+b)
+      }
+      if(opearator==='-'){
+        return parseInt(a-b)
+      }
+      if(opearator==='*'){
+        return parseInt(a*b)
+      }
+      if(opearator==='/'){
+        return parseInt(a/b)
+      }
     }
   };
 
