@@ -3,9 +3,11 @@ const CourseModel = require("../models/Course")
 const ChapterModel = require("../models/Chapter")
 const LessonModel = require("../models/Lesson")
 const SubCategoryModel = require("../models/SubCategory")
+//const ProgressModel = require("../models/Progress")
 
 const mongoose = require("mongoose");
 const multer = require('multer');
+//const Progress = require("../models/Progress")
 
 
 // [GET] /teacher
@@ -18,14 +20,16 @@ const viewCourse =  (req, res, next) => {
 console.log("aaa")
     var curPage = req.query.page
     if(curPage == undefined) curPage = 1
-    CourseModel.count({})
+    CourseModel.countDocuments({})
     .then((num) => {
         CourseModel.find({"author_id": req.user._id}).limit(4).skip(4*(curPage-1))
         .lean()
         .then((courses) => {
-            var nPage = Math.floor(num / 6)
-            if(courses.length % 6) nPage++
+            var nPage = Math.floor(num / 4)
+            if(courses.length % 4) nPage++
             var pages = Array.from({length: nPage}, (_, i) => i + 1)
+            console.log("pages: ", pages)
+
             res.render("pages/teacher/course", {
                 courses : courses,
                 curPage: curPage,
@@ -43,15 +47,11 @@ const courseDetail = async(req, res, next) => {
     .lean()
     .then(async course => 
     {
-        // console.log("course slug: ", req.params.slug)
 
-        // console.log("course chapters: ", course)
         var newChapters =[]
         if(course.chapters.length > 0)
         {
-            console.log(course.chapters.length )
             let chapters = await ChapterModel.find({_id: {$in: course.chapters}})
-            console.log("chapters: ", chapters)
     
             for (let chap of chapters){
                 let lessons = []
@@ -59,6 +59,15 @@ const courseDetail = async(req, res, next) => {
                 {
                     lessons = await LessonModel.find({_id:{$in: chap.lessons}}).lean()
                 }
+                // for (var x of lessons)
+                // {
+                //    // console.log(x._id, req.user._id)
+                //     pr = await ProgressModel.findOne({lessonID: x._id, studentID: req.user._id})
+                //     //console.log(pr)
+                //     if (pr != null)
+                //         x.progress = pr.progress
+                //     else x.progress = 0
+                // }
                 newChapters.push({
                     _id: chap._id,
                     name: chap.name,
@@ -76,7 +85,6 @@ const courseDetail = async(req, res, next) => {
     .catch(next)
 }
 
-
  // [GET] teacher/course/:slug/edit
  const courseEdit = async(req, res, next) => {
     let SubCategory = await SubCategoryModel.find({}).lean()
@@ -92,7 +100,11 @@ const courseDetail = async(req, res, next) => {
             {
                 var newChapters =[]
                 for (let chap of chapters){
+
                     var lessons = await LessonModel.find({_id:{$in: chap.lessons}}).lean()
+                    console.log("test: ", chap.lessons)
+                    console.log("test result: ", lessons)
+
                     newChapters.push({
                     _id: chap._id,
                     name: chap.name,
@@ -112,7 +124,7 @@ const courseDetail = async(req, res, next) => {
 } 
 
  //[POST] teacher/course/:slug/edit
- const editCourse = (req, res, next) => {
+const editCourse = (req, res, next) => {
     var storage = multer.diskStorage({
 
         destination: function (req, file, cb) {
@@ -212,7 +224,7 @@ const courseDetail = async(req, res, next) => {
  
  // [GET] teacher/course/create
 
- const createCourse = async(req, res, next) =>{
+const createCourse = async(req, res, next) =>{
     SubCategoryModel.find({})
         .lean()
         .then(SubCategorys => {
@@ -223,7 +235,7 @@ const courseDetail = async(req, res, next) => {
  }
 
    // [POST] teacher/course/create
- const courseCreated = async (req, res, next) =>{
+const courseCreated = async (req, res, next) =>{
     var storage = multer.diskStorage({
 
         destination: function (req, file, cb) {
@@ -280,7 +292,40 @@ const courseDetail = async(req, res, next) => {
    // res.redirect('/teacher/course/Python')
 
 }
-// SET STORAGE
+// [POST] teacher/upload
+const upload = async (req, res, next) =>{
+    var storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, 'src/public/video')
+    },
+    filename: function (req, file, cb) {
+        cb(null, file.fieldname + '-' + Date.now()+'.mp4')
+    }
+})
+    var upload = multer({ storage: storage })
+    upload.single('myFile')(req,res, async function(err){
+        //res.send(req.body)
+
+        if(req.file==undefined) res.redirect(req.header('Referer') || '/')
+        else {
+            LessonModel.updateOne({_id: req.body.idLessonUpdate},{video: req.file.filename})
+                .then(r => console.log(r))
+            //res.send(req.file)
+            res.redirect(req.header('Referer') || '/')
+        }
+
+}
+    )
+}
+
+// [POST] teacher/update-progress
+// const updateProgress = async (req, res, next) =>{
+//     ProgressModel.updateOne({studentID: req.user._id, lessonID: req.body.lessonID}, req.body, {upsert: true})
+//     .then(num => console.log(num))
+//     //console.log(req.body)
+// }
+
+
 
 module.exports = {
     viewCourse: viewCourse,
@@ -290,4 +335,6 @@ module.exports = {
     createCourse: createCourse,
     courseCreated: courseCreated,
     getIndex: getIndex,
+    upload: upload,
+    //updateProgress: updateProgress,
 }

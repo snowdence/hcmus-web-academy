@@ -184,6 +184,9 @@ var register = function (Handlebars) {
     checkIndex: (index) => {
       if(index < 5) return true;
       return false;
+    },
+    subDescription: (s) =>{
+      return s.substr(0,500)
     }
   };
 

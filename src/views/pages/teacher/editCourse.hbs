@@ -5,7 +5,7 @@
 
 </script>
 <div class="container">
-    <form method="POST" action="" enctype="multipart/form-data" >
+    <form method="POST" id="mainForm" action="" enctype="multipart/form-data" >
         <div class="row">
             <div class="col-lg-5">
                 <!--begin::Card-->
@@ -97,7 +97,7 @@
                             <div class="row">
                                 <div class="col-lg-3"></div>
                                 <div class="col-lg-9">
-                                    <button type="submit" class="btn btn-light-primary mr-2">Lưu thay đổi</button>
+                                    <button type="submit" class="btn btn-light-primary mr-2 save">Lưu thay đổi</button>
                                     <a href="/teacher/course/{{course.slug}}"  class="btn btn-primary">Hủy</a>
                                 </div>
                             </div>
@@ -125,9 +125,9 @@
         <!--begin::Card-->
                                 <div class="card chapter{{@index}}">
                                     <input hidden type="text" name="chapters[{{@index}}][id]" value="{{_id}}"> 
-                                    <div class="card-header settings telegram"  id="h{{startWCh _id}}">
+                                    <div class="card-header settings telegram"  id="h{{_id}}">
                                         <div class="card-title text-dark collapsed ">
-                                            <span class="svg-icon svg-icon-primary"  data-toggle="collapse" data-target="#{{startWCh _id}}" aria-expanded="false" aria-controls="{{startWCh _id}}" role="button">
+                                            <span class="svg-icon svg-icon-primary"  data-toggle="collapse" data-target="#i{{_id}}" aria-expanded="false" aria-controls="i{{_id}}" role="button">
                                                 <!--begin::Svg Icon | path:assets/media/svg/icons/Navigation/Angle-double-right.svg-->
                                                 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
                                                     <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
@@ -139,7 +139,7 @@
                                                 <!--end::Svg Icon-->
                                             </span> 
                                             <div class="card-label text-dark row" >
-                                                <label data-toggle="collapse" data-target="#{{startWCh _id}}" aria-expanded="false" aria-controls="{{startWCh _id}}" role="button" class="col-lg-3 col-form-label text-lg-right ">Tên chương:</label>
+                                                <label data-toggle="collapse" data-target="#i{{_id}}" aria-expanded="false" aria-controls="i{{_id}}" role="button" class="col-lg-3 col-form-label text-lg-right ">Tên chương:</label>
                                                 <input type="text" class="form-control col-lg-7" value="{{name}}" name="chapters[{{@index}}][name]" value="{{name}}">
                                                 <span class = " text-dark-50 col-lg-2" >
 
@@ -160,7 +160,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div id="{{startWCh _id}}" class="collapse" aria-labelledby="h{{startWCh _id}}" data-parent="" style="">
+                                    <div id="i{{_id}}" class="collapse" aria-labelledby="h{{_id}}" data-parent="" style="">
                                 
                                         <div class="table-responsive">
                                             <table class="table table-borderless table-vertical-center">
@@ -185,11 +185,16 @@
 
                                                                 </div>
                                                                 <div class="row text-dark-75 font-weight-bolder mb-1 font-size-lg" >
-                                                                    <label data-toggle="modal" data-target="#myModal" class="col-lg-4 col-form-label text-lg-left">URL Video:</label>
+                                                                    <label data-toggle="modal" data-target="#myModal" class="col-lg-4 col-form-label text-lg-left"> Video:</label>
                                                                     
                                                                         <div class="col-lg-8">
-                                                                            <input class="chapter{{@../index}} lesson{{@index}} form-control col-lg-20"  type="text" name="chapters[{{@../index}}][lessons][{{@index}}][video]" value="{{video}}">                                                        
-                                                                        
+                                                                            <input hidden class="chapter{{@../index}} lesson{{@index}} form-control col-lg-20"  type="text" name="chapters[{{@../index}}][lessons][{{@index}}][video]" value="{{video}}">
+                                                                             <div class="custom-file">
+                                                                                <input id="input-b1{{id}}" name="myFile" type="file" class="file custom-file-input" data-browse-on-zone-click="true" accept="video/*">
+                                                                                    <label class="custom-file-label" for="input-b1{{id}}">Chọn video để upload</label>
+                                                                                </div>
+                                                                            <button idCourse = "{{_id}}" class ="buttonUpload btn btn-primary" type= "submit" formaction="/teacher/upload" >Cập nhật video</button>
+                                                                            <input hidden type="text" name="idLessonUpdate" value="{{_id}}" disabled>
                                                                         </div>
                                                                 </div>
                                                             </table>
@@ -244,7 +249,7 @@
                             <div class="row">
                                 <div class="col-lg-2"></div>
                                 <div class="col-lg-10">
-                                <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
+                                <button type="submit" class="btn btn-primary save">Lưu thay đổi</button>
                                 <a href="/teacher/course/{{course.slug}}" class="btn btn-secondary">Hủy</a>
                                 </div>
                             </div>
@@ -275,13 +280,9 @@
                                 </div>
 
                         </div>
-                        <div class="row text-dark-75 font-weight-bolder mb-1 font-size-lg" >
-                            <label data-toggle="modal" data-target="#myModal" class="col-lg-4 col-form-label text-lg-left">URL Video:</label>
-                            
-                                <div class="col-lg-8">
-                                    <input class="video form-control col-lg-20"  type="text" >                                                        
-                                </div>
-                        </div>
+                        <input hidden class="video form-control col-lg-20"  type="text" >                                                        
+
+                      
                     </table>
                 </td>
             
@@ -351,6 +352,7 @@
 
 $(document).ready(function ()  
 {                
+    //$('td[name ="idLessonUpdate"]').prop("disabled", true)
     $('.btn-dlt-chap').click(function(){
         var chap = $(this).attr('chap')
         alert(chap);
@@ -434,6 +436,18 @@ $(document).ready(function ()
             console.error( error );
         } );
 </script>
+
+<script>
+    $('.buttonUpload').click(function(){
+
+        $(this).next().prop("disabled", false)
+    })
+    $('.save').click(function(){
+
+        $('.custom-file-input').prop("disabled", true)
+    })
+</script>
+
 <script src="/assets/plugins/custom/prismjs/prismjs.bundle.js?v=7.1.7"></script>
 <script src="/assets/js/scripts.bundle.js?v=7.1.7"></script>
 

@@ -372,9 +372,9 @@
     {{#each chapters}}
     <!--begin::Card-->
                                 <div class="card border-top-3 pd-12 ">
-                                    <div class="card-header telegram settings"  id="h{{startWCh _id}}">
+                                    <div class="card-header telegram settings"  id="h{{_id}}">
                                         <div class="mask">
-                                        <div class="card-title text-dark collapsed " data-toggle="collapse" data-target="#{{startWCh _id}}" aria-expanded="false" aria-controls="{{startWCh _id}}" role="button">
+                                        <div class="card-title text-dark collapsed " data-toggle="collapse" data-target="#i{{_id}}" aria-expanded="false" aria-controls="i{{_id}}" role="button">
                                             <span class="svg-icon svg-icon-primary">
                                                 <!--begin::Svg Icon | path:assets/media/svg/icons/Navigation/Angle-double-right.svg-->
                                                 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
@@ -390,7 +390,7 @@
                                         </div>
                                         </div>
                                     </div>
-                                    <div id="{{startWCh _id}}" class="collapse" aria-labelledby="h{{startWCh _id}}" data-parent="" style="">
+                                    <div id="i{{_id}}" class="collapse" aria-labelledby="h{{_id}}" data-parent="" style="">
                                 
                                         <div class="table-responsive">
                                             <table class="table table-borderless table-vertical-center">
@@ -403,34 +403,35 @@
                                                         </td>
                                                         <td class="pl-0">
                                                             {{#if preview}}
-                                                            <a href="{{video}}" class="text-dark-75 font-weight-bolder text-hover-primary mb-1 font-size-lg" data-toggle="modal" data-target="#myModal">{{name}}</a>
-                                                            <span class="text-muted font-weight-bold d-block">By Rose Liam</span>
+                                                            <a  class="text-dark-75 font-weight-bolder text-hover-primary mb-1 font-size-lg" data-toggle="modal" data-target="#myModal{{_id}}">{{name}}</a>
+                                                            <span class="text-muted font-weight-bold d-block">Được xem trước</span>
                                                             {{else}}
                                                             <span class="text-dark-75 font-weight-bolder text-hover-primary mb-1 font-size-lg">{{name}}</span>
                                                             {{/if}}
-                                                            
+                                                            <!-- <span class="progress">
+                                                                <div class="progress-bar progress-bar-striped progress-bar-animated bg-danger" role="progressbar" style="width: {{progress}}%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                                                            </span> -->
                                                         </td>
 
                                                         <!--Video Modal -->
-                                                        <div id="myModal" class="modal fade center" role="dialog" >
+                                                        <div id="myModal{{_id}}" class="modal fade center" role="dialog" >
                                                             <div class="modal-dialog">
                                                             <!-- Modal content-->
                                                             <div class="modal-content">
                                                                 <div class="modal-body">
-                                                                <video id="my-video" class="video-js" controls preload="video-js vjs-default-skin vjs-big-play-centered" width="640" height="264" poster="" data-setup='{}'>
+                                                                <video id="i{{_id}}" class="video-js"onpause="pauseFunction('i{{_id}}')" controls preload="video-js vjs-default-skin vjs-big-play-centered" width="640" height="264" poster="" data-setup='{}'>
                                                                     <source src="/video/{{video}}" type='video/mp4'>
-                                                                    </video>
+                                                                </video>
                                                                 </div>  
                                                             </div>
                                                             </div>
                                                         </div>
                                                         <!--Video Modal -->
 
-
                                                         <td></td>
                                                         <td class="text-left">
-                                                            <span class="text-dark-75 font-weight-bolder d-block font-size-lg">Time</span>
-                                                            <span class="text-muted font-weight-bold d-block font-size-sm">Time</span>
+                                                            <span class="text-dark-75 font-weight-bolder d-block font-size-lg">Thời lượng</span>
+                                                            <span class="text-muted font-weight-bold d-block font-size-sm i{{_id}}">Time</span>
                                                         </td>
                                                     
                                                     </tr>
@@ -441,7 +442,7 @@
                                         </div>
                                     </div>
                                 </div>
-    {{/each}}
+                                             {{/each}}
     <!--end::Card-->
                             </div>
                         </div>
@@ -472,7 +473,31 @@
         </div>
     </div>
 </div>
-								
 
+<script>
+
+    function pauseFunction(id){
+    //    player = document.getElementById(id+'_html5_api');
+    //    var percentComplete = player.currentTime/player.duration*100;
+    //    $.post("/teacher/update-progress", {progress: percentComplete, lessonID: id.substring(1)}, function(result){
+            
+       // $("span").html(result);
+  //});
+    }
+
+var T = setInterval(function(){
+    var video =$( "video" );
+
+    for(x of video)
+    {
+        var id = (x.id.substring(0,x.id.indexOf('_')));
+        //player = document.getElementById(id);
+        $("."+id).html(new Date(x.duration * 1000).toISOString().substr(11, 8))
+        //alert(video[0].attr('id'))
+    }
+    if (video.every(x=> x.duration != undefined)) clearInterval(T)
+}, 1000);
+ 
+</script>
 
 
