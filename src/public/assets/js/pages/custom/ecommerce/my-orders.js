@@ -74,7 +74,7 @@ var KTEcommerceMyOrders = function () {
                     var output = '<div class="d-flex align-items-center">\
                         <div class="symbol symbol-50 symbol-sm flex-shrink-0">\
                             <div class="symbol-label">\
-                                <img class="h-75 align-self-end" src="assets/media/products/' + number + '.png" alt="photo"/>\
+                                <img class="h-75 align-self-end" src="/assets/media/products/' + number + '.png" alt="photo"/>\
                             </div>\
                         </div>\
                         <div class="ml-4">\
