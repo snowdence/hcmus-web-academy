@@ -23,5 +23,6 @@ router.route("/archived").get((req, res)=>{
 });
 
 router.get('/course/:slug', studentController.courseDetail)
+router.post('/update-progress', studentController.updateProgress)
 
 module.exports = router;

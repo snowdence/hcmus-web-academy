@@ -408,9 +408,9 @@
                                                             {{else}}
                                                             <span class="text-dark-75 font-weight-bolder text-hover-primary mb-1 font-size-lg">{{name}}</span>
                                                             {{/if}}
-                                                            <!-- <span class="progress">
+                                                            <span class="progress">
                                                                 <div class="progress-bar progress-bar-striped progress-bar-animated bg-danger" role="progressbar" style="width: {{progress}}%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
-                                                            </span> -->
+                                                            </span>
                                                         </td>
 
                                                         <!--Video Modal -->
@@ -477,12 +477,12 @@
 <script>
 
     function pauseFunction(id){
-    //    player = document.getElementById(id+'_html5_api');
-    //    var percentComplete = player.currentTime/player.duration*100;
-    //    $.post("/teacher/update-progress", {progress: percentComplete, lessonID: id.substring(1)}, function(result){
+        player = document.getElementById(id+'_html5_api');
+        var percentComplete = player.currentTime/player.duration*100;
+        $.post("/student/update-progress", {progress: percentComplete, lessonID: id.substring(1)}, function(result){
             
        // $("span").html(result);
-  //});
+  });
     }
 
 var T = setInterval(function(){

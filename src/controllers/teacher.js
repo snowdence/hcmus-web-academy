@@ -3,7 +3,6 @@ const CourseModel = require("../models/Course")
 const ChapterModel = require("../models/Chapter")
 const LessonModel = require("../models/Lesson")
 const SubCategoryModel = require("../models/SubCategory")
-//const ProgressModel = require("../models/Progress")
 
 const mongoose = require("mongoose");
 const multer = require('multer');
@@ -328,15 +327,6 @@ const upload = async (req, res, next) =>{
     )
 }
 
-// [POST] teacher/update-progress
-// const updateProgress = async (req, res, next) =>{
-//     ProgressModel.updateOne({studentID: req.user._id, lessonID: req.body.lessonID}, req.body, {upsert: true})
-//     .then(num => console.log(num))
-//     //console.log(req.body)
-// }
-
-
-
 module.exports = {
     viewCourse: viewCourse,
     courseDetail: courseDetail,
@@ -346,5 +336,4 @@ module.exports = {
     courseCreated: courseCreated,
     getIndex: getIndex,
     upload: upload,
-    //updateProgress: updateProgress,
 }

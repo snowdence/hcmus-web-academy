@@ -3,6 +3,7 @@ const ChapterModel = require("../models/Chapter")
 const LessonModel = require("../models/Lesson")
 const SubCategoryModel = require("../models/SubCategory")
 const UserModel = require("../models/User")
+const ProgressModel = require("../models/Progress")
 
 
 const wishlist = async (req, res , next) => {
@@ -36,15 +37,15 @@ const courseDetail = async(req, res, next) => {
                 {
                     lessons = await LessonModel.find({_id:{$in: chap.lessons}}).lean()
                 }
-                // for (var x of lessons)
-                // {
-                //    // console.log(x._id, req.user._id)
-                //     pr = await ProgressModel.findOne({lessonID: x._id, studentID: req.user._id})
-                //     //console.log(pr)
-                //     if (pr != null)
-                //         x.progress = pr.progress
-                //     else x.progress = 0
-                // }
+                for (var x of lessons)
+                {
+                   // console.log(x._id, req.user._id)
+                    pr = await ProgressModel.findOne({lessonID: x._id, studentID: req.user._id})
+                    //console.log(pr)
+                    if (pr != null)
+                        x.progress = pr.progress
+                    else x.progress = 0
+                }
                 newChapters.push({
                     _id: chap._id,
                     name: chap.name,
@@ -55,7 +56,7 @@ const courseDetail = async(req, res, next) => {
         }
         let teacher = await UserModel.findOne({_id: course.author_id}).lean()
         console.log("teacher: ",SubCategory)
-        res.render("pages/teacher/courseDetail", {
+        res.render("pages/student/courseDetail", {
             SubCategory: SubCategory.name,
             createdAt: createdAt,
             updatedAt: updatedAt,
@@ -66,8 +67,15 @@ const courseDetail = async(req, res, next) => {
     })
     .catch(next)
 }
+
+// [POST] teacher/update-progress
+const updateProgress = async (req, res, next) =>{
+    ProgressModel.updateOne({studentID: req.user._id, lessonID: req.body.lessonID}, req.body, {upsert: true})
+    .then(num => console.log(num))
+    //console.log(req.body)
+}
 module.exports = {
     wishlist,
     courseDetail,
-
+    updateProgress,
 }

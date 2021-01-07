@@ -19,8 +19,5 @@ router.post('/course/:slug/edit', TeacherController.editCourse)
 
 router.post('/upload', TeacherController.upload)
 
-//router.post('/update-progress', TeacherController.updateProgress)
-
-
 module.exports = router;
 
