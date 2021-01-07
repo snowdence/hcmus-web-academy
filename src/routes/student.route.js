@@ -21,4 +21,7 @@ router.route("/archived").get((req, res)=>{
         title: "Archived"
     })
 });
+
+router.get('/course/:slug', studentController.courseDetail)
+
 module.exports = router;

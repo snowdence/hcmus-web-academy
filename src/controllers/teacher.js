@@ -47,6 +47,11 @@ const courseDetail = async(req, res, next) => {
     .lean()
     .then(async course => 
     {
+        let SubCategory = await SubCategoryModel.findOne({_id: course.sub_category}).lean()
+        var d = new Date(course.updatedAt); 
+        updatedAt = d.toLocaleString()
+        d = new Date(course.createdAt); 
+        createdAt = d.toLocaleString()
 
         var newChapters =[]
         if(course.chapters.length > 0)
@@ -76,8 +81,13 @@ const courseDetail = async(req, res, next) => {
             }
             
         }
-
+        let teacher = await UserModel.findOne({_id: course.author_id}).lean()
+        console.log("teacher: ",SubCategory)
         res.render("pages/teacher/courseDetail", {
+            SubCategory: SubCategory.name,
+            createdAt: createdAt,
+            updatedAt: updatedAt,
+            author: teacher,
             course: course,
             chapters: newChapters,
         })  
