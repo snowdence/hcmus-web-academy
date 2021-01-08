@@ -187,7 +187,7 @@ var register = function (Handlebars) {
     },
     subDescription: (s) =>{
       return s.substr(0,500)
-
+    },
     progress: (index)=>{
       return parseInt(index)*10;
     },
