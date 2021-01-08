@@ -21,12 +21,18 @@ const courseDetail = async(req, res, next) => {
     .lean()
     .then(async course => 
     {
-        let myRate = await FeedbackModel.findOne({courseID: course._id, studentID: req.user._id})
+        var rate = []
+        ave = 0
+        myRate = 0
+        myRate = await FeedbackModel.findOne({courseID: course._id, studentID: req.user._id})
         let nFeedback = await FeedbackModel.find({courseID: course._id})
-        let rate = nFeedback.map(x=>x.rate)
-        let average = (array) => array.reduce((a, b) => a + b) / array.length;
-
-        console.log('rate: ', rate.length)
+        if (nFeedback != null)
+        {
+            rate = nFeedback.map(x=>x.rate)
+            let average = (array) => array.reduce((a, b) => a + b,0) / array.length;
+            ave = average(rate)
+        }
+        if (myRate != null) myRate = myRate.rate
 
         courseModel.updateOne({slug: req.params.slug}, {count_view: course.count_view + 1})
         .lean()
@@ -67,7 +73,9 @@ const courseDetail = async(req, res, next) => {
             
         }
         let teacher = await UserModel.findOne({_id: course.author_id}).lean()
-        console.log("teacher: ",SubCategory)
+        let student = await UserModel.findOne({_id: req.user._id}).lean()
+
+       
         res.render("pages/student/courseDetail", {
             SubCategory: SubCategory.name,
             createdAt: createdAt,
@@ -75,9 +83,10 @@ const courseDetail = async(req, res, next) => {
             author: teacher,
             course: course,
             chapters: newChapters,
-            rate: average(rate),
+            rate: ave,
             nRate: rate.length,
-            myRate: myRate.rate,
+            myRate: myRate,
+            favorite: student.list_courses.map( s => JSON.stringify( s ) ).includes(JSON.stringify(course._id))
         })  
     })
     .catch(next)
@@ -106,10 +115,45 @@ const feedback = async (req, res, next) =>{
     .then(num => console.log(num))
     res.redirect(req.header('Referer') || '/')
 }
+
+// [POST] student/favorite
+const favorite = async (req, res, next) =>{
+    console.log('feedback: ', req.body)
+    var student = await UserModel.findOne({_id: req.user._id}).lean()
+    if (req.body.favorite == 'true' )
+    {
+        console.log('true')
+        student.list_courses.push(req.body.courseID);
+    }
+    //&& !student.list_courses.includes(req.body.courseID)
+    if (req.body.favorite == 'false' )
+    {
+        console.log('false')
+        const index = student.list_courses.map( s => JSON.stringify( s ) ).indexOf(JSON.stringify(req.body.courseID))
+        console.log(index)
+
+        if (index > -1) {
+            student.list_courses.splice(index, 1);
+        }
+        console.log(student.list_courses)
+
+    }
+    console.log('kq: ', student)
+
+    UserModel.updateOne({_id: req.user._id}, student, {upsert: true})
+    .then(num => console.log(num))
+
+
+  //  FeedbackModel.updateOne({studentID: req.user._id, courseID: req.body.courseID}, req.body, {upsert: true})
+  //  .then(num => console.log(num))
+   // res.redirect(req.header('Referer') || '/')
+}
+
 module.exports = {
     wishlist,
     courseDetail,
     updateProgress,
     rate,
-    feedback
+    feedback,
+    favorite
 }

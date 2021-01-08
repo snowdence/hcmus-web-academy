@@ -26,5 +26,7 @@ router.get('/course/:slug', studentController.courseDetail)
 router.post('/update-progress', studentController.updateProgress)
 router.post('/rate', studentController.rate)
 router.post('/feedback', studentController.feedback)
+router.post('/favorite', studentController.favorite)
+
 
 module.exports = router;
