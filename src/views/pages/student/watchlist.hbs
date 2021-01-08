@@ -92,7 +92,7 @@
                                 <tbody class="datatable-body" style="" id="tbody">
                                 {{#each top10Courses}}
                                 
-                                    <tr data-row="{{@index}}" id="R{{@index}}" class="datatable-row ml-4" style="">
+                                    <tr data-row="{{@index}}" id="{{_id}}" class="datatable-row ml-4" style="">
                                         <td class="datatable-cell-sorted datatable-cell-left datatable-cell row-index" data-field="RecordID" aria-label="1">
                                             <span class="font-weight-bolder" style="width: 20px;">
                                                 {{math @index '+' 1}}
@@ -133,7 +133,7 @@
                                         </td>
                                         <td data-field="Actions" data-autohide-disabled="false" aria-label="null" class="datatable-cell">
                                             <span class="s" style="overflow: visible; position: relative; width: 85px;">
-                                                <button type="button"
+                                                <button type="submit"
                                                     class="btn btn-sm btn-default btn-text-primary btn-hover-danger btn-icon remove"
                                                     title="Delete">
                                                     <span class="svg-icon svg-icon-md">
@@ -215,7 +215,7 @@
       $(document).ready(function () { 
       var rowIdx = 0; 
       $('#tbody').on('click', '.remove', function () { 
-        var child = $(this).closest('tr').nextAll(); 
+        /*var child = $(this).closest('tr').nextAll(); 
         child.each(function () { 
           var id = $(this).attr('id'); 
           var idx = $(this).children('.row-index').children('span'); 
@@ -224,7 +224,9 @@
           $(this).attr('id', `R${dig - 1}`); 
         });  
         $(this).closest('tr').remove(); 
-        rowIdx--; 
+        rowIdx--; */
+        location.reload()
+        
       }); 
     });  
 </script>
