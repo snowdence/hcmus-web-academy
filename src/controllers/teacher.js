@@ -3,6 +3,7 @@ const CourseModel = require("../models/Course")
 const ChapterModel = require("../models/Chapter")
 const LessonModel = require("../models/Lesson")
 const SubCategoryModel = require("../models/SubCategory")
+const FeedbackModel = require("../models/Feedback")
 
 const mongoose = require("mongoose");
 const multer = require('multer');
@@ -46,6 +47,17 @@ const courseDetail = async(req, res, next) => {
     .lean()
     .then(async course => 
     {
+        var rate = []
+        ave = 0
+        let nFeedback = await FeedbackModel.find({courseID: course._id})
+
+        if (nFeedback.length>0)
+        {
+            rate = nFeedback.map(x=>x.rate)
+            let average = (array) => array.reduce((a, b) => a + b,0) / array.length;
+            ave = average(rate)
+        }
+        console.log('ave: ', ave)
         let SubCategory = await SubCategoryModel.findOne({_id: course.sub_category}).lean()
         var d = new Date(course.updatedAt); 
         updatedAt = d.toLocaleString()
@@ -81,7 +93,7 @@ const courseDetail = async(req, res, next) => {
             
         }
         let teacher = await UserModel.findOne({_id: course.author_id}).lean()
-        console.log("teacher: ",SubCategory)
+        //console.log("teacher: ",SubCategory)
         res.render("pages/teacher/courseDetail", {
             SubCategory: SubCategory.name,
             createdAt: createdAt,
@@ -89,6 +101,8 @@ const courseDetail = async(req, res, next) => {
             author: teacher,
             course: course,
             chapters: newChapters,
+            rate: ave,
+            nRate: rate.length,
         })  
     })
     .catch(next)
@@ -134,7 +148,7 @@ const courseDetail = async(req, res, next) => {
 
  //[POST] teacher/course/:slug/edit
 const editCourse = (req, res, next) => {
-    var storage = multer.diskStorage({
+     var storage = multer.diskStorage({
 
         destination: function (req, file, cb) {
           cb(null, './src/public/img')
@@ -143,13 +157,10 @@ const editCourse = (req, res, next) => {
           cb(null, file.fieldname + '-' + Date.now()+'.png')
         }
       })
-      
        
     var upload = multer({ storage: storage })
     upload.single('thumbnail')(req,res, async function(err){
-        
-        res.json(req.body) 
-        
+        console.log('debug: ', req.file)
         chaps_id = []
         var newData = JSON.parse(JSON.stringify(req.body))
         if(typeof req.file != 'undefined')
@@ -215,18 +226,16 @@ const editCourse = (req, res, next) => {
                 //...... delete chapters in db
                 //....       
 
-                //console.log("lessons: ", lessons)
-
                 var newCourse = JSON.parse(JSON.stringify(newData))
                 newCourse.chapters = chaps_id
                 console.log("test: ", newCourse)
 
                 await CourseModel.updateOne({_id: newData.id}, newCourse, {upsert: true})
                 .then(num => console.log(num))
+                res.redirect('/teacher/course/'+ course.slug)
+
         })
     })
-
-   // res.redirect('/teacher/course/Python')
 
  }
 
@@ -248,7 +257,7 @@ const courseCreated = async (req, res, next) =>{
     var storage = multer.diskStorage({
 
         destination: function (req, file, cb) {
-          cb(null, '/src/public/img')
+          cb(null, './src/public/img')
         },
         filename: function (req, file, cb) {
           cb(null, file.fieldname + '-' + Date.now()+'.png')
@@ -257,15 +266,14 @@ const courseCreated = async (req, res, next) =>{
        
     var upload = multer({ storage: storage })
     upload.single('thumbnail')(req,res, async function(err){
-        res.json(req.body)
+
         var course = JSON.parse(JSON.stringify(req.body))
-        if(typeof req.file != 'undefined')
+        if(req.file != undefined)
         {
             course.thumbnail = req.file.filename
-            console.log("change")
+            //console.log("change: ", req.file.filename)
         }
-        else
-            delete course.thumbnail
+            //delete course.thumbnail
 
         var chapsId = []
         if(course.hasOwnProperty('chapters'))
@@ -292,14 +300,12 @@ const courseCreated = async (req, res, next) =>{
             
         course.author_id = req.user._id
         const newCourse = new CourseModel(course)
-        console.log("newCourse: ", newCourse)
+        //console.log("newCourse: ", newCourse)
         await newCourse.save()
         .then()
         .catch()
+        res.redirect('/teacher/course/'+newCourse.slug)
     })
-    
-   // res.redirect('/teacher/course/Python')
-
 }
 // [POST] teacher/upload
 const upload = async (req, res, next) =>{

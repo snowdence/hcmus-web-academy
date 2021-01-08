@@ -10,7 +10,7 @@ router.route("/all-courses").get((req, res)=>{
     })
 });
 
-router.route("/review-courses").get(studentController.review);
+//router.route("/review-courses").get(studentController.review);
 
 router.route("/archived").get((req, res)=>{
     res.render("pages/student/archived", {
@@ -25,5 +25,5 @@ router.post('/feedback', studentController.feedback)
 router.post('/favorite', studentController.favorite)
 
 
-router.route("/archived").get(studentController.archived);
+//router.route("/archived").get(studentController.archived);
 module.exports = router;

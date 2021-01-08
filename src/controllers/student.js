@@ -56,7 +56,7 @@ const courseDetail = async(req, res, next) => {
         myRate = 0
         myRate = await FeedbackModel.findOne({courseID: course._id, studentID: req.user._id})
         let nFeedback = await FeedbackModel.find({courseID: course._id})
-        if (nFeedback != null)
+        if (nFeedback.length >0)
         {
             rate = nFeedback.map(x=>x.rate)
             let average = (array) => array.reduce((a, b) => a + b,0) / array.length;

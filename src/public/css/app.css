@@ -205,12 +205,7 @@ tr:nth-of-type(odd) {
   padding: 9px 14px;
 }
 
-.fade {
-  opacity: 0;
-  -webkit-transition: opacity 0.15s linear;
-  -o-transition: opacity 0.15s linear;
-  transition: opacity 0.15s linear;
-}
+
 .fade.in {
   opacity: 1;
 }
