@@ -4,6 +4,7 @@ const LessonModel = require("../models/Lesson")
 const SubCategoryModel = require("../models/SubCategory")
 const UserModel = require("../models/User")
 const ProgressModel = require("../models/Progress")
+const FeedbackModel = require("../models/Feedback")
 
 
 const wishlist = async (req, res , next) => {
@@ -20,6 +21,17 @@ const courseDetail = async(req, res, next) => {
     .lean()
     .then(async course => 
     {
+        let myRate = await FeedbackModel.findOne({courseID: course._id, studentID: req.user._id})
+        let nFeedback = await FeedbackModel.find({courseID: course._id})
+        let rate = nFeedback.map(x=>x.rate)
+        let average = (array) => array.reduce((a, b) => a + b) / array.length;
+
+        console.log('rate: ', rate.length)
+
+        courseModel.updateOne({slug: req.params.slug}, {count_view: course.count_view + 1})
+        .lean()
+        .then()
+
         let SubCategory = await SubCategoryModel.findOne({_id: course.sub_category}).lean()
         var d = new Date(course.updatedAt); 
         updatedAt = d.toLocaleString()
@@ -63,19 +75,41 @@ const courseDetail = async(req, res, next) => {
             author: teacher,
             course: course,
             chapters: newChapters,
+            rate: average(rate),
+            nRate: rate.length,
+            myRate: myRate.rate,
         })  
     })
     .catch(next)
 }
 
-// [POST] teacher/update-progress
+// [POST] student/update-progress
 const updateProgress = async (req, res, next) =>{
     ProgressModel.updateOne({studentID: req.user._id, lessonID: req.body.lessonID}, req.body, {upsert: true})
     .then(num => console.log(num))
     //console.log(req.body)
 }
+
+// [POST] student/rate
+const rate = async (req, res, next) =>{
+    console.log('rate: ', req.body)
+    FeedbackModel.updateOne({studentID: req.user._id, courseID: req.body.courseID}, req.body, {upsert: true})
+    .then(num => console.log(num))
+    //console.log(req.body)
+}
+
+// [POST] student/feedback
+const feedback = async (req, res, next) =>{
+    console.log('feedback: ', req.body)
+
+    FeedbackModel.updateOne({studentID: req.user._id, courseID: req.body.courseID}, req.body, {upsert: true})
+    .then(num => console.log(num))
+    res.redirect(req.header('Referer') || '/')
+}
 module.exports = {
     wishlist,
     courseDetail,
     updateProgress,
+    rate,
+    feedback
 }

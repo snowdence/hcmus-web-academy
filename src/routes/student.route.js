@@ -24,5 +24,7 @@ router.route("/archived").get((req, res)=>{
 
 router.get('/course/:slug', studentController.courseDetail)
 router.post('/update-progress', studentController.updateProgress)
+router.post('/rate', studentController.rate)
+router.post('/feedback', studentController.feedback)
 
 module.exports = router;
