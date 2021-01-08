@@ -187,6 +187,24 @@ var register = function (Handlebars) {
     },
     subDescription: (s) =>{
       return s.substr(0,500)
+    },
+    progress: (index)=>{
+      return parseInt(index)*10;
+    },
+    //basic math helper
+    math: (a, opearator, b)=>{
+      if(opearator==='+'){
+        return parseInt(a+b)
+      }
+      if(opearator==='-'){
+        return parseInt(a-b)
+      }
+      if(opearator==='*'){
+        return parseInt(a*b)
+      }
+      if(opearator==='/'){
+        return parseInt(a/b)
+      }
     }
   };
 
