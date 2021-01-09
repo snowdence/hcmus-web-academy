@@ -1,0 +1,16 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "npm",
+			"script": "api_udemy",
+			"problemMatcher": [],
+			"label": "npm: api_udemy",
+			"detail": "node ./tools/udemy_crawl/scrape_course",
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			}
+		}
+	]
+}
