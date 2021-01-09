@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="../css/wishlist.css">
+<link rel="stylesheet" href="../css/watchlist.css">
 <div class="d-flex flex-column-fluid">
     <!--begin::Container-->
     <div class="container">
@@ -14,7 +14,8 @@
                                 <div class="wizard-wrapper">
                                     <div class="wizard-number">1</div>
                                     <div class="wizard-label">
-                                        <div class="wizard-title"><a href="/student/all-courses"><u>All Courses</u></a></div>
+                                        <div class="wizard-title"><a href="/student/all-courses"><u>All Courses</u></a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -24,7 +25,7 @@
                                 <div class="wizard-wrapper">
                                     <div class="wizard-number">2</div>
                                     <div class="wizard-label">
-                                        <div class="wizard-title"><a href="/student/wishlist"><u>WishList</u></a></div>
+                                        <div class="wizard-title"><a href="/student/watchlist/1"><u>WatchList</u></a></div>
                                     </div>
                                 </div>
                             </div>
@@ -34,7 +35,8 @@
                                 <div class="wizard-wrapper">
                                     <div class="wizard-number">3</div>
                                     <div class="wizard-label">
-                                        <div class="wizard-title"><a href="/student/review-courses"><u>Review Courses</u></a></div>
+                                        <div class="wizard-title"><a href="/student/review-courses"><u>Review
+                                                    Courses</u></a></div>
                                     </div>
                                 </div>
                             </div>
@@ -54,13 +56,124 @@
                 </div>
                 <!--end: Wizard Nav-->
                 <!--begin: Wizard Body-->
-                <div class="card card-custom card-shadowless rounded-top-0">
-                    <div class="card-body p-0">
-                        <div class="row justify-content-center py-8 px-8 py-lg-15 px-lg-10">
-                            <div class="col-xl-12 col-xxl-7">
+                <div class="card card-custom gutter-b">
+                    <div class="card-body">
+                        <!--begin: Datatable-->
+                        <div class="datatable datatable-bordered datatable-head-custom datatable-default datatable-primary datatable-loaded"
+                            id="kt_datatable">
+                            <table class="datatable-table" style="display: block; border: 1px solid black">
+                                <thead class="datatable-head">
+                                    <tr class="datatable-row ml-4">
+                                        <th data-field="RecordID"
+                                            class="datatable-cell-left datatable-cell datatable-cell-sort datatable-cell-sorted"
+                                            data-sort="asc">
+                                            <span style="width: 20px;">#
+
+                                            </span>
+                                        </th>
+                                        <th data-field="OrderID" class="datatable-cell datatable-cell-sort">
+                                            <span style="width: 350px;">Course Name</span>
+                                        </th>
+                                        <th data-field="Country" class="datatable-cell datatable-cell-sort">
+                                            <span style="width: 80px;">Teacher</span>
+                                        </th>
+                                        <th data-field="ShipDate" class="datatable-cell datatable-cell-sort">
+                                            <span style="width: 258px;">Date created</span>
+                                        </th>
+                                        <th data-field="Status" class="datatable-cell datatable-cell-sort">
+                                            <span style="width: 58px;">Status</span>
+                                        </th>
+                                        <th data-field="Actions" class="datatable-cell datatable-cell-sort">
+                                            <span style="width: 200px;">Progress</span>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                {{#each top10Courses}}
+                                <tbody class="datatable-body"
+                                    style="border-top: 1px solid black; border-bottom: 1px solid black;">
+                                    <tr data-row="0" class="datatable-row ml-4" style="">
+                                        <td class="datatable-cell-sorted datatable-cell-left datatable-cell"
+                                            data-field="RecordID" aria-label="1"><span style="width: 20px;"><span
+                                                    class="font-weight-bolder">{{@index}}</span></span></td>
+                                        <td data-field="OrderID" aria-label="64616-103" class="datatable-cell"><span
+                                                style="width: 350px;">
+                                                <div class="d-flex align-items-center">
+                                                    <div class="symbol symbol-50 symbol-sm flex-shrink-0">
+                                                        <div class="symbol-label">
+                                                            <img class="h-75" src="{{this.thumbnail}}" alt="photo">
+                                                        </div>
+                                                    </div>
+                                                    <div class="ml-4">
+                                                        <div
+                                                            class="text-dark-75 font-weight-bolder font-size-lg mb-0 ml-2">
+                                                            {{this.name}}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </span></td>
+                                        <td data-field="Country" aria-label="Brazil" class="datatable-cell">
+                                            <span style="width: 80px;">
+                                                <div class="font-weight-bolder font-size-lg mb-0">Brazil</div>
+                                            </span>
+                                        </td>
+                                        <td data-field="ShipDate" aria-label="10/15/2017" class="datatable-cell">
+                                            <span style="width: 258px;">
+                                                <div class="font-weight-bolder text-primary mb-0">{{this.created_at}}
+                                                </div>
+                                            </span>
+                                        </td>
+                                        <td data-field="Status" aria-label="5" class="datatable-cell">
+                                            <span style="width: 70px;">
+                                                <span
+                                                    class="label label-lg font-weight-bold  label-light-info label-inline">Info</span>
+                                            </span>
+                                        </td>
+                                        <td data-field="Actions" data-autohide-disabled="false" aria-label="null"
+                                            class="datatable-cell">
+                                            <span style="overflow: visible; position: relative; width: 200px;">
+                                                <div class="progress">
+                                                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-info"
+                                                        role="progressbar" style="width: {{progress @index}}%" aria-valuenow="25"
+                                                        aria-valuemin="0" aria-valuemax="100">{{progress @index}}%</div>
+                                                </div>
+                                            </span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                                {{/each}}
+                            </table>
+                            <div class="datatable-pager datatable-paging-loaded">
+                                <ul class="datatable-pager-nav my-2 mb-sm-0">
+                                    <li><a title="First"
+                                            class="datatable-pager-link datatable-pager-link-first datatable-pager-link-disabled"
+                                            data-page="1" disabled="disabled"><i class="flaticon2-fast-back"></i></a>
+                                    </li>
+                                    <li><a title="Previous"
+                                            class="datatable-pager-link datatable-pager-link-prev datatable-pager-link-disabled"
+                                            data-page="1" disabled="disabled"><i class="flaticon2-back"></i></a></li>
+                                    <li style="display: none;"><input type="text"
+                                            class="datatable-pager-input form-control" title="Page number"></li>
+                                    <li><a class="datatable-pager-link datatable-pager-link-number datatable-pager-link-active"
+                                            data-page="1" title="1">1</a></li>
+                                    <li><a class="datatable-pager-link datatable-pager-link-number" data-page="2"
+                                            title="2">2</a></li>
+                                    <li><a class="datatable-pager-link datatable-pager-link-number" data-page="3"
+                                            title="3">3</a></li>
+                                    <li><a class="datatable-pager-link datatable-pager-link-number" data-page="4"
+                                            title="4">4</a></li>
+                                    <li><a class="datatable-pager-link datatable-pager-link-number" data-page="5"
+                                            title="5">5</a></li>
+                                    <li><a title="Next" class="datatable-pager-link datatable-pager-link-next"
+                                            data-page="2"><i class="flaticon2-next"></i></a></li>
+                                    <li><a title="Last" class="datatable-pager-link datatable-pager-link-last"
+                                            data-page="35"><i class="flaticon2-fast-next"></i></a></li>
+                                </ul>
+
                             </div>
+                            <!--end: Datatable-->
                         </div>
                     </div>
+                    <!--end::Card-->
                 </div>
                 <!--end: Wizard Bpdy-->
             </div>

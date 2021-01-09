@@ -42,9 +42,6 @@ const CourseSchema = new mongoose.Schema({
   price_discount: {
     type: Number,
   },
-  rate: {
-    type: Number,
-  },
   chapters:{
     type: [Schema.Types.ObjectId],
     ref: "Chapter"

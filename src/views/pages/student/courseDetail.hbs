@@ -1,5 +1,6 @@
 <div class="d-flex flex-column-fluid">
-    
+    <div hidden id="courseID">{{course._id}}</div>    
+    <div hidden id="rate">{{myRate}}</div>
     <!--begin::Container-->
     <div class="container-fluid">
         <!--begin::Card-->
@@ -68,13 +69,17 @@
                                 <!--end::Contacts-->
                             </div>
                             <div class="my-lg-0 my-1">
-                                <a href="#" class="btn btn-sm btn-light-success font-weight-bolder text-uppercase mr-3">Reports</a>
-                                <a href="/teacher/course/{{course.slug}}/edit" class="btn btn-sm btn-info font-weight-bolder text-uppercase">Chỉnh sửa</a>
+                                <a name="enroll" class="btn btn-sm btn-light-info font-weight-bolder text-uppercase mr-3">Mua khóa học</a>
+                                {{#if favorite}}    
+                                <i id="watchlist" class="icon-xl text-danger fas fa-heart"></i>
+                                {{else}}
+                                <i id="watchlist" class="icon-xl text-danger far fa-heart"></i>
+                                {{/if}}
                             </div>
                         </div>
                         <!--end: Title-->
                         <!--begin: Content-->
-                        <div class="d-flex align-items-center flex-wrap justify-content-between">
+                        <div class="d-flex flex-column flex-wrap justify-content-between">
                             <div class="flex-grow-1 font-weight-bold text-dark-50 py-5 py-lg-2 mr-5">
                                 {{course.overview}}
                             </div>
@@ -84,17 +89,44 @@
                                         <div class="font-weight-bold mb-2">Ngày đăng tải</div>
                                         <span class="btn btn-sm btn-text btn-light-primary text-uppercase font-weight-bold">{{createdAt}}</span>
                                     </div>
-                                    <div class="">
+                                    <div class="mr-6">
                                         <div class="font-weight-bold mb-2">Lần cập nhật cuối</div>
                                         <span class="btn btn-sm btn-text btn-light-danger text-uppercase font-weight-bold">{{updatedAt}}</span>
                                     </div>
-                                </div>
-                                <div class="flex-grow-1 flex-shrink-0 w-150px w-xl-300px mt-4 mt-sm-0">
+                                    <div class="mr-6">
                                         <div class="font-weight-bold mb-2">Chủ Đề</div>
                                         <span class="btn btn-sm btn-text btn-light-success text-uppercase font-weight-bold">{{SubCategory}}</span>
-
-
+                                    </div>
                                 </div>
+                                
+                                <form action="">
+                                    <div class="flex-grow-1 flex-shrink-0 mr-5 mt-4 mt-sm-0">
+                                        <div class="font-weight-bold mb-2">Đánh giá</div>
+                                        <fieldset class="rating">
+                                        <input type="radio" id="star5" name="rating" value="5" />
+                                        <label for="star5">5 stars</label>
+                                        <input type="radio" id="star4" name="rating" value="4" />
+                                        <label for="star4">4 stars</label>
+                                        <input type="radio" id="star3" name="rating" value="3" />
+                                        <label for="star3">3 stars</label>
+                                        <input type="radio" id="star2" name="rating" value="2" />
+                                        <label for="star2">2 stars</label>
+                                        <input type="radio" id="star1" name="rating" value="1" />
+                                        <label for="star1">1 star</label>
+                                        </fieldset>
+                                    <div id="choice"></div>
+                                </div>
+                                </form>
+                                 <a tabindex="0" class="btn btn-outline-success" id="feedback" role="button"data-trigger="click" data-toggle="popover" title="Viết nhận xét" data-html="true" data-content="">  Thêm nhận xét
+                                    </a>
+                                    <div hidden id="content" class="hide">
+                                        <form method="POST" action="/student/feedback" class="my-0 py-0"> 
+                                            <textarea name="review" type="text" style="font-size: 1.9rem" class="md-textarea form-control py-0" placeholder="Đánh giá khóa học" rows="5"></textarea> 
+                                            <input hidden type="text" name="courseID" value="{{course._id}}">
+                                            <button id="voteSubmitButton" type="submit" class="btn btn-sm btn-primary">Gửi nhận xét</button>  
+                                        </form>
+                                    </div>
+                                
                             </div>
                         </div>
                         <!--end: Content-->
@@ -157,8 +189,8 @@
                             <i class="flaticon-chat-1 icon-2x text-muted font-weight-bold"></i>
                         </span>
                         <div class="d-flex flex-column">
-                            <span class="text-dark-75 font-weight-bolder font-size-sm">{số lượng đánh giá} Đánh giá</span>
-                            <a href="#" class="text-primary font-weight-bolder">View</a>
+                            <span class="text-dark-75 font-weight-bolder font-size-sm">{{nRate}} Đánh giá</span>
+                            <a href="#" class="text-primary font-weight-bolder">Xem</a>
                         </div>
                     </div>
                     <!--end: Item-->
@@ -336,7 +368,7 @@
                                             </div>
                                             <!--end::Text-->
                                             <!--begin::label-->
-                                            <span class="font-weight-bolder label label-xl label-light-success label-inline px-3 py-5 min-w-45px">{{course.rate}}
+                                            <span class="font-weight-bolder label label-xl label-light-success label-inline px-3 py-5 min-w-45px">{{rate}}
                                                 <i class="fas fa-star text-warning"></i>
                                             </span>  
                                             
@@ -484,6 +516,15 @@
        // $("span").html(result);
   });
     }
+    $('#voteSubmitButton').click(function(){
+        $('#feedback').click()
+        review = $('textarea').value
+        id = $('#courseID').html()
+        alert(review)
+        $.post("/student/feedback", {review: review, courseID: id}, function(result){     
+       // $("span").html(result);
+  });
+    })
 
 var T = setInterval(function(){
     var video =$( "video" );
@@ -498,9 +539,37 @@ var T = setInterval(function(){
     if (video.every(x=> x.duration != undefined)) clearInterval(T)
 }, 1000);
 
- $(document).ready(function() {
-  $('#rateMe4').mdbRate();
+$('.rating input').change(
+  function() {
+
+    $('#choice').text(this.value + ' stars');
+    id = $('#courseID').html()
+    $.post("/student/rate", {rate: this.value, courseID: id}, function(result){
+            
+       // $("span").html(result);
+  });
+  }
+)
+$('#watchlist').click(function(){
+    id = $('#courseID').html()
+    if( $(this).hasClass("far"))
+    {
+        $(this).attr("class", "icon-xl text-danger fas fa-heart")
+        $.post("/student/favorite", {favorite: true, courseID: id})
+    }
+    else 
+    {
+        $(this).attr("class", "icon-xl text-danger far fa-heart")
+        $.post("/student/favorite", {favorite: false, courseID: id})
+    }
+})
+
+$(document).ready(function(){
+    //fas fa-star-half-alt
+    rate = $('#rate').html()
+    $('#star'+rate.substring(0,1)).prop("checked", true);
+    $('#feedback').attr("data-content", $('#content').html())
+    $('[data-toggle="popover"]').popover();   
 });
 </script>
-
 
