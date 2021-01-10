@@ -2,6 +2,7 @@ const express = require("express");
 const courseModels = require("../controllers/web")
 const router = express.Router();
 const passport = require("passport");
+const register = require("../controllers/register")
 const authenticationMiddleware = require("../middleware/authentication");
 router.route("/").get(courseModels.getHomePage);
 
@@ -27,7 +28,7 @@ router.route("/login")
 
 router.route("/registry").get((req, res) => {
   res.render("pages/registry", { layout: null });
-});
+}).post(register.sendMail);
 
 router.route("/logout").get(function (req, res) {
   req.logout();

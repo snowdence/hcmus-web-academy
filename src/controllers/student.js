@@ -185,5 +185,6 @@ module.exports = {
     updateProgress,
     rate,
     feedback,
-    favorite
+    favorite,
+    review
 }
