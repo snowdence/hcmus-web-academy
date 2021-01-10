@@ -1,13 +1,17 @@
 const nodeMailer = require('nodemailer')
+const otpGenerator = require('otp-generator')
 const adminEmail = 'hcmusclck18@gmail.com'
 const adminPassword = 'taokhongbiet'
 const mailHost = 'smtp.gmail.com'
 const mailPort = 587
+
+const otp = otpGenerator.generate(6, { upperCase: false, specialChars: false });
+
 const sendMail = (receiver) => {
   const transporter = nodeMailer.createTransport({
     host: mailHost,
     port: mailPort,
-    secure: false, // nếu các bạn dùng port 465 (smtps) thì để true, còn lại hãy để false cho tất cả các port khác
+    secure: false, 
     auth: {
       user: adminEmail,
       pass: adminPassword
@@ -16,7 +20,8 @@ const sendMail = (receiver) => {
   const options = {
     from: adminEmail, 
     to: receiver,
-    text: "hello"
+    subject: "Verify your email",
+    text: otp
   }
   return transporter.sendMail(options)
 }

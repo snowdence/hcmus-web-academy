@@ -27,7 +27,10 @@ router.route("/login")
   );
 
 router.route("/registry").get((req, res) => {
-  res.render("pages/registry", { layout: null });
+  res.render("pages/registry", { 
+    layout: null,
+    title: "Sign Up" 
+  });
 }).post(register.sendMail);
 
 router.route("/logout").get(function (req, res) {
