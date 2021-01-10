@@ -5,7 +5,7 @@
 <head>
   <base href="../../../../">
   <meta charset="utf-8" />
-  <title>HWA - Đăng ký</title>
+  <title>HWA - Sign Up</title>
   <meta name="description" content="Login page example" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
   <link rel="canonical" href="https://keenthemes.com/metronic" />
@@ -47,7 +47,7 @@
           <!--begin::Login Sign in form-->
           <div class="login-signin">
             <div class="mb-5">
-              <h1>Đăng ký </h1>
+              <h1>Sign Up </h1>
             </div>
             <form class="form" action="/registry" method="POST" id="kt_signup_form">
               {{#if message}}
@@ -71,34 +71,27 @@
 
               <div class="form-group mb-5">
                 <input class="form-control h-auto form-control-solid py-4 px-8" type="text" placeholder="Username"
-                  name="username" autocomplete="off" />
+                  name="username" autocomplete="off" minlength="4" required/>
+              </div>
+
+              <div class="form-group mb-5">
+                <input class="form-control h-auto form-control-solid py-4 px-8" type="text" placeholder="Email"
+                  name="to" autocomplete="off" required/>
               </div>
 
               <div class="form-group mb-5">
                 <input class="form-control h-auto form-control-solid py-4 px-8" type="password" placeholder="Password"
-                  name="password" />
+                  name="password" id="password" minlength="4" maxlength="20" required/>
               </div>
 
               <div class="form-group mb-5">
                 <input class="form-control h-auto form-control-solid py-4 px-8" type="password" placeholder="Confirm Password"
-                  name="cfpassword" />
+                  name="cfpassword" id="cfpassword" minlength="4" maxlength="20" required/>
+                  <span id='message'></span>
               </div>
-              {{!-- <div class="form-group d-flex flex-wrap justify-content-between align-items-center">
-                <div class="checkbox-inline">
-                  <label class="checkbox m-0 text-muted">
-                    <input type="checkbox" name="remember" />
-                    <span></span>Ghi nhớ thông tin</label>
-                </div>
-                <a href="javascript:;" id="kt_login_forgot" class="text-muted text-hover-primary">Forget Password ?</a>
-              </div> --}}
               <button id="kt_signup_submit" type="submit"
-                class="btn btn-primary font-weight-bold px-9 py-4 my-3 mx-4">Đăng ký</button>
+                class="btn btn-primary font-weight-bold px-9 py-4 my-3 mx-4">Sign Up</button>
             </form>
-            {{!-- <div class="mt-10">
-              <span class="opacity-70 mr-4">Bạn không có tài khoản?</span>
-              <a href="javascript:;" id="kt_login_signup" class="text-muted text-hover-primary font-weight-bold">Đăng
-                ký!</a>
-            </div> --}}
           </div>
           <!--end::Login Sign in form-->
 
@@ -124,3 +117,14 @@
 <!--end::Body-->
 
 </html>
+<script>
+  $('#password, #cfpassword').on('keyup', function () {
+  if ($('#password').val() !== $('#cfpassword').val()) {
+    $('#message').html('CONFIRM PASSWORD DOES NOT MATCH').css('color', 'red');
+    $("#kt_signup_submit").attr("disabled", true);
+  } else{
+    $('#message').html('');
+    $("#kt_signup_submit").attr("disabled", false);
+  }
+});
+</script>

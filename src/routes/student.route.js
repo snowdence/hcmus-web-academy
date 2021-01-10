@@ -10,7 +10,7 @@ router.route("/all-courses").get((req, res)=>{
     })
 });
 
-//router.route("/review-courses").get(studentController.review);
+router.route("/review-courses").get(studentController.review);
 
 router.route("/archived").get((req, res)=>{
     res.render("pages/student/archived", {
