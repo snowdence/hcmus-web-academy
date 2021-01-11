@@ -26,5 +26,6 @@ const sendMail = (receiver) => {
   return transporter.sendMail(options)
 }
 module.exports = {
-  sendMail
+  sendMail,
+  otp
 }
