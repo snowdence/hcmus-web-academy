@@ -46,7 +46,7 @@ passport.deserializeUser(async (username, done) => {
 
 // connect mongo
 var db = mongoClient
-  .connect("mongodb://localhost:27017/hwa", {
+  .connect(process.env.MONGODB_URI, {
     useNewUrlParser: true,
     useCreateIndex: true,
     useUnifiedTopology: true,

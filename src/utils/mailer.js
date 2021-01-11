@@ -14,7 +14,7 @@ const sendMail = (receiver) => {
     secure: false, 
     auth: {
       user: adminEmail,
-      pass: adminPassword
+      pass: adminPassword,
     }
   })
   const options = {
