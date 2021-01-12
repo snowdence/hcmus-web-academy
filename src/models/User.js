@@ -31,12 +31,6 @@ const UserSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
-  list_courses: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: "Course",
-    },
-  ],
 });
 
 const User = mongoose.model("User", UserSchema);

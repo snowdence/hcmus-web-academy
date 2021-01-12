@@ -249,6 +249,18 @@ const favorite = async (req, res, next) =>{
    // res.redirect(req.header('Referer') || '/')
 }
 
+// [POST] student/enroll
+const enroll = async (req, res, next) =>{
+    console.log('feedback: ', req.body)
+    doc = {
+        studentID: req.user._id,
+        courseID: req.body.courseID
+    }
+    EnrollModel.updateOne({studentID: req.user._id, courseID: req.body.courseID}, doc, {upsert: true})
+    .then(num => console.log(num))
+   res.redirect(req.header('Referer') || '/')
+}
+
 module.exports = {
     wishlist,
     courseDetail,
@@ -258,4 +270,5 @@ module.exports = {
     favorite,
     review,
     lessonDetail,
+    enroll,
 }

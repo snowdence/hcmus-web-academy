@@ -92,10 +92,12 @@
                                 <!--end::Contacts-->
                             </div>
                             <div class="my-lg-0 my-1">
+                                <form id="enrollForm" action="/student/enroll" method="POST">
+                                        <input hidden type="text" name="courseID" id="" value="{{course._id}}">
+                                </form>
                                 {{#unless enroll}}
                                 <a id='enroll' name="enroll"
-                                    class="btn btn-sm btn-light-info font-weight-bolder text-uppercase mr-3">Mua khóa
-                                    học</a>
+                                    class="btn btn-sm btn-light-info font-weight-bolder text-uppercase mr-3">Mua khóa học</a>
                                 {{/unless}}
                                 {{#if favorite}}
                                 <i id="watchlist" class="icon-xl text-danger fas fa-heart"></i>
@@ -128,7 +130,7 @@
                                             class="btn btn-sm btn-text btn-light-success text-uppercase font-weight-bold">{{SubCategory}}</span>
                                     </div>
                                 </div>
-
+                                {{#if enroll}}
                                 <form action="">
                                     <div class="flex-grow-1 flex-shrink-0 mr-5 mt-4 mt-sm-0">
                                         <div class="font-weight-bold mb-2">Đánh giá</div>
@@ -161,6 +163,7 @@
                                             nhận xét</button>
                                     </form>
                                 </div>
+                            {{/if}}
 
                             </div>
                         </div>
@@ -539,15 +542,19 @@
                                                             <i class="fa fas fa-photo-video text-warning icon-xl"></i>
                                                         </td>
                                                         <td class="pl-0">
+                                                            {{#if enroll}}
+                                                            <a class="text-dark-75 font-weight-bolder text-hover-primary mb-1 font-size-lg"
+                                                                href="{{_id}}">{{name}}</a>
+                                                            {{else}}
                                                             {{#if preview}}
                                                             <a class="text-dark-75 font-weight-bolder text-hover-primary mb-1 font-size-lg"
                                                                 data-toggle="modal"
                                                                 data-target="#myModal{{_id}}">{{name}}</a>
-                                                            <span class="text-muted font-weight-bold d-block">Được xem
-                                                                trước</span>
+                                                            <span class="text-muted font-weight-bold d-block">Được xem trước</span>
                                                             {{else}}
                                                             <span
-                                                                class="text-dark-75 font-weight-bolder text-hover-primary mb-1 font-size-lg">{{name}}</span>
+                                                                class="nonPreview text-dark-75 font-weight-bolder text-hover-primary mb-1 font-size-lg">{{name}}</span>
+                                                            {{/if}}
                                                             {{/if}}
                                                             <span class="progress">
                                                                 <div class="progress-bar progress-bar-striped progress-bar-animated bg-danger"
@@ -639,76 +646,98 @@
         });
     })
 
-    var T = setInterval(function () {
-        var video = $("video");
+var T = setInterval(function(){
+    var video =$( "video" );
 
-        for (x of video) {
-            var id = (x.id.substring(0, x.id.indexOf('_')));
-            //player = document.getElementById(id);
-            $("." + id).html(new Date(x.duration * 1000).toISOString().substr(11, 8))
-            //alert(video[0].attr('id'))
+    for(x of video)
+    {
+        var id = (x.id.substring(0,x.id.indexOf('_')));
+        //player = document.getElementById(id);
+        $("."+id).html(new Date(x.duration * 1000).toISOString().substr(11, 8))
+        //alert(video[0].attr('id'))
+    }
+    if (video.every(x=> x.duration != undefined)) clearInterval(T)
+}, 1000);
+
+$('.rating input').change(
+  function() {
+
+    $('#choice').text(this.value + ' stars');
+    id = $('#courseID').html()
+    $.post("/student/rate", {rate: this.value, courseID: id}, function(result){
+            
+       // $("span").html(result);
+  });
+  }
+)
+$('#watchlist').click(function(){
+    id = $('#courseID').html()
+    if( $(this).hasClass("far"))
+    {
+        $(this).attr("class", "icon-xl text-danger fas fa-heart")
+        $.post("/student/favorite", {favorite: true, courseID: id})
+        Swal.fire({
+        icon: "success",
+        title: "Đã thêm khóa học vào danh sách yêu thích",
+        showConfirmButton: false,
+        timer: 1500
+    });
+    }
+    else 
+    {
+        $(this).attr("class", "icon-xl text-danger far fa-heart")
+        $.post("/student/favorite", {favorite: false, courseID: id})
+        Swal.fire({
+        icon: "success",
+        title: "Đã xóa khóa học khỏi danh sách yêu thích",
+        showConfirmButton: false,
+        timer: 1500
+    })
+    }
+})
+
+$(document).ready(function(){
+    //fas fa-star-half-alt
+    rate = $('#rate').html()
+    $('#star'+rate.substring(0,1)).prop("checked", true);
+    $('#feedback').attr("data-content", $('#content').html())
+    $('[data-toggle="popover"]').popover();   
+});
+
+$(".nonPreview").click(function(e) {
+    Swal.fire("Đây là khóa học trả phí", "Hãy đăng ký mua khóa học để tiếp tục", "warning");
+});
+
+$("#enroll").click(function(e) {
+
+    Swal.fire({
+        title: "Bạn có chắc muốn mua khóa học ?",
+        text: "Bạn sẽ không thể hoàn tác",
+        icon: "question",
+        showCancelButton: true,
+        confirmButtonText: "Có",
+        cancelButtonText: "Không",
+        reverseButtons: true
+    }).then(function(result) {
+        if (result.value) {
+            Swal.fire(
+                "Mua thành công",
+                "Bạn có thể tiến hành học và đánh giá khóa học",
+                "success"
+            )
+            $('#enrollForm').submit()
+            // result.dismiss can be "cancel", "overlay",
+            // "close", and "timer"
+        } else if (result.dismiss === "cancel") {
+            Swal.fire(
+                "Hủy mua khóa học",
+                "Bạn vẫn có thể xem trước một số bài học",
+                "error"
+            )
         }
         if (video.every(x => x.duration != undefined)) clearInterval(T)
     }, 1000);
+})
 
-    $('.rating input').change(
-        function () {
-
-            $('#choice').text(this.value + ' stars');
-            id = $('#courseID').html()
-            $.post("/student/rate", { rate: this.value, courseID: id }, function (result) {
-
-                // $("span").html(result);
-            });
-        }
-    )
-    $('#watchlist').click(function () {
-        id = $('#courseID').html()
-        if ($(this).hasClass("far")) {
-            $(this).attr("class", "icon-xl text-danger fas fa-heart")
-            $.post("/student/favorite", { favorite: true, courseID: id })
-        }
-        else {
-            $(this).attr("class", "icon-xl text-danger far fa-heart")
-            $.post("/student/favorite", { favorite: false, courseID: id })
-        }
-    })
-
-    $(document).ready(function () {
-        //fas fa-star-half-alt
-        rate = $('#rate').html()
-        $('#star' + rate.substring(0, 1)).prop("checked", true);
-        $('#feedback').attr("data-content", $('#content').html())
-        $('[data-toggle="popover"]').popover();
-    });
-
-
-    $("#enroll").click(function (e) {
-
-        Swal.fire({
-            title: "Are you sure?",
-            text: "You wont be able to revert this!",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonText: "Yes, delete it!",
-            cancelButtonText: "No, cancel!",
-            reverseButtons: true
-        }).then(function (result) {
-            if (result.value) {
-                Swal.fire(
-                    "Deleted!",
-                    "Your file has been deleted.",
-                    "success"
-                )
-                // result.dismiss can be "cancel", "overlay",
-                // "close", and "timer"
-            } else if (result.dismiss === "cancel") {
-                Swal.fire(
-                    "Cancelled",
-                    "Your imaginary file is safe :)",
-                    "error"
-                )
-            }
-        });
-    });
+    
 </script>

@@ -24,6 +24,7 @@ router.post('/update-progress', studentController.updateProgress)
 router.post('/rate', studentController.rate)
 router.post('/feedback', studentController.feedback)
 router.post('/favorite', studentController.favorite)
+router.post('/enroll', studentController.enroll)
 
 
 //router.route("/archived").get(studentController.archived);
