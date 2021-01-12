@@ -89,10 +89,10 @@ const courseDetail = async(req, res, next) => {
                 {
                    // console.log(x._id, req.user._id)
                     pr = await ProgressModel.findOne({lessonID: x._id, studentID: req.user._id})
-                    //console.log(pr)
+
                     if (pr != null)
-                        x.progress = pr.progress
-                    else x.progress = 0
+                        x.prog = pr.progress
+                    else x.prog = 0
                 }
                 newChapters.push({
                     _id: chap._id,
@@ -122,11 +122,88 @@ const courseDetail = async(req, res, next) => {
     .catch(next)
 }
 
+const lessonDetail = async(req, res, next) => {
+    
+    courseModel.findOne({slug: req.params.slug})
+    .lean()
+    .then(async course => 
+    {
+        var rate = []
+        ave = 0
+        myRate = 0
+        myRate = await FeedbackModel.findOne({courseID: course._id, studentID: req.user._id})
+        let nFeedback = await FeedbackModel.find({courseID: course._id})
+        if (nFeedback.length >0)
+        {
+            rate = nFeedback.map(x=>x.rate)
+            let average = (array) => array.reduce((a, b) => a + b,0) / array.length;
+            ave = average(rate)
+        }
+        if (myRate != null) myRate = myRate.rate
+
+        courseModel.updateOne({slug: req.params.slug}, {count_view: course.count_view + 1})
+        .lean()
+        .then()
+
+        let SubCategory = await SubCategoryModel.findOne({_id: course.sub_category}).lean()
+        var d = new Date(course.updatedAt); 
+        updatedAt = d.toLocaleString()
+        d = new Date(course.createdAt); 
+        createdAt = d.toLocaleString()
+
+        var newChapters =[]
+        if(course.chapters.length > 0)
+        {
+            let chapters = await ChapterModel.find({_id: {$in: course.chapters}})
+            for (let chap of chapters){
+                let lessons = []
+                if (chap.lessons.length > 0)
+                {
+                    lessons = await LessonModel.find({_id:{$in: chap.lessons}}).lean()
+                }
+                for (var x of lessons)
+                {
+                   // console.log(x._id, req.user._id)
+                    pr = await ProgressModel.findOne({lessonID: x._id, studentID: req.user._id})
+
+                    if (pr != null)
+                        x.prog = pr.progress
+                    else x.prog = 0
+                }
+                newChapters.push({
+                    _id: chap._id,
+                    name: chap.name,
+                    lessons: lessons,
+                })
+            }
+            
+        }
+        let teacher = await UserModel.findOne({_id: course.author_id}).lean()
+        let student = await UserModel.findOne({_id: req.user._id}).lean()
+        lesson = await LessonModel.findOne({_id: req.params.lesson}).lean()
+        res.render("pages/student/lessonDetail", {
+            SubCategory: SubCategory.name,
+            createdAt: createdAt,
+            updatedAt: updatedAt,
+            author: teacher,
+            course: course,
+            chapters: newChapters,
+            rate: ave,
+            nRate: rate.length,
+            myRate: myRate,
+            favorite: student.list_courses.map( s => JSON.stringify( s ) ).includes(JSON.stringify(course._id)),
+            lesson: lesson
+        })  
+    })
+    .catch(next)
+}
+
 // [POST] student/update-progress
 const updateProgress = async (req, res, next) =>{
+    console.log('DEBUG: ', req.body)
+
     ProgressModel.updateOne({studentID: req.user._id, lessonID: req.body.lessonID}, req.body, {upsert: true})
     .then(num => console.log(num))
-    //console.log(req.body)
 }
 
 // [POST] student/rate
@@ -186,5 +263,6 @@ module.exports = {
     rate,
     feedback,
     favorite,
-    review
+    review,
+    lessonDetail,
 }

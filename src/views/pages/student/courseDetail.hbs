@@ -11,7 +11,7 @@
                     <!--begin: Pic-->
                     <div class="flex-shrink-0 mr-7 mt-lg-0 mt-3">
                         <div class="symbol symbol-50 symbol-lg-120">
-                            <img alt="Pic" src="/img/{{course.thumbnail}}">
+                            <img alt="Pic" src="{{course.thumbnail}}">
                         </div>
                         <div class="symbol symbol-50 symbol-lg-120 symbol-primary d-none">
                             <span class="font-size-h3 symbol-label font-weight-boldest">JM</span>
@@ -423,7 +423,6 @@
                                         </div>
                                     </div>
                                     <div id="i{{_id}}" class="collapse" aria-labelledby="h{{_id}}" data-parent="" style="">
-                                
                                         <div class="table-responsive">
                                             <table class="table table-borderless table-vertical-center">
                                                 
@@ -441,17 +440,17 @@
                                                             <span class="text-dark-75 font-weight-bolder text-hover-primary mb-1 font-size-lg">{{name}}</span>
                                                             {{/if}}
                                                             <span class="progress">
-                                                                <div class="progress-bar progress-bar-striped progress-bar-animated bg-danger" role="progressbar" style="width: {{progress}}%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                                                                <div class="progress-bar progress-bar-striped progress-bar-animated bg-danger" role="progressbar" style="width: {{prog}}%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
                                                             </span>
                                                         </td>
 
                                                         <!--Video Modal -->
                                                         <div id="myModal{{_id}}" class="modal fade center" role="dialog" >
-                                                            <div class="modal-dialog">
+                                                            <div class="modal-dialog modal-lg">
                                                             <!-- Modal content-->
                                                             <div class="modal-content">
                                                                 <div class="modal-body">
-                                                                <video id="i{{_id}}" class="video-js"onpause="pauseFunction('i{{_id}}')" controls preload="video-js vjs-default-skin vjs-big-play-centered" width="640" height="264" poster="" data-setup='{}'>
+                                                                <video id="i{{_id}}" class="video-js" controls preload="video-js vjs-default-skin vjs-big-play-centered" width="640" height="264" poster="" data-setup='{}'>
                                                                     <source src="/video/{{video}}" type='video/mp4'>
                                                                 </video>
                                                                 </div>  
@@ -508,14 +507,6 @@
 
 <script>
 
-    function pauseFunction(id){
-        player = document.getElementById(id+'_html5_api');
-        var percentComplete = player.currentTime/player.duration*100;
-        $.post("/student/update-progress", {progress: percentComplete, lessonID: id.substring(1)}, function(result){
-            
-       // $("span").html(result);
-  });
-    }
     $('#voteSubmitButton').click(function(){
         $('#feedback').click()
         review = $('textarea').value

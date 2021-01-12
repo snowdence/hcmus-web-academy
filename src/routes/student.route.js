@@ -18,6 +18,7 @@ router.route("/archived").get((req, res)=>{
     })
 });
 
+router.get('/course/:slug/:lesson', studentController.lessonDetail)
 router.get('/course/:slug', studentController.courseDetail)
 router.post('/update-progress', studentController.updateProgress)
 router.post('/rate', studentController.rate)

@@ -209,3 +209,38 @@ tr:nth-of-type(odd) {
 .fade.in {
   opacity: 1;
 }
+/*
+#custom-wrapper {
+  background: #2f89fc;
+  background: -moz-linear-gradient(-45deg, #2f89fc 0%, #5effc9 100%);
+  background: -webkit-gradient(left top, right bottom, color-stop(0%, #2f89fc), color-stop(100%, #5effc9));
+  background: -webkit-linear-gradient(-45deg, #2f89fc 0%, #5effc9 100%);
+  background: -o-linear-gradient(-45deg, #2f89fc 0%, #5effc9 100%);
+  background: -ms-linear-gradient(-45deg, #2f89fc 0%, #5effc9 100%);
+  background: -webkit-linear-gradient(315deg, #2f89fc 0%, #5effc9 100%);
+  background: -o-linear-gradient(315deg, #2f89fc 0%, #5effc9 100%);
+  background: linear-gradient(135deg, #2f89fc 0%, #5effc9 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#2f89fc', endColorstr='#5effc9', GradientType=1 );
+  opacity: .7;    -webkit-transition: all 0.5s ease;
+  -moz-transition: all 0.5s ease;
+  -o-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+
+}*/
+.myVideo {
+  /* override other styles to make responsive */
+  width: 100%    !important;
+  height: auto   !important;
+}
+.videoWrapper {
+  position: relative;
+  padding-bottom: 56.25%; /* 16:9 */
+  height: 0;
+}
+.videoWrapper video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}

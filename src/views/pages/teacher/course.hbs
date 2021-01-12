@@ -183,37 +183,31 @@
         <div class="row">
             <div class="d-flex  align-items-center flex-wrap">
                 <div class="d-flex flex-wrap">
-                    <form method="">
-                    
-                        <button type="submit"  name="page" value="1" class="btn btn-light-success font-weight-bold mr-2">
-                            <i class="ki ki-bold-double-arrow-back icon-xs"></i>
-                        </button>
-                        <button type="submit"  name="page" value="{{Prev curPage}}" class="btn btn-light-success font-weight-bold mr-2">
-                            <i class="ki ki-bold-arrow-back icon-xs"></i>
-                        </button>
-                    
+                    <div class="card-footer">
+            {{#pagination currentPage pages}}
+            <div class="pagination">
+                {{#unless startFromFirstPage}}
+                <a href="/teacher/courses/1" class="btn btn-icon btn-sm btn-light mr-2 my-1">
+                    <i class="ki ki-bold-double-arrow-back icon-xs"></i>
+                </a>
+                {{/unless}}
+                {{#each pages}}
+                {{#if isCurrent}}
+                <a href="/teacher/courses/{{page}}"
+                    class="btn btn-icon btn-sm border-0 btn-light btn-hover-primary active mr-2 my-1">{{page}}</a>
+                {{/if}}
+                {{#unless isCurrent}}
+                <a href="/teacher/courses/{{page}}" class="btn btn-icon btn-sm border-0 btn-light mr-2 my-1">{{page}}</a>
+                {{/unless}}
+                {{/each}}
 
-                        {{#each pages}}
-                        {{#if (isEqual this ../curPage)}}
-                        <button type="submit"  name="page" value="{{../curPage}}" class="btn btn-icon btn-sm border-0 btn-hover-success active ">
-                            {{../curPage}}
-                        </button>
-                        
-                        {{else}}
-                        
-                        <button type="submit" name="page" value="{{this}}" class="btn btn-icon btn-sm border-0 btn-hover-success">
-                            {{this}}
-                        </button>
-                        
-                        {{/if}}
-                        {{/each}}
-                        <button type="submit"  name="page" value="{{Next curPage courses}}" class="btn btn-light-success font-weight-bold mr-2">
-                            <i class="ki ki-bold-arrow-next icon-xs"></i>
-                        </button>
-                        <button type="submit"  name="page" value="{{courses.length}}" class="btn btn-light-success font-weight-bold mr-2">
-                            <i class="ki ki-bold-double-arrow-next icon-xs"></i>
-                        </button>
-                    </form>
+                {{#unless endAtLastPage}}
+                <a href="/teacher/courses/{{pages}}">&gt;</a>
+                {{/unless}}
+            </div>
+            {{/pagination}}
+
+        </div>
                 </div>
             </div>
         </div>

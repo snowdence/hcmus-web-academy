@@ -17,23 +17,20 @@ const getIndex =  (req, res, next) => {
 
 // [GET] /teacher/course
 const viewCourse =  (req, res, next) => {
-console.log("aaa")
-    var curPage = req.query.page
-    if(curPage == undefined) curPage = 1
+    let perPage = 5;
+    let page = req.params.page || 1;
     CourseModel.countDocuments({})
-    .then((num) => {
-        CourseModel.find({"author_id": req.user._id}).limit(4).skip(4*(curPage-1))
+    .then((count) => {
+        CourseModel.find({"author_id": req.user._id}).skip(perPage * page - perPage)
+        .limit(perPage)
         .lean()
         .then((courses) => {
-            var nPage = Math.floor(num / 4)
-            if(courses.length % 4) nPage++
-            var pages = Array.from({length: nPage}, (_, i) => i + 1)
-            console.log("pages: ", pages)
-
             res.render("pages/teacher/course", {
                 courses : courses,
-                curPage: curPage,
-                pages: pages,
+                currentPage: page, // page hiện tại
+                pageCount: count,
+                itemPerPage: perPage,
+                pages: Math.ceil(count / perPage),
             });
         })
     })
@@ -165,7 +162,7 @@ const editCourse = (req, res, next) => {
         var newData = JSON.parse(JSON.stringify(req.body))
         if(typeof req.file != 'undefined')
         {
-            newData.thumbnail = req.file.filename
+            newData.thumbnail = '/img/' + req.file.filename
             console.log("change")
         }
         else

@@ -5,7 +5,7 @@ const TeacherController = require("../controllers/teacher")
 
 router.get('/', TeacherController.getIndex)
 
-router.get('/course/', TeacherController.viewCourse)
+router.get('/courses/:page', TeacherController.viewCourse)
 
 router.get('/course/create', TeacherController.createCourse)
 
