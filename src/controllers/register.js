@@ -1,9 +1,12 @@
 const mailer = require('../utils/mailer')
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
 const UserModel = require("../models/User")
 let useremail;
 const sendMail = async (req, res, next) => {
   try {
     const {username, to, password, cfpassword} = req.body
+    const hashpw = await bcrypt.hash(password, saltRounds)
     const user = await UserModel.findOne({email: to}).lean()
     if(user){
       res.render("pages/registry", {
@@ -16,8 +19,7 @@ const sendMail = async (req, res, next) => {
       const newUser = new UserModel({
         username: username,
         email: to,
-        password: password,
-        role: 2,
+        password: hashpw,
         otp: mailer.otp,
         avatar: "",
         phone: "",
@@ -35,7 +37,7 @@ const sendMail = async (req, res, next) => {
     res.send(error)
   }
 }
-const otpAuth = (req, res)=>{
+const otpAuth = async (req, res)=>{
   const{digit1, digit2, digit3, digit4, digit5, digit6} = req.body
   const userOtp = `${digit1}${digit2}${digit3}${digit4}${digit5}${digit6}`
   userOtp.toLowerCase()
