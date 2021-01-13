@@ -79,7 +79,7 @@
                                             <span style="width: 80px;">Teacher</span>
                                         </th>
                                         <th data-field="ShipDate" class="datatable-cell datatable-cell-sort">
-                                            <span style="width: 258px;">Date created</span>
+                                            <span style="width: 258px;">Updated Date</span>
                                         </th>
                                         <th data-field="Status" class="datatable-cell datatable-cell-sort">
                                             <span style="width: 58px;">Status</span>
@@ -95,7 +95,7 @@
                                     <tr data-row="{{@index}}" id="{{_id}}" class="datatable-row ml-4" style="">
                                         <td class="datatable-cell-sorted datatable-cell-left datatable-cell row-index" data-field="RecordID" aria-label="1">
                                             <span class="font-weight-bolder" style="width: 20px;">
-                                                {{math @index '+' 1}}
+                                                {{math (math (math this.page '*' 10) '+' 1) '+' @index}}
                                             </span>
                                         </td>
                                         <td data-field="OrderID" aria-label="64616-103" class="datatable-cell">
@@ -121,7 +121,7 @@
                                         </td>
                                         <td data-field="ShipDate" aria-label="10/15/2017" class="datatable-cell">
                                             <span style="width: 258px;">
-                                                <div class="font-weight-bolder text-primary mb-0">{{this.created_at}}
+                                                <div class="font-weight-bolder text-primary mb-0">{{this.updatedAt}}
                                                 </div>
                                             </span>
                                         </td>
@@ -162,29 +162,26 @@
                             </table>
                             <div class="datatable-pager datatable-paging-loaded">
                                 <ul class="datatable-pager-nav my-2 mb-sm-0">
-                                    <li><a title="First"
-                                            class="datatable-pager-link datatable-pager-link-first datatable-pager-link-disabled"
-                                            data-page="1" disabled="disabled"><i class="flaticon2-fast-back"></i></a>
-                                    </li>
-                                    <li><a title="Previous"
-                                            class="datatable-pager-link datatable-pager-link-prev datatable-pager-link-disabled"
-                                            data-page="1" disabled="disabled"><i class="flaticon2-back"></i></a></li>
-                                    {{#each listpage}}
-                                    {{#if @index}}
                                     <li>
-                                        <a href="/student/watchlist/{{@index}}" class="datatable-pager-link datatable-pager-link-number {{this}}"
+                                        <a href="/student/watchlist/{{previouspage}}" title="Previous" onclick="return {{prevActive}};" class="datatable-pager-link datatable-pager-link-prev">
+                                            <i class="flaticon2-back"></i>
+                                        </a>
+                                    </li>
+                                    {{#each listpage}}
+                                    {{#if (wlpagi @index this.i)}}
+                                    <li>
+                                        <a href="/student/watchlist/{{@index}}" class="datatable-pager-link datatable-pager-link-number {{this.class}}"
                                             data-page="{{@index}}" title="{{@index}}">{{@index}}
                                         </a>
                                     </li>
                                     {{/if}}
                                     {{/each}}
                                     <li>
-                                        <a title="Next" class="datatable-pager-link datatable-pager-link-next" data-page="2">
+                                        <a href="/student/watchlist/{{nextpage}}" title="Next"  onclick="return {{nextActive}};" class="datatable-pager-link datatable-pager-link-next" >
                                             <i class="flaticon2-next"></i>
                                         </a>
                                     </li>
-                                    <li><a title="Last" class="datatable-pager-link datatable-pager-link-last"
-                                            data-page="35"><i class="flaticon2-fast-next"></i></a></li>
+                                    
                                 </ul>
 
                             </div>

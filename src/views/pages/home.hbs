@@ -102,7 +102,7 @@
             <div class="carousel-item active">
               <div class="d-flex flex-row">
                 {{#each top10Courses}}
-                {{#if (checkIndex @index)}}
+                {{#if (checkIndex @index 5)}}
                 <div class="d-flex flex-column justify-content-between align-items-center" data-html="true"
                   data-container="body" data-toggle="tooltip" data-placement="right" title="
                   <div class='tooltip-detail'>
@@ -138,7 +138,7 @@
             <div class="carousel-item">
               <div class="d-flex flex-row">
                 {{#each top10Courses}}
-                {{#if (checkIndex @index)}}
+                {{#if (checkIndex @index 5)}}
                 {{else}}
                 <div class="d-flex flex-column justify-content-between align-items-center" data-html="true"
                   data-container="body" data-toggle="tooltip" data-placement="right" title="
@@ -196,7 +196,7 @@
             <div class=" carousel-item active">
               <div class="d-flex flex-row">
                 {{#each top10NewCourses}}
-                {{#if (checkIndex @index)}}
+                {{#if (checkIndex @index 5)}}
                 <div class="d-flex flex-column justify-content-between align-items-center" data-html="true"
                   data-container="body" data-toggle="tooltip" data-placement="right" title="
                   <div class='tooltip-detail'>
@@ -230,7 +230,7 @@
             <div class="carousel-item">
               <div class="d-flex flex-row">
                 {{#each top10NewCourses}}
-                {{#if (checkIndex @index)}}
+                {{#if (checkIndex @index 5)}}
                 {{else}}
                 <div class="d-flex flex-column justify-content-between align-items-center" data-html="true"
                   data-container="body" data-toggle="tooltip" data-placement="right" title="

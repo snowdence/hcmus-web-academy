@@ -14,19 +14,39 @@ mongoose.set('useFindAndModify', false);
 const wishlist = async (req, res , next) => {
     const lim = 10;
     const page = req.params.page || 1;
+    const nextpage = parseInt(page) + 1
+    const previouspage = parseInt(page) - 1
     const top10Courses = await courseModel.find().lean().skip((lim * page) - lim).limit(lim)
     const count = await courseModel.countDocuments()
     let listpage = []
+    let prevActive = "true"
+    let nextActive = "true"
     const totalpage = Math.ceil(count / lim)
-    for(let i = 0; i < totalpage; i++)
+    for(let i = 0; i <= totalpage; i++)
     {
-        listpage[i] = ""
+        listpage[i] = {class: "", i: page}
     }
-    listpage[page]="datatable-pager-link-active"
+    listpage[page]={class: "datatable-pager-link-active", i: page}
+    if(parseInt(page) === 1){
+        prevActive = "false"
+    }
+    if(parseInt(page) === (totalpage)){
+        nextActive = "false"
+    }
+    for(let i = 0; i< lim; i++){
+        top10Courses[i].page = page
+        var d = new Date(top10Courses[i].updatedAt); 
+        top10Courses[i].updatedAt = d.toLocaleString()
+    }
     res.render("pages/student/watchlist", {
         title: "Watchlist",
         top10Courses,
         listpage,
+        page,
+        nextpage,
+        previouspage,
+        prevActive,
+        nextActive,
     })
     
 }

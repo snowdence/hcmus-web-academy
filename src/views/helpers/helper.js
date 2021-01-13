@@ -172,8 +172,8 @@ var register = function (Handlebars) {
       return Math.round(a / 0.5) * 0.5;
     },
     //top course
-    checkIndex: (index) => {
-      if(index < 5) return true;
+    checkIndex: (index, number) => {
+      if(index < number) return true;
       return false;
     },
     subDescription: (s) =>{
@@ -184,18 +184,29 @@ var register = function (Handlebars) {
     },
     //basic math helper
     math: (a, opearator, b)=>{
+      console.log(a)
+      console.log(b)
       if(opearator==='+'){
-        return parseInt(a+b)
+        return parseInt(a) + parseInt(b)
       }
       if(opearator==='-'){
-        return parseInt(a-b)
+        return parseInt(a) - parseInt(b)
       }
       if(opearator==='*'){
-        return parseInt(a*b)
+        return parseInt(a) * parseInt(b)
       }
       if(opearator==='/'){
-        return parseInt(a/b)
+        return parseInt(a) / parseInt(b)
       }
+    },
+    wlpagi: (index, page) => {
+      let start = Math.floor(page / 10) * 10
+      if(parseInt(page) === start){
+        start = start - 10
+      }
+      const end = start + 10
+      if(index <= start || index > end) return false
+      return true
     }
   };
 
