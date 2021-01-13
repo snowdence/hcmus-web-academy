@@ -53,6 +53,10 @@ const CourseSchema = new mongoose.Schema({
   },
   updatedAt: {
     type: Date
+  },
+  complete: {
+    type: Boolean,
+    default: false
   }
 }, {timestamps:true});
 const Course = mongoose.model("Course", CourseSchema);

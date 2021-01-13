@@ -26,7 +26,16 @@
                                 <!--begin::Name-->
                                 <a href="#"
                                     class="d-flex align-items-center text-dark text-hover-primary font-size-h5 font-weight-bold mr-3">{{course.name}}
-                                    <i class="flaticon2-correct text-success icon-md ml-2"></i></a>
+                                    {{#if course.complete}}
+                                    <i class="flaticon2-correct text-success icon-md ml-2"></i>
+                                    <span class="label label-success label-inline mr-2">Đã hoàn thành</span>
+                                    {{else}}
+                                    
+                                    <i class="flaticon2-contract text-warning icon-md ml-2"></i>
+                                    <span class="label label-warning label-inline mr-2">Chưa hoàn thành</span>
+                                    {{/if}}
+
+                                </a>
                                 <!--end::Name-->
                                 <!--begin::Contacts-->
                                 <div class="d-flex flex-wrap my-2">
@@ -789,8 +798,7 @@ $("#enroll").click(function(e) {
                 "error"
             )
         }
-        if (video.every(x => x.duration != undefined)) clearInterval(T)
-    }, 1000);
+    });
 })
 
     
