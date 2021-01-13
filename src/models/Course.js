@@ -50,6 +50,9 @@ const CourseSchema = new mongoose.Schema({
     type: String, 
     slug: 'name', 
     unique:true 
+  },
+  updatedAt: {
+    type: Date
   }
 }, {timestamps:true});
 const Course = mongoose.model("Course", CourseSchema);

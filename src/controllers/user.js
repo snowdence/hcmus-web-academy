@@ -69,7 +69,11 @@ const postUserProfile = (req, res, next) => {
   }
 };
 
-const postUserChangePassword = (req, res, next) => {
+const postUserChangePassword = async (req, res, next) => {
+  const userPW = req.user.password
+  const pwChange = req.body.curPassword
+  const isMatch = await bcrypt.compare(pwChange, userPW);
+  console.log(isMatch)
   if (
     req.user.password === req.body.curPassword &&
     req.body.password === req.body.verPassword

@@ -22,7 +22,7 @@ const UserSchema = new mongoose.Schema({
   },
   role: {
     type: Number,
-    default: 1,
+    default: 2,
   },
   phone: {
     type: String,
@@ -31,6 +31,19 @@ const UserSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
+  list_courses: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Course",
+    },
+  ],
+  otp:{
+    type: String
+  },
+  otp_count: {
+    type: Number,
+    default: 0
+  }
 });
 
 const User = mongoose.model("User", UserSchema);

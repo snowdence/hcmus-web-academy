@@ -14,7 +14,7 @@ const sendMail = (receiver) => {
     secure: false, 
     auth: {
       user: adminEmail,
-      pass: adminPassword
+      pass: adminPassword,
     }
   })
   const options = {
@@ -26,5 +26,6 @@ const sendMail = (receiver) => {
   return transporter.sendMail(options)
 }
 module.exports = {
-  sendMail
+  sendMail,
+  otp
 }
