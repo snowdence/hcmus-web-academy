@@ -33,6 +33,8 @@ router.route("/registry").get((req, res) => {
   });
 }).post(register.sendMail);
 
+router.route("/otp").post(register.otpAuth)
+
 router.route("/logout").get(function (req, res) {
   req.logout();
   res.redirect("/");
