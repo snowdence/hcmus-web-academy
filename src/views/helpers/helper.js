@@ -164,21 +164,12 @@ var register = function (Handlebars) {
     bar: function () {
       return "BAR";
     },
-    isEndRow: (num, total) => {
-      if (num % 2 || num == total-1) return true
-      else return false
-    },
     isEqual: (a, b) =>{
       if(String(b) === String(a)) return true
       else return false
     },
-    Prev: (a)=>{
-      if (parseInt(a) == 1) return 1
-      return parseInt(a) - 1
-    },
-    Next: (a, courses)=>{
-      if (parseInt(a) == courses.length) return a
-      return parseInt(a) + 1
+    roundRating: (a) =>{
+      return Math.round(a / 0.5) * 0.5;
     },
     //top course
     checkIndex: (index, number) => {

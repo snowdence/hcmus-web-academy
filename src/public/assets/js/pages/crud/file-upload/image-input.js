@@ -28,10 +28,10 @@ var KTImageInputDemo = function () {
 
 		avatar4.on('change', function(imageInput) {
 			swal.fire({
-                title: 'Image successfully changed !',
+                title: 'Đã chọn ảnh!',
                 type: 'success',
                 buttonsStyling: false,
-                confirmButtonText: 'Awesome!',
+                confirmButtonText: 'OK!',
                 confirmButtonClass: 'btn btn-primary font-weight-bold'
             });
 		});

@@ -7,7 +7,9 @@ const ProgressModel = require("../models/Progress")
 const FeedbackModel = require("../models/Feedback")
 const EnrollModel = require("../models/Enroll")
 const FavoriteModel = require("../models/Favorite")
+const mongoose = require('mongoose');
 
+mongoose.set('useFindAndModify', false);
 
 const wishlist = async (req, res , next) => {
     const lim = 10;
@@ -73,22 +75,33 @@ const courseDetail = async(req, res, next) => {
     .lean()
     .then(async course => 
     {
-        var rate = []
-        ave = 0
-        myRate = 0
-        myRate = await FeedbackModel.findOne({courseID: course._id, studentID: req.user._id})
         let nFeedback = await FeedbackModel.find({courseID: course._id})
-        if (nFeedback.length >0)
-        {
-            rate = nFeedback.map(x=>x.rate)
-            let average = (array) => array.reduce((a, b) => a + b,0) / array.length;
-            ave = average(rate)
-        }
-        if (myRate != null) myRate = myRate.rate
+        let average = (array) => array.reduce((a, b) => a + b,0) / array.length;
+        var ave = (nFeedback.length>0) ? average(nFeedback.map(x=>x.rate)) : 0;
 
-        courseModel.updateOne({slug: req.params.slug}, {count_view: course.count_view + 1})
+        myRate = await FeedbackModel.findOne({courseID: course._id, studentID: req.user._id})
+        myRate = (myRate != null)? myRate.rate: 0
+
+
+        let sameCate = await courseModel.find({sub_category: course.sub_category})
+        .sort({count_enroll: -1})
+        .limit(5)
         .lean()
-        .then()
+        for( x of sameCate)
+            {
+                let nFeedback = await FeedbackModel.find({courseID: x._id}).lean()
+                var ave = (nFeedback.length>0) ? average(nFeedback.map(c=>c.rate)) : 0;
+
+                let teacher = await UserModel.findOne({_id: x.author_id}).lean()
+                let SubCategory = await SubCategoryModel.findOne({_id: x.sub_category}).lean()
+                x.SubCategory = SubCategory.name
+                x.author = teacher
+                x.rating = ave
+                x.allRates = nFeedback.length
+            }
+
+        courseModel.findOneAndUpdate({slug :req.params.slug}, {$inc : {'count_view' : 1}}).exec();
+
 
         let SubCategory = await SubCategoryModel.findOne({_id: course.sub_category}).lean()
         var d = new Date(course.updatedAt); 
@@ -136,10 +149,11 @@ const courseDetail = async(req, res, next) => {
             course: course,
             chapters: newChapters,
             rate: ave,
-            nRate: rate.length,
+            nRate: nFeedback.length,
             myRate: myRate,
             favorite: fav != null,
-            enroll: enroll != null
+            enroll: enroll != null,
+            sameCate: sameCate
         })  
     })
     .catch(next)
@@ -151,18 +165,13 @@ const lessonDetail = async(req, res, next) => {
     .lean()
     .then(async course => 
     {
-        var rate = []
-        ave = 0
-        myRate = 0
+      
         myRate = await FeedbackModel.findOne({courseID: course._id, studentID: req.user._id})
+        myRate = (myRate != null)? myRate.rate: 0
+
         let nFeedback = await FeedbackModel.find({courseID: course._id})
-        if (nFeedback.length >0)
-        {
-            rate = nFeedback.map(x=>x.rate)
-            let average = (array) => array.reduce((a, b) => a + b,0) / array.length;
-            ave = average(rate)
-        }
-        if (myRate != null) myRate = myRate.rate
+        let average = (array) => array.reduce((a, b) => a + b,0) / array.length;
+        var ave = (nFeedback.length>0) ? average(nFeedback.map(x=>x.rate)) : 0;
 
         courseModel.updateOne({slug: req.params.slug}, {count_view: course.count_view + 1})
         .lean()
@@ -186,7 +195,6 @@ const lessonDetail = async(req, res, next) => {
                 }
                 for (var x of lessons)
                 {
-                   // console.log(x._id, req.user._id)
                     pr = await ProgressModel.findOne({lessonID: x._id, studentID: req.user._id})
 
                     if (pr != null)
@@ -213,7 +221,7 @@ const lessonDetail = async(req, res, next) => {
             course: course,
             chapters: newChapters,
             rate: ave,
-            nRate: rate.length,
+            nRate: nFeedback.length,
             myRate: myRate,
             favorite: fav != null,
             lesson: lesson
@@ -276,6 +284,8 @@ const enroll = async (req, res, next) =>{
         studentID: req.user._id,
         courseID: req.body.courseID
     }
+
+    courseModel.findOneAndUpdate({_id :req.body.courseID}, {$inc : {'count_enroll' : 1}}).exec();
     EnrollModel.updateOne({studentID: req.user._id, courseID: req.body.courseID}, doc, {upsert: true})
     .then(num => console.log(num))
    res.redirect(req.header('Referer') || '/')

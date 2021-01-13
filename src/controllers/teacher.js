@@ -16,7 +16,8 @@ const getIndex =  (req, res, next) => {
 }
 
 // [GET] /teacher/course
-const viewCourse =  (req, res, next) => {
+const viewCourse = (req, res, next) => {
+    let average = (array) => array.reduce((a, b) => a + b,0) / array.length;
     let perPage = 5;
     let page = req.params.page || 1;
     CourseModel.countDocuments({})
@@ -24,7 +25,20 @@ const viewCourse =  (req, res, next) => {
         CourseModel.find({"author_id": req.user._id}).skip(perPage * page - perPage)
         .limit(perPage)
         .lean()
-        .then((courses) => {
+        .then( async (courses) => {
+            for( x of courses)
+            {
+                let nFeedback = await FeedbackModel.find({courseID: x._id}).lean()
+                var ave = (nFeedback.length>0) ? average(nFeedback.map(c=>c.rate)) : 0;
+
+                let teacher = await UserModel.findOne({_id: x.author_id}).lean()
+                let SubCategory = await SubCategoryModel.findOne({_id: x.sub_category}).lean()
+                x.SubCategory = SubCategory.name
+                x.author = teacher
+                x.rating = ave
+                x.allRates = nFeedback.length
+            }
+
             res.render("pages/teacher/course", {
                 courses : courses,
                 currentPage: page, // page hiện tại
@@ -43,17 +57,12 @@ const courseDetail = async(req, res, next) => {
     CourseModel.findOne({slug: req.params.slug})
     .lean()
     .then(async course => 
-    {
-        var rate = []
-        ave = 0
+    {    
         let nFeedback = await FeedbackModel.find({courseID: course._id})
+        let average = (array) => array.reduce((a, b) => a + b,0) / array.length;
 
-        if (nFeedback.length>0)
-        {
-            rate = nFeedback.map(x=>x.rate)
-            let average = (array) => array.reduce((a, b) => a + b,0) / array.length;
-            ave = average(rate)
-        }
+        var ave = (nFeedback.length>0) ? average(nFeedback.map(x=>x.rate)) : 0;
+
         console.log('ave: ', ave)
         let SubCategory = await SubCategoryModel.findOne({_id: course.sub_category}).lean()
         var d = new Date(course.updatedAt); 
@@ -72,15 +81,6 @@ const courseDetail = async(req, res, next) => {
                 {
                     lessons = await LessonModel.find({_id:{$in: chap.lessons}}).lean()
                 }
-                // for (var x of lessons)
-                // {
-                //    // console.log(x._id, req.user._id)
-                //     pr = await ProgressModel.findOne({lessonID: x._id, studentID: req.user._id})
-                //     //console.log(pr)
-                //     if (pr != null)
-                //         x.progress = pr.progress
-                //     else x.progress = 0
-                // }
                 newChapters.push({
                     _id: chap._id,
                     name: chap.name,
@@ -99,7 +99,7 @@ const courseDetail = async(req, res, next) => {
             course: course,
             chapters: newChapters,
             rate: ave,
-            nRate: rate.length,
+            nRate: nFeedback.length,
         })  
     })
     .catch(next)
