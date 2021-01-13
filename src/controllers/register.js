@@ -40,6 +40,8 @@ const sendMail = async (req, res, next) => {
 const otpAuth = async (req, res)=>{
   const{digit1, digit2, digit3, digit4, digit5, digit6} = req.body
   const userOtp = `${digit1}${digit2}${digit3}${digit4}${digit5}${digit6}`
+  const user = UserModel.findOne({email: useremail})
+  const Otp = user.otp
   userOtp.toLowerCase()
   if(userOtp === Otp){
     const ver = UserModel.updateOne({email: useremail}, {verified: true})
