@@ -14,15 +14,20 @@ router.route("/editUser/:id").get(AdminController.editUser);
 router.route("/editUser/:id").post(AdminController.editedUser);
 
 router.route("/addUser").get(AdminController.addUser);
+router.route("/addUser").post(AdminController.addUserPost);
 
 router.route("/change-password/:id").get(AdminController.getUserChangePassword);
-router.route("/change-password/:id").post(AdminController.postUserChangePassword);
+router
+  .route("/change-password/:id")
+  .post(AdminController.postUserChangePassword);
 
 router.route("/deleteUser").post(AdminController.deleteUser);
 router.route("/deleteCourse").post(AdminController.deleteCourse);
 router.route("/deleteCategory").post(AdminController.deleteCategory);
 router.route("/deleteSubCategory").post(AdminController.deleteSubCategory);
 
-router.route("/category-management/").post(AdminController.categoryManagementPost);
+router
+  .route("/category-management/")
+  .post(AdminController.categoryManagementPost);
 
 module.exports = router;
