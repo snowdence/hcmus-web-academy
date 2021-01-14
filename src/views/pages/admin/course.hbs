@@ -1,3 +1,133 @@
+{{#section 'script'}}
+<script>
+    "use strict";
+    // Class definition
+
+    var KTDatatableHtmlTableDemo = function () {
+        // Private functions
+
+        // demo initializer
+        var demo = function () {
+
+            var datatable = $('#kt_datatable').KTDatatable({
+                data: {
+                    saveState: { cookie: false },
+                },
+                search: {
+                    input: $('#kt_datatable_search_query'),
+                    key: 'generalSearch'
+                },
+                layout: {
+                    class: 'datatable-bordered'
+                },
+                columns: [
+                    {
+                        field: 'Course',
+                        title: 'Course',
+                        autoHide: false,
+                    },
+                    {
+                        field: 'Lecturer',
+                        title: 'Lecturer',
+                        autoHide: false,
+
+                    },
+                    {
+                        field: 'Review',
+                        title: 'Review',
+                        autoHide: false,
+                    },
+                    {
+                        field: 'Category',
+                        title: 'Category',
+                        autoHide: false,
+                        // callback function support for column rendering
+                    },
+                    {
+                        field: 'Sub Category',
+                        title: 'Sub Category',
+                        autoHide: false,
+                        // callback function support for column rendering
+                    },
+                    {
+                        field: 'Price',
+                        title: 'Price',
+                        autoHide: false,
+                        // callback function support for column rendering
+                    }
+                ],
+            });
+
+
+            $('#kt_datatable_search_cate').on('change', function () {
+                datatable.search($(this).val().toLowerCase(), 'Category');
+            });
+
+
+            $('#kt_datatable_search_sub_cate').on('change', function () {
+                datatable.search($(this).val().toLowerCase(), 'Sub Category');
+            });
+
+            $('#kt_datatable_search_sub_cate, #kt_datatable_search_cate').selectpicker();
+
+        };
+
+        return {
+            // Public functions
+            init: function () {
+                // init dmeo
+                demo();
+            },
+        };
+    }();
+
+    jQuery(document).ready(function () {
+        KTDatatableHtmlTableDemo.init();
+    });
+
+    jQuery('#kt_datatable').on('click', '.dlt-btn', function () {
+        let id = $(this).attr('name')
+
+        Swal.fire({
+            title: "Bạn có chắc muốn xóa khóa học ?",
+            text: "Bạn sẽ không thể hoàn tác",
+            icon: "question",
+            showCancelButton: true,
+            confirmButtonText: "Có",
+            cancelButtonText: "Không",
+            reverseButtons: true
+        }).then(function (result) {
+            if (result.value) {
+                $.post("/admin/deleteCourse", { userID: id }, function (result) {
+                    if (result = 'true') {
+                        Swal.fire(
+                            "Xóa thành công",
+                            "",
+                            "success"
+                        )
+                        window.location.reload();
+                    }
+                    else Swal.fire(
+                        "Xóa không thành công",
+                        "",
+                        "error"
+                    )
+                });
+
+                // result.dismiss can be "cancel", "overlay",
+                // "close", and "timer"
+            } else if (result.dismiss === "cancel") {
+                Swal.fire(
+                    "Hủy thao tác xóa",
+                    "",
+                    "error"
+                )
+            }
+        });
+    })
+</script>
+
+{{/section}}
 <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
 
     <!--begin::Entry-->
@@ -148,44 +278,5 @@
 </div>
 
 <script>
-    $('.dlt-btn').click(function () {
-        id = $(this).attr('name')
 
-        Swal.fire({
-            title: "Bạn có chắc muốn xóa khóa học ?",
-            text: "Bạn sẽ không thể hoàn tác",
-            icon: "question",
-            showCancelButton: true,
-            confirmButtonText: "Có",
-            cancelButtonText: "Không",
-            reverseButtons: true
-        }).then(function (result) {
-            if (result.value) {
-                $.post("/admin/deleteCourse", { userID: id }, function (result) {
-                    if (result = 'true') {
-                        Swal.fire(
-                            "Xóa thành công",
-                            "",
-                            "success"
-                        )
-                        window.location.reload();
-                    }
-                    else Swal.fire(
-                        "Xóa không thành công",
-                        "",
-                        "error"
-                    )
-                });
-
-                // result.dismiss can be "cancel", "overlay",
-                // "close", and "timer"
-            } else if (result.dismiss === "cancel") {
-                Swal.fire(
-                    "Hủy thao tác xóa",
-                    "",
-                    "error"
-                )
-            }
-        });
-    })
 </script>
