@@ -5,26 +5,20 @@ const LessonSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  picture: {
-    type: String,
-  },
   overview: {
     type: String,
   },
+  preview: {
+    type: Boolean,
+    default: false,
+  },
   video: {
     type: String,
-  },
-  description: {
-    type: String,
-  },
-  chapter: {
-    type: Schema.Types.ObjectId,
-    ref: "Chapter",
-  },
-  course: {
-    type: Schema.Types.ObjectId,
-    ref: "Course",
-  },
+  }
 });
-const Chapter = mongoose.model("Lesson", LessonSchema);
-module.exports = Chapter;
+
+const mongooseDelete = require('mongoose-delete');
+LessonSchema.plugin(mongooseDelete, { overrideMethods: 'all' })
+
+const Lesson = mongoose.model("Lesson", LessonSchema);
+module.exports = Lesson;

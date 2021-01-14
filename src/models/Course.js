@@ -1,5 +1,10 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
+const slug = require('mongoose-slug-generator');
+
 const Schema = mongoose.Schema;
+
+mongoose.plugin(slug);
+
 const CourseSchema = new mongoose.Schema({
   name: {
     type: String,
@@ -37,14 +42,26 @@ const CourseSchema = new mongoose.Schema({
   price_discount: {
     type: Number,
   },
-  created_at: {
-    type: Date,
-    default: Date.now,
+  chapters:{
+    type: [Schema.Types.ObjectId],
+    ref: "Chapter"
   },
-  updated_at: {
-    type: Date,
-    default: Date.now,
+  slug: { 
+    type: String, 
+    slug: 'name', 
+    unique:true 
   },
-});
+  updatedAt: {
+    type: Date
+  },
+  complete: {
+    type: Boolean,
+    default: false
+  },
+}, {timestamps:true});
+
+const mongooseDelete = require('mongoose-delete');
+CourseSchema.plugin(mongooseDelete, { overrideMethods: 'all' })
+
 const Course = mongoose.model("Course", CourseSchema);
 module.exports = Course;

@@ -1,3 +1,6 @@
+<style>
+  .carousel-inner {}
+</style>
 <!--begin::Entry-->
 <div class="d-flex flex-column-fluid">
 
@@ -16,7 +19,7 @@
               <h1 class="font-weight-bolder text-dark mb-0">Tìm kiếm khoá học</h1>
               <div class="font-size-h4 mb-8">Java, Marketing Online, AI</div>
               <!--begin::Form-->
-              <form class="d-flex flex-center py-2 px-6 bg-white rounded">
+              <form class="d-flex flex-center py-2 px-6 bg-white rounded" action="/search">
                 <span class="svg-icon svg-icon-lg svg-icon-primary">
                   <!--begin::Svg Icon | path:assets/media/svg/icons/General/Search.svg-->
                   <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
@@ -33,7 +36,8 @@
                   </svg>
                   <!--end::Svg Icon-->
                 </span>
-                <input type="text" class="form-control border-0 font-weight-bold pl-2" placeholder="Tìm kiếm">
+                <input type="text" class="form-control border-0 font-weight-bold pl-2" name="key"
+                  placeholder="Nhập từ khóa và ấn enter để tìm kiếm">
               </form>
               <!--end::Form-->
             </div>
@@ -44,9 +48,256 @@
 
       </div>
       {{!-- end::search --}}
+      <div class="mh-300 mt-15 mr-4 ml-4 pr-4 pl-4 card card-custom gutter-b card-stretch">
+        <u>
+          <h2 class="mt-7 ml-2">Top 5 courses in the week</h2>
+        </u>
 
+        <style>
+          .tooltip-detail {
+            text-align: left;
+          }
+        </style>
+        <div class="mt-7 d-flex flex-row ">
+          {{#each top5Courses}}
+          <div>
 
+            <div class="d-flex flex-column justify-content-between align-items-center" data-html="true"
+              data-container="body" data-toggle="tooltip" data-placement="right" title="
+                <div class='tooltip-detail'>
+                  Teacher: author<br>
+                  Price: {{this.price}}<br>
+                  Discount: {{this.price_discount}}<br> 
+                  Category: <br>
+                  Review: {{this.overview}}<br>
+                  Number of reviews:
+                </div>
+              ">
+              <div class="slideitem__thumbnail">
+                <div class="ribbon ribbon-clip ribbon-left ml-3">
+                  <div class="ribbon-target" style="top: 12px;">
+                    <span class="ribbon-inner bg-danger "></span>Best seller
+                  </div>
+                </div>
+                <img class="ml-3" style="width:90%;" src="{{this.thumbnail}}" alt="{{this.name}}" />
+              </div>
+              <div class="mr-1 ml-1 mt-5 mb-8 pl-1 pr-1">
+                <a href="/course-detail/{{this._id}}"><u>
+                    <h6>{{this.name}}</h6>
+                  </u></a>
+              </div>
+            </div>
+          </div>
+          {{/each}}
 
+        </div>
+      </div>
+
+      <div class="mt-8 mr-4 ml-4 pr-4 pl-4 card card-custom gutter-b card-stretch mh-300" style="height:300px;">
+        <u>
+          <h2 class="mt-7 ml-2">Top 10 popular online courses</h2>
+        </u>
+        <div id="carouselExampleControls" class="mt-7 carousel slide" data-ride="carousel">
+          <div class="carousel-inner">
+
+            <div class="carousel-item active">
+              <div class="d-flex flex-row ml-5" style="width: 100%;">
+                {{#each top10Courses}}
+                {{#if (checkIndex @index 5)}}
+                <div class="d-flex flex-column justify-content-between align-items-center" data-html="true"
+                  data-container="body" data-toggle="tooltip" data-placement="right" title="
+                  <div class='tooltip-detail'>
+                    Teacher: author<br>
+                    Price: {{this.price}}<br>
+                    Discount: {{this.price_discount}}<br> 
+                    Category: <br>
+                    Review: {{this.overview}}<br>
+                    Number of reviews:
+                  </div>
+                ">
+                  <div class="slideitem__thumbnail">
+                    <div class="ribbon ribbon-top ribbon-ver">
+                      <div class=" ribbon-target bg-warning" style="top: -2px; right: 20px;">
+                        <i class="fa fa-star text-white"></i>
+
+                      </div>
+
+                    </div>
+                    <img class="" style="width:90%" src="{{this.thumbnail}}" alt="{{this.name}}" />
+                  </div>
+
+                  <div class="mr-1 ml-1 mt-5 mb-8 pl-1 pr-1">
+                    <a href="/course-detail/{{this._id}}"><u>
+                        <h6>{{this.name}}</h6>
+                      </u></a>
+                  </div>
+                </div>
+                {{/if}}
+                {{/each}}
+              </div>
+            </div>
+            <div class="carousel-item">
+              <div class="d-flex flex-row ml-5" style="width: 100%;">
+                {{#each top10Courses}}
+                {{#if (checkIndex @index 5)}}
+                {{else}}
+                <div class="d-flex flex-column justify-content-between align-items-center" data-html="true"
+                  data-container="body" data-toggle="tooltip" data-placement="right" title="
+              <div class='tooltip-detail'>
+                Teacher: author<br>
+                Price: {{this.price}}<br>
+                Discount: {{this.price_discount}}<br> 
+                Category: <br>
+                Review: {{this.overview}}<br>
+                Number of reviews:
+              </div>
+            ">
+                  <div class="slideitem__thumbnail">
+                    <div class="ribbon ribbon-top ribbon-ver">
+                      <div class=" ribbon-target bg-warning " style="top: -2px; right: 20px;">
+                        <i class="fa fa-star text-white"></i>
+
+                      </div>
+
+                    </div>
+                    <img class="" style="width:90%" src="{{this.thumbnail}}" alt="{{this.name}}" />
+                  </div>
+                  <div class="mr-1 ml-1 mt-5 mb-8 pl-1 pr-1">
+                    <a href="/course-detail/{{this._id}}"><u>
+                        <h6>{{this.name}}</h6>
+                      </u></a>
+                  </div>
+                </div>
+                {{/if}}
+                {{/each}}
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <a class="carousel-control-prev btn-circle" href="#carouselExampleControls" role="button" data-slide="prev"
+          style="width: 1.5%; filter: invert(1); height: 100%;">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next"
+          style="width: 1.5%; filter: invert(1); height: 100%;">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="sr-only">Next</span>
+        </a>
+      </div>
+
+      <div class="mh300 mt-8 mr-4 ml-4 pr-4 pl-4 card card-custom gutter-b card-stretch" style="height:300px;">
+        <u>
+          <h2 class="mt-7 ml-2">Top 10 newest courses</h2>
+        </u>
+        <div id="carouselExampleControls2" class="mt-7 carousel slide" data-ride="carousel">
+          <div class="carousel-inner">
+
+            <div class=" carousel-item active">
+              <div class="d-flex flex-row ml-5" style="width: 100%;">
+                {{#each top10NewCourses}}
+                {{#if (checkIndex @index 5)}}
+                <div class="d-flex flex-column justify-content-between align-items-center" data-html="true"
+                  data-container="body" data-toggle="tooltip" data-placement="right" title="
+                  <div class='tooltip-detail'>
+                    Teacher: author<br>
+                    Price: {{this.price}}<br>
+                    Discount: {{this.price_discount}}<br> 
+                    Category: <br>
+                    Review: {{this.overview}}<br>
+                    Number of reviews:
+                  </div>
+                ">
+                  <div class="slideitem__thumbnail">
+                    <div class="ribbon ribbon-top ribbon-ver">
+                      <div class=" ribbon-target bg-primary " style="top: -2px; right: 20px;">
+                        <i class="fas fa-hand-holding-heart text-white"></i>
+                      </div>
+
+                    </div>
+                    <img class="" style="width:90%" src="{{this.thumbnail}}" alt="{{this.name}}" />
+                  </div>
+                  <div class="mr-1 ml-1 mt-5 mb-8 pl-1 pr-1">
+                    <a href="/course-detail/{{this._id}}"><u>
+                        <h6>{{this.name}}</h6>
+                      </u></a>
+                  </div>
+                </div>
+                {{/if}}
+                {{/each}}
+              </div>
+            </div>
+            <div class="carousel-item">
+              <div class="d-flex flex-row ml-5" style="100%">
+                {{#each top10NewCourses}}
+                {{#if (checkIndex @index 5)}}
+                {{else}}
+                <div class="d-flex flex-column justify-content-between align-items-center" data-html="true"
+                  data-container="body" data-toggle="tooltip" data-placement="right" title="
+              <div class='tooltip-detail'>
+                Teacher: author<br>
+                Price: {{this.price}}<br>
+                Discount: {{this.price_discount}}<br> 
+                Category: <br>
+                Review: {{this.overview}}<br>
+                Number of reviews:
+              </div>
+            ">
+                  <div class="slideitem__thumbnail">
+                    <div class="ribbon ribbon-top ribbon-ver">
+                      <div class=" ribbon-target bg-primary " style="top: -2px; right: 20px;">
+                        <i class="fas fa-hand-holding-heart text-white"></i>
+                      </div>
+
+                    </div>
+                    <img class="" style="width:90%" src="{{this.thumbnail}}" alt="{{this.name}}" />
+                  </div>
+                  <div class="mr-1 ml-1 mt-5 mb-8 pl-1 pr-1">
+                    <a href="/course-detail/{{this._id}}"><u>
+                        <h6>{{this.name}}</h6>
+                      </u></a>
+                  </div>
+                </div>
+                {{/if}}
+                {{/each}}
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <a class="carousel-control-prev " href="#carouselExampleControls2" role="button" data-slide="prev"
+          style="width: 1.5%; filter: invert(1); height: 100%;">
+          <span class="carousel-control-prev-icon " aria-hidden="true"></span>
+          <span class="sr-only">Previous</span>
+        </a>
+
+        </a>
+        <a class="carousel-control-next" href="#carouselExampleControls2" role="button" data-slide="next"
+          style="width: 1.5%; filter: invert(1); height: 100%;">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+
+          <span class="sr-only">Next</span>
+        </a>
+      </div>
+      <div class="mh-300 mt-8 mr-4 ml-4 pr-4 pl-4 card card-custom gutter-b card-stretch">
+        <u>
+          <h2 class="mt-7 ml-2">Top 5 categories in the week</h2>
+        </u>
+        <div class="mt-1 d-flex flex-row ml-6">
+          {{#each top5cate}}
+          <div>
+            <div class="d-flex flex-column justify-content-between align-items-center">
+              <div class="mr-1 ml-1 mt-5 mb-8 pl-1 pr-1">
+                <h6>{{this.name}}</h6><img src="{{this.thumbnail}}" style="width: 90%; height: 180px;">
+              </div>
+            </div>
+          </div>
+          {{/each}}
+
+        </div>
+      </div>
       <!--end::Container-->
     </div>
   </div>

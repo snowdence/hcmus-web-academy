@@ -1,16 +1,12 @@
 const express = require("express");
-
+const webController = require("../controllers/web");
 const router = express.Router();
 const passport = require("passport");
+const register = require("../controllers/register");
 const authenticationMiddleware = require("../middleware/authentication");
-router.route("/").get((req, res) => {
-  if (req.isAuthenticated()) {
-    console.log(req.user);
-  } else {
-    console.log("Not login");
-  }
-  res.render("pages/home");
-});
+
+router.route("/").get(webController.getHomePage);
+router.route("/search").get(webController.courseSearch);
 
 router
   .route("/login")
@@ -33,9 +29,26 @@ router
     })
   );
 
-router.route("/registry").get((req, res) => {
-  res.render("pages/registry", { layout: null });
-});
+router
+  .route("/registry")
+  .get((req, res) => {
+    res.render("pages/registry", {
+      layout: null,
+      title: "Sign Up",
+    });
+  })
+  .post(register.sendMail);
+
+router
+  .route("/otp")
+  .post(register.otpAuth)
+  .get((req, res) => {
+    res.render("pages/otp", {
+      layout: null,
+      noti:
+        "You entered your OTP incorrectly 3 times.<br> We've just resent the code to your email",
+    });
+  });
 
 router.route("/logout").get(function (req, res) {
   req.logout();
@@ -45,4 +58,6 @@ router.route("/logout").get(function (req, res) {
 router.route("/loginOK").get(authenticationMiddleware(), (req, res) => {
   res.send("Login thanh cong");
 });
+
+router.route("/course-detail/:id").get(webController.courseDetail);
 module.exports = router;

@@ -6,6 +6,7 @@
  */
 
 const UserModel = require("../models/User");
+const bcrypt = require('bcrypt')
 
 /**
  * get all user use promise style
@@ -69,12 +70,19 @@ const postUserProfile = (req, res, next) => {
   }
 };
 
-const postUserChangePassword = (req, res, next) => {
+const postUserChangePassword = async (req, res, next) => {
+  const userPW = req.user.password
+  const pwOld = req.body.curPassword
+  const pwNew = req.body.password
+  const isMatch = await bcrypt.compare(pwOld, userPW);
+  console.log(isMatch)
   if (
-    req.user.password === req.body.curPassword &&
+    isMatch &&
     req.body.password === req.body.verPassword
   ) {
-    UserModel.updateOne({ username: req.user.username }, req.body)
+    const salt = 10;
+    const hashpw = await bcrypt.hash(pwNew, salt)
+    UserModel.updateOne({ username: req.user.username }, {password: hashpw})
       .then()
       .catch((err) => next(err));
     res.render("pages/user/change-password", {
@@ -107,9 +115,31 @@ const postUserChangePassword = (req, res, next) => {
   }
 };
 
+const getUserProfile = (req, res, next) => {
+  res.render("pages/user/personal-info", {
+    userAvatar: req.user.avatar,
+    userFullname: req.user.fullname,
+    userPhone: req.user.phone,
+    userEmail: req.user.email,
+    title: "Personal Information"
+  });
+}
+
+const getUserChangePassword = (req, res, next) => {
+  res.render("pages/user/change-password", {
+    userAvatar: req.user.avatar,
+    userFullname: req.user.fullname,
+    userPhone: req.user.phone,
+    userEmail: req.user.email,
+    title: "Change Password",
+  });
+}
+
 module.exports = {
   getIndex: getIndex,
   newUser,
   postUserProfile,
   postUserChangePassword,
+  getUserProfile,
+  getUserChangePassword,
 };

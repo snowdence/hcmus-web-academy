@@ -1,0 +1,200 @@
+<link rel="stylesheet" href="../css/watchlist.css">
+<div class="d-flex flex-column-fluid">
+    <!--begin::Container-->
+    <div class="container">
+        <div class="card card-custom card-transparent">
+            <div class="card-body p-0">
+                <!--begin: Wizard-->
+                <div class="wizard wizard-4" id="kt_wizard" data-wizard-state="between" data-wizard-clickable="true">
+                    <!--begin: Wizard Nav-->
+                    <div class="wizard-nav">
+                        <div class="wizard-steps">
+                            <!--begin::Wizard Step 1 Nav-->
+                            <div class="wizard-step" data-wizard-state="pending">
+                                <div class="wizard-wrapper">
+                                    <div class="wizard-number">1</div>
+                                    <div class="wizard-label">
+                                        <div class="wizard-title"><a href="/student/all-courses"><u>All Courses</u></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--end::Wizard Step 1 Nav-->
+                            <!--begin::Wizard Step 2 Nav-->
+                            <div class="wizard-step" data-wizard-state="pending">
+                                <div class="wizard-wrapper">
+                                    <div class="wizard-number">2</div>
+                                    <div class="wizard-label">
+                                        <div class="wizard-title"><a href="/student/watchlist/1"><u>WatchList</u></a></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--end::Wizard Step 2 Nav-->
+                            <!--begin::Wizard Step 3 Nav-->
+                            <div class="wizard-step" data-wizard-type="step" data-wizard-state="current">
+                                <div class="wizard-wrapper">
+                                    <div class="wizard-number">3</div>
+                                    <div class="wizard-label">
+                                        <div class="wizard-title"><a href="/student/review-courses"><u>Review
+                                                    Courses</u></a></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--end::Wizard Step 3 Nav-->
+                            <!--begin::Wizard Step 4 Nav-->
+                            <div class="wizard-step" data-wizard-type="step" data-wizard-state="pending">
+                                <div class="wizard-wrapper">
+                                    <div class="wizard-number">4</div>
+                                    <div class="wizard-label">
+                                        <div class="wizard-title"><a href="/student/archived"><u>Archived</u></a></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--end::Wizard Step 4 Nav-->
+                        </div>
+                    </div>
+                </div>
+                <!--end: Wizard Nav-->
+                <!--begin: Wizard Body-->
+                <div class="card card-custom gutter-b">
+                    <div class="card-body">
+                        <!--begin: Datatable-->
+                        <div class="datatable datatable-bordered datatable-head-custom datatable-default datatable-primary datatable-loaded"
+                            id="kt_datatable">
+                            <table class="datatable-table" style="display: block; border: 1px solid black">
+                                <thead class="datatable-head">
+                                    <tr class="datatable-row ml-4">
+                                        <th data-field="RecordID"
+                                            class="datatable-cell-left datatable-cell datatable-cell-sort datatable-cell-sorted"
+                                            data-sort="asc">
+                                            <span style="width: 20px;">#
+
+                                            </span>
+                                        </th>
+                                        <th data-field="OrderID" class="datatable-cell datatable-cell-sort">
+                                            <span style="width: 350px;">Course Name</span>
+                                        </th>
+                                        <th data-field="Country" class="datatable-cell datatable-cell-sort">
+                                            <span style="width: 80px;">Teacher</span>
+                                        </th>
+                                        <th data-field="ShipDate" class="datatable-cell datatable-cell-sort">
+                                            <span style="width: 258px;">Date created</span>
+                                        </th>
+                                        <th data-field="Status" class="datatable-cell datatable-cell-sort">
+                                            <span style="width: 58px;">Status</span>
+                                        </th>
+                                        <th data-field="Actions" class="datatable-cell datatable-cell-sort">
+                                            <span style="width: 100px;">Actions</span>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                {{#each top10Courses}}
+                                <tbody class="datatable-body"
+                                    style="border-top: 1px solid black; border-bottom: 1px solid black;">
+                                    <tr data-row="0" class="datatable-row ml-4" style="">
+                                        <td class="datatable-cell-sorted datatable-cell-left datatable-cell"
+                                            data-field="RecordID" aria-label="1"><span style="width: 20px;"><span
+                                                    class="font-weight-bolder">{{@index}}</span></span></td>
+                                        <td data-field="OrderID" aria-label="64616-103" class="datatable-cell"><span
+                                                style="width: 350px;">
+                                                <div class="d-flex align-items-center">
+                                                    <div class="symbol symbol-50 symbol-sm flex-shrink-0">
+                                                        <div class="symbol-label">
+                                                            <img class="h-75" src="{{this.thumbnail}}" alt="photo">
+                                                        </div>
+                                                    </div>
+                                                    <div class="ml-4">
+                                                        <div
+                                                            class="text-dark-75 font-weight-bolder font-size-lg mb-0 ml-2">
+                                                            {{this.name}}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </span></td>
+                                        <td data-field="Country" aria-label="Brazil" class="datatable-cell">
+                                            <span style="width: 80px;">
+                                                <div class="font-weight-bolder font-size-lg mb-0">Brazil</div>
+                                            </span>
+                                        </td>
+                                        <td data-field="ShipDate" aria-label="10/15/2017" class="datatable-cell">
+                                            <span style="width: 258px;">
+                                                <div class="font-weight-bolder text-primary mb-0">{{this.created_at}}
+                                                </div>
+                                            </span>
+                                        </td>
+                                        <td data-field="Status" aria-label="5" class="datatable-cell">
+                                            <span style="width: 70px;">
+                                                <span
+                                                    class="label label-lg font-weight-bold  label-light-info label-inline">Info</span>
+                                            </span>
+                                        </td>
+                                        <td data-field="Actions" data-autohide-disabled="false" aria-label="null"
+                                            class="datatable-cell">
+                                            <span style="overflow: visible; position: relative; width: 85px;">
+                                                <a href="/stuent/review-courses/{{this._id}}"
+                                                    class="btn btn-sm btn-default btn-text-primary btn-hover-primary btn-icon mr-2"
+                                                    title="Edit details"> <span class="svg-icon svg-icon-md"> <svg
+                                                            xmlns="http://www.w3.org/2000/svg"
+                                                            xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
+                                                            height="24px" viewBox="0 0 24 24" version="1.1">
+                                                            <g stroke="none" stroke-width="1" fill="none"
+                                                                fill-rule="evenodd">
+                                                                <rect x="0" y="0" width="24" height="24"></rect>
+                                                                <path
+                                                                    d="M12.2674799,18.2323597 L12.0084872,5.45852451 C12.0004303,5.06114792 12.1504154,4.6768183 12.4255037,4.38993949 L15.0030167,1.70195304 L17.5910752,4.40093695 C17.8599071,4.6812911 18.0095067,5.05499603 18.0083938,5.44341307 L17.9718262,18.2062508 C17.9694575,19.0329966 17.2985816,19.701953 16.4718324,19.701953 L13.7671717,19.701953 C12.9505952,19.701953 12.2840328,19.0487684 12.2674799,18.2323597 Z"
+                                                                    fill="#000000" fill-rule="nonzero"
+                                                                    transform="translate(14.701953, 10.701953) rotate(-135.000000) translate(-14.701953, -10.701953) ">
+                                                                </path>
+                                                                <path
+                                                                    d="M12.9,2 C13.4522847,2 13.9,2.44771525 13.9,3 C13.9,3.55228475 13.4522847,4 12.9,4 L6,4 C4.8954305,4 4,4.8954305 4,6 L4,18 C4,19.1045695 4.8954305,20 6,20 L18,20 C19.1045695,20 20,19.1045695 20,18 L20,13 C20,12.4477153 20.4477153,12 21,12 C21.5522847,12 22,12.4477153 22,13 L22,18 C22,20.209139 20.209139,22 18,22 L6,22 C3.790861,22 2,20.209139 2,18 L2,6 C2,3.790861 3.790861,2 6,2 L12.9,2 Z"
+                                                                    fill="#000000" fill-rule="nonzero" opacity="0.3">
+                                                                </path>
+                                                            </g>
+                                                        </svg> </span> </a>
+                                            </span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                                {{/each}}
+                            </table>
+                            <div class="datatable-pager datatable-paging-loaded">
+                                <ul class="datatable-pager-nav my-2 mb-sm-0">
+                                    <li><a title="First"
+                                            class="datatable-pager-link datatable-pager-link-first datatable-pager-link-disabled"
+                                            data-page="1" disabled="disabled"><i class="flaticon2-fast-back"></i></a>
+                                    </li>
+                                    <li><a title="Previous"
+                                            class="datatable-pager-link datatable-pager-link-prev datatable-pager-link-disabled"
+                                            data-page="1" disabled="disabled"><i class="flaticon2-back"></i></a></li>
+                                    <li style="display: none;"><input type="text"
+                                            class="datatable-pager-input form-control" title="Page number"></li>
+                                    <li><a class="datatable-pager-link datatable-pager-link-number datatable-pager-link-active"
+                                            data-page="1" title="1">1</a></li>
+                                    <li><a class="datatable-pager-link datatable-pager-link-number" data-page="2"
+                                            title="2">2</a></li>
+                                    <li><a class="datatable-pager-link datatable-pager-link-number" data-page="3"
+                                            title="3">3</a></li>
+                                    <li><a class="datatable-pager-link datatable-pager-link-number" data-page="4"
+                                            title="4">4</a></li>
+                                    <li><a class="datatable-pager-link datatable-pager-link-number" data-page="5"
+                                            title="5">5</a></li>
+                                    <li><a title="Next" class="datatable-pager-link datatable-pager-link-next"
+                                            data-page="2"><i class="flaticon2-next"></i></a></li>
+                                    <li><a title="Last" class="datatable-pager-link datatable-pager-link-last"
+                                            data-page="35"><i class="flaticon2-fast-next"></i></a></li>
+                                </ul>
+
+                            </div>
+                            <!--end: Datatable-->
+                        </div>
+                    </div>
+                    <!--end::Card-->
+                </div>
+                <!--end: Wizard Bpdy-->
+            </div>
+            <!--end: Wizard-->
+        </div>
+    </div>
+</div>
+<!--end::Container-->
+</div>

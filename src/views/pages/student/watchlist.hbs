@@ -1,0 +1,185 @@
+<link rel="stylesheet" href="/css/watchlist.css">
+<div class="d-flex flex-column-fluid">
+    <!--begin::Container-->
+    <div class="container">
+        <div class="card card-custom card-transparent">
+            <div class="card-body p-0">
+                <!--begin: Wizard-->
+                <div class="wizard wizard-4" id="kt_wizard"  data-wizard-clickable="true">
+                    <!--begin: Wizard Nav-->
+                    <div class="wizard-nav">
+                        <div class="wizard-steps">
+                            <!--begin::Wizard Step 1 Nav-->
+                            <div class="wizard-step" data-wizard-state="pending">
+                                <div class="wizard-wrapper">
+                                    <div class="wizard-number">1</div>
+                                    <div class="wizard-label">
+                                        <div class="wizard-title"><a href="/student/all-courses"><u>All Courses</u></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--end::Wizard Step 1 Nav-->
+                            <!--begin::Wizard Step 2 Nav-->
+                            <div class="wizard-step" data-wizard-state="current">
+                                <div class="wizard-wrapper">
+                                    <div class="wizard-number">2</div>
+                                    <div class="wizard-label">
+                                        <div class="wizard-title"><a href="/student/watchlist/1"><u>WatchList</u></a></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--end::Wizard Step 2 Nav-->
+                            <!--begin::Wizard Step 3 Nav-->
+                            <div class="wizard-step" data-wizard-type="step" data-wizard-state="pending">
+                                <div class="wizard-wrapper">
+                                    <div class="wizard-number">3</div>
+                                    <div class="wizard-label">
+                                        <div class="wizard-title"><a href="/student/review-courses"><u>Review
+                                                    Courses</u></a></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--end::Wizard Step 3 Nav-->
+                            <!--begin::Wizard Step 4 Nav-->
+                            <div class="wizard-step" data-wizard-type="step" data-wizard-state="pending">
+                                <div class="wizard-wrapper">
+                                    <div class="wizard-number">4</div>
+                                    <div class="wizard-label">
+                                        <div class="wizard-title"><a href="/student/archived"><u>Archived</u></a></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--end::Wizard Step 4 Nav-->
+                        </div>
+                    </div>
+                </div>
+                <!--end: Wizard Nav-->
+                <!--begin: Wizard Body-->
+                <!--begin::Card-->
+                <div class="card card-custom card-stretch gutter-b">
+			<!--begin::Header-->
+			<div class="card-header border-0">
+				<h2 class="card-title font-weight-bolder text-dark">Các khóa học</h2>
+
+			</div>
+			<!--end::Header-->
+			<!--begin::Body-->
+			<div class="card-body pt-2 container-fluid">
+				{{#each courses}}
+				<!--begin::Item-->
+				<div id="i{{_id}}" class="d-flex flex-wrap align-items-center mb-10 row">
+					<!--begin::Symbol-->
+					<div class="symbol symbol-120 symbol-2by3 col-2">
+						<div class="symbol symbol-50 symbol-lg-120">
+                            <img alt="Pic" src="{{thumbnail}}">
+                        </div>
+					</div>
+					<!--end::Symbol-->
+					<!--begin::Title-->
+					<div class="d-flex flex-column flex-grow-1 my-lg-0 my-2 col-6">
+						<a href="/teacher/course/{{slug}}" class="text-dark-75 font-weight-bolder text-hover-primary"
+							style="font-size: 120%;">{{name}}</a>
+						<span class="text-muted font-weight-bold font-size-sm my-1">Lĩnh vực: {{SubCategory}}</span>
+						<span class="text-muted font-weight-bold font-size-sm">Giảng viên:
+							<span class="text-primary font-weight-bold">{{author.fullname}}</span></span>
+					</div>
+					<!--end::Title-->
+					<!--begin::Info-->
+					<div class="d-flex align-items-center py-lg-0 py-2 col-2">
+						<div class="d-flex flex-column text-right">
+							<span class="text-dark-75 font-weight-bolder font-size-h4">Đánh giá</span>
+							<span class="text-muted font-size-sm font-weight-bolder">
+								<img src="/assets/media/logos/star{{roundRating rating}}.jpg" alt="image"
+									style="width: 5.5rem">
+							</span>
+							<span class="text-muted font-size-sm font-weight-bolder">
+								( {{allRates}} Đánh giá)
+							</span>
+						</div>
+					</div>
+					<div class="d-flex align-items-center py-lg-0 py-2 col-1">
+						<div class="d-flex flex-column text-right">
+							{{#if price_discount}}
+							<span class="text-dark-75 font-weight-bolder font-size-h4">${{price_discount}}</span>
+							<s class="text-muted font-size-h5 font-weight-bolder">${{price}}</s>
+							{{else}}
+							<span class="text-dark-75 font-weight-bolder font-size-h4">${{price}}</span>
+							{{/if}}
+						</div>
+					</div>
+					<div class="d-flex align-items-center py-lg-0 py-2 col-1">
+						<div data-field="Actions" data-autohide-disabled="false" aria-label="null"
+							class="datatable-cell">
+							<span style="overflow: visible; position: relative; width: 130px;">
+								
+                                    <i title="Xóa khỏi danh sách yêu thích" name="{{_id}}" id="watchlist" class="icon-xl text-danger fas fa-heart"></i>
+							</span>
+						</div>
+					</div>
+					<!--end::Info-->
+				</div>
+				<!--end::Item-->
+				{{else}}
+				<h3>Bạn chưa có khóa học yêu thích nào</h3>
+				
+				{{/each}}
+			</div>
+			<!--end::Body-->
+			
+					<div class="d-flex flex-wrap">
+						<div class="card-footer">
+							{{#pagination currentPage pages}}
+							<div class="pagination">
+								{{#unless startFromFirstPage}}
+								<a href="/teacher/courses/1" class="btn btn-icon btn-sm btn-light mr-2 my-1">
+									<i class="ki ki-bold-double-arrow-back icon-xs"></i>
+								</a>
+								{{/unless}}
+								{{#each pages}}
+								{{#if isCurrent}}
+								<a href="/teacher/courses/{{page}}"
+									class="btn btn-icon btn-sm border-0 btn-light btn-hover-primary active mr-2 my-1">{{page}}</a>
+								{{/if}}
+								{{#unless isCurrent}}
+								<a href="/teacher/courses/{{page}}"
+									class="btn btn-icon btn-sm border-0 btn-light mr-2 my-1">{{page}}</a>
+								{{/unless}}
+								{{/each}}
+
+								{{#unless endAtLastPage}}
+								<a href="/teacher/courses/{{pages}}">&gt;</a>
+								{{/unless}}
+							</div>
+							{{/pagination}}
+
+						</div>
+			
+			</div>
+		</div>
+                <!--end::Container-->
+            </div>
+        </div>
+        <!--end: Wizard-->
+    </div>
+</div>
+ 
+
+<script>
+  
+
+    $('#watchlist').click(function(){
+    id = $(this).attr('name')
+  
+    $.post("/student/favorite", {favorite: false, courseID: id})
+    Swal.fire({
+    icon: "success",
+    title: "Đã xóa khóa học khỏi danh sách yêu thích",
+    showConfirmButton: false,
+    timer: 1500
+    })
+    $('#i'+id).remove()
+    
+})
+
+</script>

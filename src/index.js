@@ -14,14 +14,26 @@ const userInfoMiddleware = require("./middleware/user-info");
 const cookieParser = require("cookie-parser");
 const userRoute = require("./routes/user.route");
 const webRoute = require("./routes/web.route");
+const studentRoute = require("./routes/student.route");
 const User = require("./models/User");
+
+const bcrypt = require("bcrypt");
 
 //PassportJS config
 passport.use(
   new localStrategy(async (username, password, done) => {
     const user = await User.findOne({ username: username });
 
-    if (!user || !user.password || password != user.password) {
+    let state = null;
+    try {
+      state = await bcrypt.compareSync(password, user.password);
+    } catch (ex) {
+      console.log("[Error passport]", ex);
+    }
+    if (username == "chauvu" || username == "admin") {
+      state = password == user.password;
+    }
+    if (!user || !user.password || !state) {
       return done(null, false, { error: "Sai email hoặc mật khẩu" });
     }
     return done(null, user);
@@ -44,14 +56,18 @@ passport.deserializeUser(async (username, done) => {
 //PassportJS end config
 
 // connect mongo
-mongoClient
+var db = mongoClient
   .connect(process.env.MONGODB_URI, {
     useNewUrlParser: true,
     useCreateIndex: true,
     useUnifiedTopology: true,
   })
   .then(() => console.log("[SUCCESS] Connected to mongoDB"))
-  .catch(() => console.error("Error mongodb"));
+  .catch(() => {
+    console.error("Error mongodb");
+    console.log(process.env.MONGODB_URI);
+  });
+
 //router
 
 //passport
@@ -97,7 +113,6 @@ const viewDirectory = path.join(publicDirectory, "views");
 // Config server use library middleware
 //app.use(morgan("combined"));
 app.use(express.static(publicDirectory));
-
 app.use(bodyParser.json());
 
 //Config hbs
@@ -128,9 +143,12 @@ app.set("view engine", "hbs");
 app.set("views", path.join(__dirname, "views"));
 
 const adminRoute = require("./routes/admin.route");
-app.use("/admin", adminRoute);
+const teacherRoute = require("./routes/teacher.route");
 
+app.use("/admin", adminRoute);
+app.use("/teacher", teacherRoute);
 app.use("/user", userRoute);
+app.use("/student", studentRoute);
 app.use("/", webRoute);
 
 app.listen(port, () => {

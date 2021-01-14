@@ -12,6 +12,13 @@ const SubCategorySchema = new mongoose.Schema({
     type: Schema.Types.ObjectId,
     ref: "Category",
   },
+  thumbnail: {
+    type: String,
+  }
 });
+
+const mongooseDelete = require('mongoose-delete');
+SubCategorySchema.plugin(mongooseDelete, { overrideMethods: 'all' })
+
 const SubCategory = mongoose.model("SubCategory", SubCategorySchema);
 module.exports = SubCategory;
