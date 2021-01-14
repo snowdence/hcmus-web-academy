@@ -70,11 +70,11 @@
               {{/if}}
               <div class="form-group mb-5">
                 <input class="form-control h-auto form-control-solid py-4 px-8" type="text" placeholder="Username"
-                  name="username" autocomplete="off" />
+                  name="username" autocomplete="off" minlength="4" required />
               </div>
               <div class="form-group mb-5">
                 <input class="form-control h-auto form-control-solid py-4 px-8" type="password" placeholder="Password"
-                  name="password" />
+                  name="password" minlength="4" maxlength="20" required />
               </div>
               <div class="form-group d-flex flex-wrap justify-content-between align-items-center">
                 <div class="checkbox-inline">
@@ -111,7 +111,8 @@
   <script src="/assets/js/scripts.bundle.js"></script>
   <!--end::Global Theme Bundle-->
   <!--begin::Page Scripts(used by this page)-->
-  {{!-- <script src="/assets/js/pages/custom/login/login-general.js"></script> --}}
+  {{!--
+  <script src="/assets/js/pages/custom/login/login-general.js"></script> --}}
   <!--end::Page Scripts-->
 </body>
 <!--end::Body-->
