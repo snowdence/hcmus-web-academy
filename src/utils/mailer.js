@@ -6,6 +6,8 @@ const mailHost = 'smtp.gmail.com'
 const mailPort = 587
 
 const otp = otpGenerator.generate(6, { upperCase: false, specialChars: false });
+const otptxt = otp.toUpperCase()
+const txt = `Your verify code: ${otptxt}`
 
 const sendMail = (receiver) => {
   const transporter = nodeMailer.createTransport({
@@ -21,7 +23,7 @@ const sendMail = (receiver) => {
     from: adminEmail, 
     to: receiver,
     subject: "Verify your email",
-    text: otp
+    text: txt
   }
   return transporter.sendMail(options)
 }
