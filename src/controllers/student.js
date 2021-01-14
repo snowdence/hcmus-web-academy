@@ -139,8 +139,8 @@ const courseDetail = async(req, res, next) => {
         }
         let teacher = await UserModel.findOne({_id: course.author_id}).lean()
         let fav = await FavoriteModel.findOne({studentID: req.user._id, courseID: course._id}).lean()
-        let enroll = await EnrollModel.findOne({studentID: req.user._id, courseID: course._id}).lean()
-
+        let _enroll = await EnrollModel.findOne({studentID: req.user._id, courseID: course._id}).lean()
+        console.log('debugg: ', _enroll != null)
         res.render("pages/student/courseDetail", {
             SubCategory: SubCategory.name,
             createdAt: createdAt,
@@ -152,7 +152,7 @@ const courseDetail = async(req, res, next) => {
             nRate: nFeedback.length,
             myRate: myRate,
             favorite: fav != null,
-            enroll: enroll != null,
+            enroll: _enroll != null,
             sameCate: sameCate
         })  
     })

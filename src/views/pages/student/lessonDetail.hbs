@@ -69,12 +69,15 @@
                                 <!--end::Contacts-->
                             </div>
                             <div class="my-lg-0 my-1">
-                                <a name="enroll" class="btn btn-sm btn-light-info font-weight-bolder text-uppercase mr-3">Mua khóa học</a>
-                                {{#if favorite}}    
+                                {{#unless enroll}}
+                                <a id='enroll' name="enroll"
+                                    class="btn btn-sm btn-light-info font-weight-bolder text-uppercase mr-3">Mua khóa học</a>
+                                {{/unless}}
+                                {{#if favorite}}
                                 <i id="watchlist" class="icon-xl text-danger fas fa-heart"></i>
                                 {{else}}
                                 <i id="watchlist" class="icon-xl text-danger far fa-heart"></i>
-                                {{/if}}
+                                {{/if}}                                
                             </div>
                         </div>
                         <!--end: Title-->
@@ -243,7 +246,7 @@
                         </div>
                         <div class="card-body">
                             <div class="accordion accordion-light accordion-light-borderless accordion-svg-toggle" id="">
-    {{#each chapters}}
+                            {{#each chapters}}
     <!--begin::Card-->
                                 <div class="card border-top-3 pd-12 ">
                                     <div class="card-header telegram settings"  id="h{{_id}}">
