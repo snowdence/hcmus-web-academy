@@ -375,7 +375,7 @@
                         </div>
                         <div class="card-body">
                             <div class="accordion accordion-light accordion-light-borderless accordion-svg-toggle" id="">
-    {{#each chapters}}
+                            {{#each chapters}}
     <!--begin::Card-->
                                 <div class="card border-top-3 pd-12 ">
                                     <div class="card-header telegram settings"  id="h{{_id}}">
@@ -441,6 +441,8 @@
                                                         </td>
                                                     
                                                     </tr>
+                                                    {{else}}
+                                                    <h3>Chương này chưa có bài học</h3>
                                                     {{/each}}
                                                 </tbody>
                             <!--end::Tbody-->
@@ -448,7 +450,9 @@
                                         </div>
                                     </div>
                                 </div>
-                                             {{/each}}
+                            {{else}}
+                            <h3>Khóa học này chưa có bài học</h3>
+                            {{/each}}
     <!--end::Card-->
                             </div>
                         </div>

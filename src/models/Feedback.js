@@ -18,5 +18,8 @@ const FeedbackSchema = new mongoose.Schema({
     }
 })
 
+const mongooseDelete = require('mongoose-delete');
+FeedbackSchema.plugin(mongooseDelete, { overrideMethods: 'all' })
+
 const Feedback = mongoose.model("Feedback", FeedbackSchema);
 module.exports = Feedback;

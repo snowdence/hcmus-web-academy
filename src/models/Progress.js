@@ -15,5 +15,8 @@ const ProgressSchema = new mongoose.Schema({
     },
 })
 
+const mongooseDelete = require('mongoose-delete');
+ProgressSchema.plugin(mongooseDelete, { overrideMethods: 'all' })
+
 const Progress = mongoose.model("Progress", ProgressSchema);
 module.exports = Progress;

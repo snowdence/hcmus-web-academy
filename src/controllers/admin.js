@@ -1,5 +1,9 @@
 const UserModel = require("../models/User");
 const CategoryModel = require("../models/Category");
+const CourseModel = require("../models/Course")
+const FeedbackModel = require("../models/Feedback")
+const SubCategoryModel = require("../models/SubCategory")
+
 const bcrypt = require('bcrypt');
 
 const multer = require('multer');
@@ -64,6 +68,43 @@ const studentManagement = async (req, res, next) => {
   res.render('pages/admin/student', {student})
 }
 
+const courseManagement = async (req, res, next) => {
+  let count = await CourseModel.countDocuments({})
+
+  let perPage = 5;
+  let page = req.params.page || 1;
+  let average = (array) => array.reduce((a, b) => a + b,0) / array.length;
+  let courses = await CourseModel.find()
+                    .skip(perPage * page - perPage)
+                    .limit(perPage)
+                    .lean()
+  for( x of courses)
+    {
+        let nFeedback = await FeedbackModel.find({courseID: x._id}).lean()
+        var ave = (nFeedback.length>0) ? average(nFeedback.map(c=>c.rate)) : 0;
+
+        let teacher = await UserModel.findOne({_id: x.author_id}).lean()
+        let SubCategory = await SubCategoryModel.findOne({_id: x.sub_category}).lean()
+        x.SubCategory = SubCategory.name
+        x.author = teacher
+        x.rating = ave
+        x.allRates = nFeedback.length
+    }
+  res.render('pages/admin/course', {
+    courses,
+    currentPage: page, // page hiện tại
+    pageCount: count,
+    itemPerPage: perPage,
+    pages: Math.ceil(count / perPage),})
+}
+
+//[GET]
+
+const addUser = async (req, res, next) => {
+  
+  res.render('pages/admin/addUser')
+}
+
 //[GET]
 const editUser = async (req, res, next) => {
   let user = await UserModel.findOne({_id: req.params.id}).lean()
@@ -97,6 +138,8 @@ const editedUser = async (req, res, next) => {
       res.send(req.body)
  })
 }
+
+//[POST]
 const postUserChangePassword = async (req, res, next) => {
   const userPW = req.user.password
   const pwChange = req.body.curPassword
@@ -138,6 +181,8 @@ const postUserChangePassword = async (req, res, next) => {
     }
   }
 };
+
+//[GET]
 const getUserChangePassword = (req, res, next) => {
   let user = UserModel.findOne({_id: req.params.id}).lean()
   
@@ -149,14 +194,34 @@ const getUserChangePassword = (req, res, next) => {
     title: "Change Password",
   });
 }
+
+// [POST] /admin/deleteUser
+const deleteUser = (req, res, next) => {
+  console.log('ok')
+  UserModel.delete({_id:req.body.userID})
+  .then((num)=> res.send('true'))
+  .catch(next)
+}
+
+// [POST] /admin/deleteCourse
+const deleteCourse = (req, res, next) => {
+  console.log('ok')
+  CourseModel.delete({_id:req.body.courseID})
+  .then((num)=> res.send('true'))
+  .catch(next)
+}
 module.exports = {
   getDashboard,
   getAllUser,
   getAllCategory,
   teacherManagement,
   studentManagement,
+  courseManagement,
   editUser,
   editedUser,
   postUserChangePassword,
   getUserChangePassword,
+  deleteUser,
+  deleteCourse,
+  addUser,
 };

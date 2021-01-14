@@ -59,5 +59,9 @@ const CourseSchema = new mongoose.Schema({
     default: false
   }
 }, {timestamps:true});
+
+const mongooseDelete = require('mongoose-delete');
+CourseSchema.plugin(mongooseDelete, { overrideMethods: 'all' })
+
 const Course = mongoose.model("Course", CourseSchema);
 module.exports = Course;

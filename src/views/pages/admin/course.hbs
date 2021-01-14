@@ -245,132 +245,108 @@
                 <div class="row">
 
 
-                    <div class="card card-custom">
-                        <!--begin::Header-->
-                        <div class="card-header flex-wrap border-0 pt-6 pb-0">
-                            <div class="card-title">
-                                <h2 class="card-label">Quản lý tài khoản giảng viên
-                                    <span class="d-block  pt-2 font-size-sm">Giảng viên</span>
-                                </h2>
-                            </div>
-                            <div class="card-toolbar">
-                                <a href="#" class="btn btn-success font-weight-bolder font-size-sm">
-                                    <span class="svg-icon svg-icon-md svg-icon-white">
-                                        <!--begin::Svg Icon | path:/metronic/theme/html/demo2/dist/assets/media/svg/icons/Communication/Add-user.svg-->
-                                        <svg xmlns="http://www.w3.org/2000/svg"
-                                            xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px"
-                                            viewBox="0 0 24 24" version="1.1">
-                                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                                <polygon points="0 0 24 0 24 24 0 24"></polygon>
-                                                <path
-                                                    d="M18,8 L16,8 C15.4477153,8 15,7.55228475 15,7 C15,6.44771525 15.4477153,6 16,6 L18,6 L18,4 C18,3.44771525 18.4477153,3 19,3 C19.5522847,3 20,3.44771525 20,4 L20,6 L22,6 C22.5522847,6 23,6.44771525 23,7 C23,7.55228475 22.5522847,8 22,8 L20,8 L20,10 C20,10.5522847 19.5522847,11 19,11 C18.4477153,11 18,10.5522847 18,10 L18,8 Z M9,11 C6.790861,11 5,9.209139 5,7 C5,4.790861 6.790861,3 9,3 C11.209139,3 13,4.790861 13,7 C13,9.209139 11.209139,11 9,11 Z"
-                                                    fill="#000000" fill-rule="nonzero" opacity="0.3"></path>
-                                                <path
-                                                    d="M0.00065168429,20.1992055 C0.388258525,15.4265159 4.26191235,13 8.98334134,13 C13.7712164,13 17.7048837,15.2931929 17.9979143,20.2 C18.0095879,20.3954741 17.9979143,21 17.2466999,21 C13.541124,21 8.03472472,21 0.727502227,21 C0.476712155,21 -0.0204617505,20.45918 0.00065168429,20.1992055 Z"
-                                                    fill="#000000" fill-rule="nonzero"></path>
-                                            </g>
-                                        </svg>
-                                        <!--end::Svg Icon-->
-                                    </span>Thêm tài khoản</a>
-                            </div>
-                        </div>
-                        <!--end::Header-->
-                        <!--begin::Body-->
-                        <div class="card-body">
-                            <!--begin: Datatable-->
-                            <div class="datatable datatable-bordered datatable-head-custom datatable-default datatable-primary datatable-loaded"
-                                id="kt_datatable" style="">
-                                <table class="datatable-table" style="display: block;">
-                                    <thead class="datatable-head">
-                                        <tr class="datatable-row" style="left: 0px;">
-        
-                                            <th data-field="OrderID" class="datatable-cell datatable-cell-sort">
-                                                <span style="width: 250px;color:black">Tên người dùng</span>
-                                            </th>
-                                            <th data-field="Country" class="datatable-cell datatable-cell-sort">
-                                                <span style="width: 140px;color:black">Tên tài khoản</span>
-                                            </th>
-                                            <th data-field="ShipDate" class="datatable-cell datatable-cell-sort">
-                                                <span style="width: 140px;color:black">Số điện thoại</span>
-                                            </th>
-                                          
-                                            <th data-field="Status" class="datatable-cell datatable-cell-sort"><span
-                                                    style="width: 140px; color:black">Trạng thái</span></th>
-                                            <th data-field="Actions" data-autohide-disabled="false"
-                                                class="datatable-cell datatable-cell-sort"><span
-                                                    style="width: 130px;color:black">Quản lý</span></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody class="datatable-body" style="">
-                                        {{#each teacher}}
-                                        <tr data-row="10" class="datatable-row" style="left: 0px;">
-                                           
-                                            <td data-field="OrderID" aria-label="68428-740" class="datatable-cell"><span
-                                                    style="width: 250px;">
-                                                    <div class="d-flex align-items-center">
-                                                        <div class="symbol symbol-50 symbol-sm flex-shrink-0">
-                                                            <img class="" src="{{avatar}}" alt="photo">
-                                                        </div>
-                                                        <div class="ml-4">
-                                                            <div class="text-dark-75 font-weight-bolder font-size-lg mb-0">{{fullname}}</div>
-                                                            <a href="#" class="text-muted font-weight-bold text-hover-primary">{{email}}</a>
-                                                        </div>
-                                                    </div>
-                                                </span></td>
-                                            <td data-field="Country" aria-label="Morocco" class="datatable-cell"><span
-                                                    style="width: 140px;">
-                                                    <div class="font-weight-bolder font-size-lg mb-0">{{username}}</div>
-                                                </span></td>
-                                            <td data-field="ShipDate" aria-label="2/8/2016" class="datatable-cell"><span
-                                                    style="width: 140px;">
-                                                    <div class="font-weight-bolder text-primary mb-0">{{phone}}</div>
-                                                </span></td>
-                        
-                                            <td data-field="Status" aria-label="6" class="datatable-cell">
-                                                <span style="width: 140px;">
-                                                    {{#if verified}}
-                                                    <span
-                                                        class="label label-lg font-weight-bold  label-light-info label-inline">Đã
-                                                        xác thực</span>
-                                                    {{else}}
-                                                    <span
-                                                        class="label label-lg font-weight-bold  label-light-danger label-inline">Chưa
-                                                        xác thực</span>
-                                                    {{/if}}
-                                                </span>
-                                            </td>
-                                            <td data-field="Actions" data-autohide-disabled="false" aria-label="null"
-                                                class="datatable-cell">
-                                                <span style="overflow: visible; position: relative; width: 130px;">
+                    <div class="card card-custom card-stretch gutter-b">
+	<!--begin::Header-->
+		<div class="card-header border-0">
+			<h2 class="card-title font-weight-bolder text-dark">Các khóa học đã đăng tải</h2>
+			
+		</div>
+		<!--end::Header-->
+		<!--begin::Body-->
+		<div class="card-body pt-2 container-fluid">
+			{{#each courses}}
+			<!--begin::Item-->
+			<div class="d-flex flex-wrap align-items-center mb-10 row">
+				<!--begin::Symbol-->
+				<div class="symbol symbol-2by3  col-2">
+					<div class="symbol-label" style="background-image: url('{{thumbnail}}'); background-size=100% 100%"></div>
+				</div>
+				<!--end::Symbol-->
+				<!--begin::Title-->
+				<div class="d-flex flex-column flex-grow-1 my-lg-0 my-2 col-6">
+					<a href="/teacher/course/{{slug}}" class="text-dark-75 font-weight-bolder text-hover-primary" style="font-size: 120%;">{{name}}</a>
+					<span class="text-muted font-weight-bold font-size-sm my-1">{{SubCategory}}</span>
+					<span class="text-muted font-weight-bold font-size-sm">Giảng viên: 
+					<span class="text-primary font-weight-bold">{{author.fullname}}</span></span>
+				</div>
+				<!--end::Title-->
+				<!--begin::Info-->
+				<div class="d-flex align-items-center py-lg-0 py-2 col-2">
+					<div class="d-flex flex-column text-right">
+						<span class="text-dark-75 font-weight-bolder font-size-h4">Đánh giá</span>
+						<span class="text-muted font-size-sm font-weight-bolder">
+							<img src="/assets/media/logos/star{{roundRating rating}}.jpg" alt="image" style="width: 5.5rem">
+						</span>
+						<span class="text-muted font-size-sm font-weight-bolder">
+							( {{allRates}} Đánh giá)
+						</span>
+					</div>
+				</div>
+				<div class="d-flex align-items-center py-lg-0 py-2 col-1">
+					<div class="d-flex flex-column text-right">
+						{{#if price_discount}}
+						<span class="text-dark-75 font-weight-bolder font-size-h4">${{price_discount}}</span>
+						<s class="text-muted font-size-h5 font-weight-bolder">${{price}}</s>
+						{{else}}
+						<span class="text-dark-75 font-weight-bolder font-size-h4">${{price}}</span>
+						{{/if}}
+					</div>
+				</div>
+				<div class="d-flex align-items-center py-lg-0 py-2 col-1">
+					<span name="{{_id}}"
+                        class="pl-3 btn btn-sm btn-default btn-text-primary btn-hover-primary btn-icon dlt-btn"
+                        title="Xóa">
 
-                                                    <a href="/admin/editUser/{{_id}}"
-                                                        class="btn btn-sm btn-default btn-text-primary btn-hover-primary btn-icon mx-2"
-                                                        title="Sửa thông tin">
-                                                        <span href="#"
-                                                            class="btn btn-outline-warning btn-circle font-weight-bold mr-2">
-                                                            <i class="flaticon-edit-1"></i>
-                                                        </span>
-                                                    </a>
-                                                    <span name="{{_id}}"
-                                                        class="btn btn-sm btn-default btn-text-primary btn-hover-primary btn-icon dlt-btn"
-                                                        title="Xóa">
+                        <span href="#"
+                            class="btn btn-outline-info btn-circle font-weight-bold mx-2">
+                            <i class="flaticon2-trash"></i>
+                        </span>
+                    </span>
 
-                                                        <span href="#"
-                                                            class="btn btn-outline-info btn-circle font-weight-bold mx-2">
-                                                            <i class="flaticon2-trash"></i>
-                                                        </span>
-                                                    </span>
-                                                </span>
-                                            </td>
-                                        </tr>
-                                        {{/each}}
-                                    </tbody>
-                                </table>
-                            </div>
-                            <!--end: Datatable-->
-                        </div>
-                        <!--end::Body-->
-                    </div>
+				</div>
+				<!--end::Info-->
+			</div>
+			<!--end::Item-->
+			{{else}}
+			<h3>Không có khóa học nào.</h3>
+			<a href="/teacher/course/create" class="btn btn-outline-success">
+				<i class="flaticon2-open-text-book"></i> Tạo khóa học mới
+			</a>
+			{{/each}}
+		</div>
+		<!--end::Body-->
+		<div class="row">
+		<div class="d-flex  align-items-center flex-wrap">
+			<div class="d-flex flex-wrap">
+				<div class="card-footer">
+		{{#pagination currentPage pages}}
+		<div class="pagination">
+			{{#unless startFromFirstPage}}
+			<a href="/admin/course-management/1" class="btn btn-icon btn-sm btn-light mr-2 my-1">
+				<i class="ki ki-bold-double-arrow-back icon-xs"></i>
+			</a>
+			{{/unless}}
+			{{#each pages}}
+			{{#if isCurrent}}
+			<a href="/admin/course-management/{{page}}"
+				class="btn btn-icon btn-sm border-0 btn-light btn-hover-primary active mr-2 my-1">{{page}}</a>
+			{{/if}}
+			{{#unless isCurrent}}
+			<a href="/admin/course-management/{{page}}" class="btn btn-icon btn-sm border-0 btn-light mr-2 my-1">{{page}}</a>
+			{{/unless}}
+			{{/each}}
+
+			{{#unless endAtLastPage}}
+			<a href="/admin/course-management/{{pages}}">&gt;</a>
+			{{/unless}}
+		</div>
+		{{/pagination}}
+
+	</div>
+			</div>
+		</div>
+	</div>
+	</div>
                 </div>
             </div>
             <!--end::Card-->
@@ -384,7 +360,7 @@
         id = $(this).attr('name')
 
         Swal.fire({
-            title: "Bạn có chắc muốn xóa người dùng ?",
+            title: "Bạn có chắc muốn xóa khóa học ?",
             text: "Bạn sẽ không thể hoàn tác",
             icon: "question",
             showCancelButton: true,
@@ -393,7 +369,7 @@
             reverseButtons: true
         }).then(function (result) {
             if (result.value) {
-                $.post("/admin/deleteUser", { userID: id }, function (result) {
+                $.post("/admin/deleteCourse", { courseID: id }, function (result) {
                     if (result = 'true') {
                         Swal.fire(
                             "Xóa thành công",

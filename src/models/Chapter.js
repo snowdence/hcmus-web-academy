@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const Lesson = require("./Lesson");
 const Schema = mongoose.Schema;
 const ChapterSchema = new mongoose.Schema({
   name: {
@@ -12,10 +11,10 @@ const ChapterSchema = new mongoose.Schema({
       ref: "Lesson"
     }
   ],
-  // course: {
-  //   type: Schema.Types.ObjectId,
-  //   ref: "Course",
-  // },
 });
+
+const mongooseDelete = require('mongoose-delete');
+ChapterSchema.plugin(mongooseDelete, { overrideMethods: 'all' })
+
 const Chapter = mongoose.model("Chapter", ChapterSchema);
 module.exports = Chapter;

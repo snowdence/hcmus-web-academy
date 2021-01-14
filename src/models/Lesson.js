@@ -16,5 +16,9 @@ const LessonSchema = new mongoose.Schema({
     type: String,
   }
 });
+
+const mongooseDelete = require('mongoose-delete');
+LessonSchema.plugin(mongooseDelete, { overrideMethods: 'all' })
+
 const Lesson = mongoose.model("Lesson", LessonSchema);
 module.exports = Lesson;

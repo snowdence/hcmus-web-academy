@@ -243,131 +243,116 @@
 
             <div class="flex-row-fluid ml-sm-8">
                 <div class="row">
-
-
-                    <div class="card card-custom">
-                        <!--begin::Header-->
-                        <div class="card-header flex-wrap border-0 pt-6 pb-0">
-                            <div class="card-title">
-                                <h2 class="card-label">Quản lý tài khoản giảng viên
-                                    <span class="d-block  pt-2 font-size-sm">Giảng viên</span>
-                                </h2>
-                            </div>
-                            <div class="card-toolbar">
-                                <a href="#" class="btn btn-success font-weight-bolder font-size-sm">
-                                    <span class="svg-icon svg-icon-md svg-icon-white">
-                                        <!--begin::Svg Icon | path:/metronic/theme/html/demo2/dist/assets/media/svg/icons/Communication/Add-user.svg-->
-                                        <svg xmlns="http://www.w3.org/2000/svg"
-                                            xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px"
-                                            viewBox="0 0 24 24" version="1.1">
-                                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                                <polygon points="0 0 24 0 24 24 0 24"></polygon>
-                                                <path
-                                                    d="M18,8 L16,8 C15.4477153,8 15,7.55228475 15,7 C15,6.44771525 15.4477153,6 16,6 L18,6 L18,4 C18,3.44771525 18.4477153,3 19,3 C19.5522847,3 20,3.44771525 20,4 L20,6 L22,6 C22.5522847,6 23,6.44771525 23,7 C23,7.55228475 22.5522847,8 22,8 L20,8 L20,10 C20,10.5522847 19.5522847,11 19,11 C18.4477153,11 18,10.5522847 18,10 L18,8 Z M9,11 C6.790861,11 5,9.209139 5,7 C5,4.790861 6.790861,3 9,3 C11.209139,3 13,4.790861 13,7 C13,9.209139 11.209139,11 9,11 Z"
-                                                    fill="#000000" fill-rule="nonzero" opacity="0.3"></path>
-                                                <path
-                                                    d="M0.00065168429,20.1992055 C0.388258525,15.4265159 4.26191235,13 8.98334134,13 C13.7712164,13 17.7048837,15.2931929 17.9979143,20.2 C18.0095879,20.3954741 17.9979143,21 17.2466999,21 C13.541124,21 8.03472472,21 0.727502227,21 C0.476712155,21 -0.0204617505,20.45918 0.00065168429,20.1992055 Z"
-                                                    fill="#000000" fill-rule="nonzero"></path>
-                                            </g>
-                                        </svg>
-                                        <!--end::Svg Icon-->
-                                    </span>Thêm tài khoản</a>
-                            </div>
-                        </div>
-                        <!--end::Header-->
-                        <!--begin::Body-->
-                        <div class="card-body">
-                            <!--begin: Datatable-->
-                            <div class="datatable datatable-bordered datatable-head-custom datatable-default datatable-primary datatable-loaded"
-                                id="kt_datatable" style="">
-                                <table class="datatable-table" style="display: block;">
-                                    <thead class="datatable-head">
-                                        <tr class="datatable-row" style="left: 0px;">
-        
-                                            <th data-field="OrderID" class="datatable-cell datatable-cell-sort">
-                                                <span style="width: 250px;color:black">Tên người dùng</span>
-                                            </th>
-                                            <th data-field="Country" class="datatable-cell datatable-cell-sort">
-                                                <span style="width: 140px;color:black">Tên tài khoản</span>
-                                            </th>
-                                            <th data-field="ShipDate" class="datatable-cell datatable-cell-sort">
-                                                <span style="width: 140px;color:black">Số điện thoại</span>
-                                            </th>
-                                          
-                                            <th data-field="Status" class="datatable-cell datatable-cell-sort"><span
-                                                    style="width: 140px; color:black">Trạng thái</span></th>
-                                            <th data-field="Actions" data-autohide-disabled="false"
-                                                class="datatable-cell datatable-cell-sort"><span
-                                                    style="width: 130px;color:black">Quản lý</span></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody class="datatable-body" style="">
-                                        {{#each teacher}}
-                                        <tr data-row="10" class="datatable-row" style="left: 0px;">
-                                           
-                                            <td data-field="OrderID" aria-label="68428-740" class="datatable-cell"><span
-                                                    style="width: 250px;">
-                                                    <div class="d-flex align-items-center">
-                                                        <div class="symbol symbol-50 symbol-sm flex-shrink-0">
-                                                            <img class="" src="{{avatar}}" alt="photo">
-                                                        </div>
-                                                        <div class="ml-4">
-                                                            <div class="text-dark-75 font-weight-bolder font-size-lg mb-0">{{fullname}}</div>
-                                                            <a href="#" class="text-muted font-weight-bold text-hover-primary">{{email}}</a>
+                    <div class="card card-custom card-shadowless rounded-top-0 col-12">
+												<!--begin::Body-->
+                        <div class="card-body p-0">
+                            <div class="row justify-content-center py-8 px-8 py-lg-15 px-lg-10">
+                                <div class="col-xl-12 col-xxl-10">
+                                    <!--begin::Wizard Form-->
+                                    <form class="form fv-plugins-bootstrap fv-plugins-framework" id="kt_form">
+                                        <div class="row justify-content-center">
+                                            <div class="col-xl-9">
+                                                <!--begin::Wizard Step 1-->
+                                                <div class="my-5 step" data-wizard-type="step-content" data-wizard-state="current">
+                                                    <h5 class="text-dark font-weight-bold mb-10">User's Profile Details:</h5>
+                                                    <!--begin::Group-->
+                                                    <div class="form-group row">
+                                                        <label class="col-xl-3 col-lg-3 col-form-label text-left">Avatar</label>
+                                                        <div class="col-lg-9 col-xl-9">
+                                                            <div class="image-input image-input-outline" id="kt_user_add_avatar">
+                                                                <div class="image-input-wrapper" style="background-image: url(assets/media/users/100_6.jpg)"></div>
+                                                                <label class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="change" data-toggle="tooltip" title="" data-original-title="Change avatar">
+                                                                    <i class="fa fa-pen icon-sm text-muted"></i>
+                                                                    <input type="file" name="profile_avatar" accept=".png, .jpg, .jpeg">
+                                                                    <input type="hidden" name="profile_avatar_remove">
+                                                                </label>
+                                                                <span class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="cancel" data-toggle="tooltip" title="" data-original-title="Cancel avatar">
+                                                                    <i class="ki ki-bold-close icon-xs text-muted"></i>
+                                                                </span>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                </span></td>
-                                            <td data-field="Country" aria-label="Morocco" class="datatable-cell"><span
-                                                    style="width: 140px;">
-                                                    <div class="font-weight-bolder font-size-lg mb-0">{{username}}</div>
-                                                </span></td>
-                                            <td data-field="ShipDate" aria-label="2/8/2016" class="datatable-cell"><span
-                                                    style="width: 140px;">
-                                                    <div class="font-weight-bolder text-primary mb-0">{{phone}}</div>
-                                                </span></td>
-                        
-                                            <td data-field="Status" aria-label="6" class="datatable-cell">
-                                                <span style="width: 140px;">
-                                                    {{#if verified}}
-                                                    <span
-                                                        class="label label-lg font-weight-bold  label-light-info label-inline">Đã
-                                                        xác thực</span>
-                                                    {{else}}
-                                                    <span
-                                                        class="label label-lg font-weight-bold  label-light-danger label-inline">Chưa
-                                                        xác thực</span>
-                                                    {{/if}}
-                                                </span>
-                                            </td>
-                                            <td data-field="Actions" data-autohide-disabled="false" aria-label="null"
-                                                class="datatable-cell">
-                                                <span style="overflow: visible; position: relative; width: 130px;">
-
-                                                    <a href="/admin/editUser/{{_id}}"
-                                                        class="btn btn-sm btn-default btn-text-primary btn-hover-primary btn-icon mx-2"
-                                                        title="Sửa thông tin">
-                                                        <span href="#"
-                                                            class="btn btn-outline-warning btn-circle font-weight-bold mr-2">
-                                                            <i class="flaticon-edit-1"></i>
-                                                        </span>
-                                                    </a>
-                                                    <span name="{{_id}}"
-                                                        class="btn btn-sm btn-default btn-text-primary btn-hover-primary btn-icon dlt-btn"
-                                                        title="Xóa">
-
-                                                        <span href="#"
-                                                            class="btn btn-outline-info btn-circle font-weight-bold mx-2">
-                                                            <i class="flaticon2-trash"></i>
-                                                        </span>
-                                                    </span>
-                                                </span>
-                                            </td>
-                                        </tr>
-                                        {{/each}}
-                                    </tbody>
-                                </table>
+                                                    <!--end::Group-->
+                                                    <!--begin::Group-->
+                                                    <div class="form-group row fv-plugins-icon-container">
+                                                        <label class="col-xl-3 col-lg-3 col-form-label">Full Name</label>
+                                                        <div class="col-lg-9 col-xl-9">
+                                                            <input class="form-control form-control-solid form-control-lg" name="fullname" type="text" value="">
+                                                        <div class="fv-plugins-message-container"></div></div>
+                                                    </div>
+                                                    <!--end::Group-->
+                                                
+                                                    <!--begin::Group-->
+                                                    <div class="form-group row fv-plugins-icon-container">
+                                                        <label class="col-xl-3 col-lg-3 col-form-label">Contact Phone</label>
+                                                        <div class="col-lg-9 col-xl-9">
+                                                            <div class="input-group input-group-solid input-group-lg">
+                                                                <div class="input-group-prepend">
+                                                                    <span class="input-group-text">
+                                                                        <i class="la la-phone"></i>
+                                                                    </span>
+                                                                </div>
+                                                                <input type="text" class="form-control form-control-solid form-control-lg" name="phone" value="5678967456" placeholder="Phone">
+                                                            </div>
+                                                            <span class="form-text text-muted">Enter valid US phone number(e.g: 5678967456).</span>
+                                                        <div class="fv-plugins-message-container"></div></div>
+                                                    </div>
+                                                    <!--end::Group-->
+                                                    <!--begin::Group-->
+                                                    <div class="form-group row fv-plugins-icon-container">
+                                                        <label class="col-xl-3 col-lg-3 col-form-label">Email Address</label>
+                                                        <div class="col-lg-9 col-xl-9">
+                                                            <div class="input-group input-group-solid input-group-lg">
+                                                                <div class="input-group-prepend">
+                                                                    <span class="input-group-text">
+                                                                        <i class="la la-at"></i>
+                                                                    </span>
+                                                                </div>
+                                                                <input type="text" class="form-control form-control-solid form-control-lg" name="email" value="">
+                                                            </div>
+                                                        <div class="fv-plugins-message-container"></div></div>
+                                                    </div>
+                                                    <!--end::Group-->
+                                                
+                                                </div>
+                                                <!--end::Wizard Step 1-->
+                                                <!--begin::Wizard Step 2-->
+                                                <div class="my-5 step" data-wizard-type="step-content">
+                                                    <h5 class="text-dark font-weight-bold mb-10 mt-5">User's Account Details</h5>
+                                                 <!--begin::Group-->
+                                                    <div class="form-group row fv-plugins-icon-container">
+                                                        <label class="col-xl-3 col-lg-3 col-form-label">Username</label>
+                                                        <div class="col-lg-9 col-xl-9">
+                                                            <input class="form-control form-control-solid form-control-lg" name="username" type="text" value="">
+                                                        <div class="fv-plugins-message-container"></div></div>
+                                                    </div>
+                                                    <!--end::Group-->
+                                                        <!--begin::Group-->
+                                                    <div class="form-group row fv-plugins-icon-container">
+                                                        <label class="col-xl-3 col-lg-3 col-form-label">Password</label>
+                                                        <div class="col-lg-9 col-xl-9">
+                                                            <input class="form-control form-control-solid form-control-lg" name="password" type="text" value="">
+                                                        <div class="fv-plugins-message-container"></div></div>
+                                                    </div>
+                                                    <!--end::Group-->
+                                                    
+                                                    
+                                                    
+                                                </div>
+                                                <!--end::Wizard Step 2-->
+                                              
+                                                <!--begin::Wizard Actions-->
+                                                <div class="d-flex justify-content-between border-top pt-10 mt-15">
+                                                  
+                                                        <button type="button" class="btn btn-success font-weight-bolder px-9 py-4" data-wizard-type="action-submit">Submit</button>
+                                                </div>
+                                                <!--end::Wizard Actions-->
+                                            </div>
+                                        </div>
+                                    <div></div><div></div><div></div></form>
+                                    <!--end::Wizard Form-->
+                                </div>
                             </div>
-                            <!--end: Datatable-->
                         </div>
                         <!--end::Body-->
                     </div>

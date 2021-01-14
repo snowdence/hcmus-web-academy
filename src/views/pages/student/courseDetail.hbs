@@ -601,6 +601,8 @@
                                                         </td>
 
                                                     </tr>
+                                                    {{else}}
+                                                    <h3>Chương này chưa có bài học</h3>
                                                     {{/each}}
                                                 </tbody>
                                                 <!--end::Tbody-->
@@ -608,6 +610,8 @@
                                         </div>
                                     </div>
                                 </div>
+                                {{else}}
+                                <h3>Khóa học này chưa có nội dung</h3>
                                 {{/each}}
                                 <!--end::Card-->
                             </div>
@@ -641,9 +645,8 @@
                  <!--begin::Row-->
     <div class="card card-custom gutter-b mx-10">
 	<!--begin::Header-->
-		<div class="card-header border-0">
-			<h3 class="card-title font-weight-bolder text-dark">Cùng lĩnh vực</h3>
-			
+		<div class="card-header border-0 py-5">
+			<h1 class="font-weight-bolder text-dark " style="font-family: Bookman">Cùng lĩnh vực</h1>
 		</div>
 		<!--end::Header-->
 		<!--begin::Body-->
@@ -658,7 +661,7 @@
 				<!--end::Symbol-->
 				<!--begin::Title-->
 				<div class="d-flex flex-column flex-grow-1 my-lg-0 my-2 col-6">
-					<a href="/teacher/course/{{slug}}" class="text-dark-75 font-weight-bolder text-hover-primary" style="font-size: 120%;">{{name}}</a>
+					<a href="/student/course/{{slug}}" class="text-dark-75 font-weight-bolder text-hover-primary" style="font-size: 120%;">{{name}}</a>
 					<span class="text-muted font-weight-bold font-size-sm my-1">{{SubCategory}}</span>
 					<span class="text-muted font-weight-bold font-size-sm">Giảng viên: 
 					<span class="text-primary font-weight-bold">{{author.fullname}}</span></span>
@@ -689,7 +692,9 @@
 				<!--end::Info-->
 			</div>
 			<!--end::Item-->
-{{/each}}
+            {{else}}
+            <h3>Không có khóa học nào cùng lĩnh vực</h3>
+            {{/each}}
 		</div>
 		<!--end::Body-->
 	</div>

@@ -31,12 +31,6 @@ const UserSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
-  list_courses: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: "Course",
-    },
-  ],
   otp:{
     type: String
   },
@@ -45,6 +39,9 @@ const UserSchema = new mongoose.Schema({
     default: 0
   }
 });
+
+const mongooseDelete = require('mongoose-delete');
+UserSchema.plugin(mongooseDelete, { overrideMethods: 'all' })
 
 const User = mongoose.model("User", UserSchema);
 module.exports = User;

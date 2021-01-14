@@ -11,5 +11,8 @@ const EnrollSchema = new mongoose.Schema({
     },
 })
 
+const mongooseDelete = require('mongoose-delete');
+EnrollSchema.plugin(mongooseDelete, { overrideMethods: 'all' })
+
 const Enroll = mongoose.model("Enroll", EnrollSchema);
 module.exports = Enroll;
