@@ -151,6 +151,11 @@ app.use("/user", userRoute);
 app.use("/student", studentRoute);
 app.use("/", webRoute);
 
+require("./controllers/global")().then((result)=>{
+  global.__statics ={}
+  global.__statics.categories = result
+})
+
 app.listen(port, () => {
   console.log(`HWA listen att http://localhost:${port}`);
 });

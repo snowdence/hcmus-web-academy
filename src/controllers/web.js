@@ -19,11 +19,14 @@ const getHomePage = async (req, res, next) => {
     .limit(limTop10)
     .skip(limTop10 + limTop5);
   res.render("pages/home", {
+    cate: __statics.categories,
     title: "Home",
     top10Courses,
     top5Courses,
     top10NewCourses,
     top5cate,
+    cate: __statics.categories,
+
   });
 };
 
@@ -67,6 +70,8 @@ const courseDetail = async (req, res, next) => {
     teacher,
     chapters,
     fb,
+    cate: __statics.categories,
+
   });
 };
 
@@ -120,11 +125,28 @@ const courseSearch = async (req, res, next) => {
     all_cate,
     current_key: key,
     current_cate_sub_id: cate_sub_id,
+    cate: __statics.categories,
+
   });
 };
 
+const myCourse = async (req, res, next) => {
+  if(req.user.role == 0)
+  {
+    res.redirect('/admin/course-management')
+  }
+  else if (req.user.role == 1)
+  {
+    res.redirect('/teacher/courses/1')
+  }
+  else if (req.user.role == 2)
+  {
+    res.redirect('/student/myCourse/1')
+  }
+}
 module.exports = {
   getHomePage,
   courseDetail,
   courseSearch,
+  myCourse
 };

@@ -42,6 +42,44 @@ const wishlist = async (req, res , next) => {
         pageCount: count,
         itemPerPage: perPage,
         pages: Math.ceil(count / perPage), // tổng số các page
+        cate: __statics.categories,
+
+    })
+}
+
+const myCourse = async (req, res , next) => {
+    let average = (array) => array.reduce((a, b) => a + b,0) / array.length;
+
+    let perPage = 5;
+    let page = req.params.page || 1;
+    let courses = await EnrollModel.find({studentID:req.user._id}).skip(perPage * page - perPage).limit(perPage)
+    .lean()
+
+    console.log('course1: ', courses.map(c=>c.courseID))
+
+    courses = await courseModel.find({_id: {$in: courses.map(c=>c.courseID)}}).lean()
+    for(x of courses)
+    {
+        let nFeedback = await FeedbackModel.find({courseID: x._id}).lean()
+                var ave = (nFeedback.length>0) ? average(nFeedback.map(c=>c.rate)) : 0;
+
+                let teacher = await UserModel.findOne({_id: x.author_id}).lean()
+                let SubCategory = await SubCategoryModel.findOne({_id: x.sub_category}).lean()
+                x.SubCategory = SubCategory.name
+                x.author = teacher
+                x.rating = ave
+                x.allRates = nFeedback.length
+    }
+    console.log('course: ', courses)
+    let count = await FavoriteModel.countDocuments({studentID:req.user._id})
+    res.render('pages/student/watchlist',{
+        courses,
+        currentPage: page, // page hiện tại
+        pageCount: count,
+        itemPerPage: perPage,
+        pages: Math.ceil(count / perPage), // tổng số các page
+        cate: __statics.categories,
+
     })
 }
 
@@ -51,6 +89,7 @@ const review = async (req, res , next) => {
     res.render("pages/student/review-courses", {
         title: "Review",
         top10Courses,
+
     })
     
 }
@@ -150,6 +189,8 @@ const courseDetail = async(req, res, next) => {
             enroll: enroll != null,
             sameCate: sameCate,
             nFeedback: nFeedback,
+            cate: __statics.categories,
+
         })  
     })
     .catch(next)
@@ -222,7 +263,9 @@ const lessonDetail = async(req, res, next) => {
             myRate: myRate,
             favorite: fav != null,
             enroll: enroll!= null,
-            lesson: lesson
+            lesson: lesson,
+            cate: __statics.categories,
+
         })  
     })
     .catch(next)
@@ -291,6 +334,7 @@ const enroll = async (req, res, next) =>{
 
 module.exports = {
     wishlist,
+    myCourse,
     courseDetail,
     updateProgress,
     rate,

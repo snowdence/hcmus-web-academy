@@ -59,6 +59,8 @@ const postUserProfile = (req, res, next) => {
       userPhone: req.body.phone,
       userEmail: req.body.email,
       isUpdateSuccessfully: true,
+      cate: __statics.categories,
+
     });
   } else {
     res.render("pages/user/personal-info", {
@@ -66,6 +68,8 @@ const postUserProfile = (req, res, next) => {
       userFullname: req.body.fullname,
       userPhone: req.body.phone,
       userEmail: req.body.email,
+      cate: __statics.categories,
+
     });
   }
 };
@@ -91,6 +95,8 @@ const postUserChangePassword = async (req, res, next) => {
       userPhone: req.user.phone,
       userEmail: req.user.email,
       isUpdateSuccessfully: true,
+      cate: __statics.categories,
+
     });
   } else {
     if (req.user.password !== req.body.curPassword) {
@@ -101,6 +107,8 @@ const postUserChangePassword = async (req, res, next) => {
         userEmail: req.user.email,
         isFail: true,
         message: "Wrong password! Please enter again!",
+        cate: __statics.categories,
+
       });
     } else {
       res.render("pages/user/change-password", {
@@ -110,6 +118,8 @@ const postUserChangePassword = async (req, res, next) => {
         userEmail: req.user.email,
         isFail: true,
         message: "Verified password doesn't match! Check it again",
+        cate: __statics.categories,
+
       });
     }
   }
@@ -121,7 +131,9 @@ const getUserProfile = (req, res, next) => {
     userFullname: req.user.fullname,
     userPhone: req.user.phone,
     userEmail: req.user.email,
-    title: "Personal Information"
+    title: "Personal Information",
+    cate: __statics.categories,
+
   });
 }
 
@@ -132,6 +144,8 @@ const getUserChangePassword = (req, res, next) => {
     userPhone: req.user.phone,
     userEmail: req.user.email,
     title: "Change Password",
+    cate: __statics.categories,
+
   });
 }
 

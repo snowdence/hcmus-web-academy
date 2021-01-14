@@ -60,4 +60,7 @@ router.route("/loginOK").get(authenticationMiddleware(), (req, res) => {
 });
 
 router.route("/course-detail/:id").get(webController.courseDetail);
+
+router.route("/course").get(webController.myCourse);
+
 module.exports = router;
