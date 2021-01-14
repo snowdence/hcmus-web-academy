@@ -34,7 +34,7 @@ const wishlist = async (req, res , next) => {
         nextActive = "false"
     }
     for(let i = 0; i< lim; i++){
-        top10Courses[i].page = page
+        top10Courses[i].page = previouspage
         var d = new Date(top10Courses[i].updatedAt); 
         top10Courses[i].updatedAt = d.toLocaleString()
     }

@@ -1,5 +1,5 @@
-const Course = require("../models/Course");
 const courseModel = require("../models/Course");
+const userModel = require("../models/User")
 
 const getHomePage = async (req, res, next) => {
   const limTop10 = 10;
@@ -24,6 +24,7 @@ const courseDetail = async (req, res, next) => {
   const course = await query.findOne().lean();
   const limit = 5
   const top5 = await courseModel.find({sub_category: course.sub_category}).lean().limit(limit)
+  const teacher = await userModel.findOne({_id: course.teacher}).lean()
   var d = new Date(course.updatedAt)
   course.updatedAt = d.toLocaleString()
   for(i = 0; i<5;i++) {
@@ -34,6 +35,7 @@ const courseDetail = async (req, res, next) => {
     course,
     top5,
     title: "Detail",
+    teacher
   });
 };
 
