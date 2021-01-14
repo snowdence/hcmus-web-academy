@@ -6,6 +6,7 @@
  */
 
 const UserModel = require("../models/User");
+const bcrypt = require('bcrypt')
 
 /**
  * get all user use promise style
@@ -71,14 +72,17 @@ const postUserProfile = (req, res, next) => {
 
 const postUserChangePassword = async (req, res, next) => {
   const userPW = req.user.password
-  const pwChange = req.body.curPassword
-  const isMatch = await bcrypt.compare(pwChange, userPW);
+  const pwOld = req.body.curPassword
+  const pwNew = req.body.password
+  const isMatch = await bcrypt.compare(pwOld, userPW);
   console.log(isMatch)
   if (
-    req.user.password === req.body.curPassword &&
+    isMatch &&
     req.body.password === req.body.verPassword
   ) {
-    UserModel.updateOne({ username: req.user.username }, req.body)
+    const salt = 10;
+    const hashpw = await bcrypt.hash(pwNew, salt)
+    UserModel.updateOne({ username: req.user.username }, {password: hashpw})
       .then()
       .catch((err) => next(err));
     res.render("pages/user/change-password", {
