@@ -139,8 +139,7 @@ const courseDetail = async(req, res, next) => {
         }
         let teacher = await UserModel.findOne({_id: course.author_id}).lean()
         let fav = await FavoriteModel.findOne({studentID: req.user._id, courseID: course._id}).lean()
-        let _enroll = await EnrollModel.findOne({studentID: req.user._id, courseID: course._id}).lean()
-        console.log('debugg: ', _enroll != null)
+        let enroll = await EnrollModel.findOne({studentID: req.user._id, courseID: course._id}).lean()
         res.render("pages/student/courseDetail", {
             SubCategory: SubCategory.name,
             createdAt: createdAt,
@@ -152,7 +151,7 @@ const courseDetail = async(req, res, next) => {
             nRate: nFeedback.length,
             myRate: myRate,
             favorite: fav != null,
-            enroll: _enroll != null,
+            enroll: enroll != null,
             sameCate: sameCate
         })  
     })
@@ -211,6 +210,7 @@ const lessonDetail = async(req, res, next) => {
         }
         let teacher = await UserModel.findOne({_id: course.author_id}).lean()
         let fav = await FavoriteModel.findOne({studentID: req.user._id, courseID: course._id}).lean()
+        let enroll = await EnrollModel.findOne({studentID: req.user._id, courseID: course._id}).lean()
 
         lesson = await LessonModel.findOne({_id: req.params.lesson}).lean()
         res.render("pages/student/lessonDetail", {
@@ -224,6 +224,7 @@ const lessonDetail = async(req, res, next) => {
             nRate: nFeedback.length,
             myRate: myRate,
             favorite: fav != null,
+            enroll: enroll!= null,
             lesson: lesson
         })  
     })
