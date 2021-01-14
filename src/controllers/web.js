@@ -2,15 +2,14 @@ const UserModel = require("../models/User");
 const CategoryModel = require("../models/Category");
 const CourseModel = require("../models/Course");
 const SubCategoryModel = require("../models/SubCategory");
-const ChapterModel = require("../models/Chapter")
-const FbModel = require("../models/Feedback")
+const ChapterModel = require("../models/Chapter");
+const FeedbackModel = require("../models/Feedback");
 const LessonModel = require("../models/Lesson");
-
 const getHomePage = async (req, res, next) => {
   const limTop10 = 10;
   const limTop5 = 5;
   const top10Courses = await CourseModel.find().lean().limit(limTop10);
-  const top5cate = await SubCategoryModel.find().lean().limit(limTop5)
+  const top5cate = await SubCategoryModel.find().lean().limit(limTop5);
   const top5Courses = await CourseModel.find()
     .lean()
     .limit(limTop5)
@@ -24,7 +23,7 @@ const getHomePage = async (req, res, next) => {
     top10Courses,
     top5Courses,
     top10NewCourses,
-    top5cate
+    top5cate,
   });
 };
 
@@ -35,27 +34,30 @@ const courseDetail = async (req, res, next) => {
   const top5 = await CourseModel.find({ sub_category: course.sub_category })
     .lean()
     .limit(limit);
-  const teacher = await UserModel.findOne({_id: course.author_id}).lean()
-  let chapters = []
+  const teacher = await UserModel.findOne({ _id: course.author_id }).lean();
+  let chapters = [];
   var d = new Date(course.updatedAt);
   course.updatedAt = d.toLocaleString();
   for (i = 0; i < 5; i++) {
     var temp = new Date(top5[i].updatedAt);
     top5[i].updatedAt = temp.toLocaleString();
   }
-  for (i = 0;i < course.chapters.length; i++){
-    chapters[i] = await ChapterModel.findOne({_id: course.chapters[i]}).lean()
-    for(j = 0; j < chapters[i].lessons.length; j++){
-      chapters[i].lessons[j] = await LessonModel.findOne({_id: chapters[i].lessons[j]}).lean()
+  for (i = 0; i < course.chapters.length; i++) {
+    chapters[i] = await ChapterModel.findOne({
+      _id: course.chapters[i],
+    }).lean();
+    for (j = 0; j < chapters[i].lessons.length; j++) {
+      chapters[i].lessons[j] = await LessonModel.findOne({
+        _id: chapters[i].lessons[j],
+      }).lean();
     }
-
   }
 
-  const fb = await FbModel.find({courseID: course._id}).lean()
-  for(i=0;i<fb.length;i++){
-    const t = await UserModel.findOne({_id: fb[i].studentID}).lean()
-    fb[i].studentID = t.fullname
-    fb[i].ava = t.avatar
+  const fb = await FeedbackModel.find({ courseID: course._id }).lean();
+  for (i = 0; i < fb.length; i++) {
+    const t = await UserModel.findOne({ _id: fb[i].studentID }).lean();
+    fb[i].studentID = t.fullname;
+    fb[i].ava = t.avatar;
   }
 
   res.render("pages/courses/details", {
@@ -64,13 +66,24 @@ const courseDetail = async (req, res, next) => {
     title: "Detail",
     teacher,
     chapters,
-    fb
+    fb,
   });
 };
 
 const courseSearch = async (req, res, next) => {
+  const { key, sub_cate_id } = req.query;
+  let find_condition = {};
+  if (sub_cate_id) {
+    find_condition["sub_category"] = sub_cate_id;
+  }
+  if (key) {
+    find_condition = { ...find_condition, ...{ $text: { $search: key } } };
+  }
+
+  console.log(find_condition);
+
   let average = (array) => array.reduce((a, b) => a + b, 0) / array.length;
-  let courses = await CourseModel.find().lean();
+  let courses = await CourseModel.find(find_condition).lean();
   let all_sub_cate = await SubCategoryModel.find().lean();
   for (x of courses) {
     let nFeedback = await FeedbackModel.find({ courseID: x._id }).lean();
