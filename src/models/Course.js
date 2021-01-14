@@ -58,10 +58,6 @@ const CourseSchema = new mongoose.Schema({
     type: Boolean,
     default: false
   },
-  teacher: {
-    type: Schema.Types.ObjectId,
-    ref: "User"
-  }
 }, {timestamps:true});
 
 const mongooseDelete = require('mongoose-delete');
