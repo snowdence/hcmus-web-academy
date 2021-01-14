@@ -21,6 +21,7 @@ const getHomePage = async (req, res, next) => {
     top10Courses,
     top5Courses,
     top10NewCourses,
+    top5cate
   });
 };
 
@@ -38,6 +39,22 @@ const courseDetail = async (req, res, next) => {
     var temp = new Date(top5[i].updatedAt);
     top5[i].updatedAt = temp.toLocaleString();
   }
+  for (i = 0;i < course.chapters.length; i++){
+    chapters[i] = await chapterModel.findOne({_id: course.chapters[i]}).lean()
+    for(j = 0; j < chapters[i].lessons.length; j++){
+      chapters[i].lessons[j] = await lessonModel.findOne({_id: chapters[i].lessons[j]}).lean()
+    }
+
+  }
+
+  const fb = await fbModel.find({courseID: course._id}).lean()
+  for(i=0;i<fb.length;i++){
+    const t = await userModel.findOne({_id: fb[i].studentID}).lean()
+    fb[i].studentID = t.fullname
+    fb[i].ava = t.avatar
+  }
+  console.log(fb)
+
   res.render("pages/courses/details", {
     course,
     top5,
