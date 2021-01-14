@@ -71,10 +71,11 @@ const courseDetail = async (req, res, next) => {
 };
 
 const courseSearch = async (req, res, next) => {
-  const { key, sub_cate_id } = req.query;
-  let find_condition = {};
-  if (sub_cate_id) {
-    find_condition["sub_category"] = sub_cate_id;
+  const { key, cate_sub_id } = req.query;
+  let find_condition = { deleted: false };
+
+  if (cate_sub_id) {
+    find_condition["sub_category"] = cate_sub_id;
   }
   if (key) {
     find_condition = { ...find_condition, ...{ $text: { $search: key } } };
@@ -85,6 +86,14 @@ const courseSearch = async (req, res, next) => {
   let average = (array) => array.reduce((a, b) => a + b, 0) / array.length;
   let courses = await CourseModel.find(find_condition).lean();
   let all_sub_cate = await SubCategoryModel.find().lean();
+  let all_cate = await CategoryModel.find().lean();
+  for (x of all_cate) {
+    let SubCategory = await SubCategoryModel.find({
+      parent_category: x._id,
+    }).lean();
+    x.sub_categories = SubCategory;
+  }
+
   for (x of courses) {
     let nFeedback = await FeedbackModel.find({ courseID: x._id }).lean();
     var ave = nFeedback.length > 0 ? average(nFeedback.map((c) => c.rate)) : 0;
@@ -93,7 +102,13 @@ const courseSearch = async (req, res, next) => {
     let SubCategory = await SubCategoryModel.findOne({
       _id: x.sub_category,
     }).lean();
+
+    let ParentCategory = await CategoryModel.findOne({
+      _id: SubCategory.parent_category,
+    }).lean();
+
     x.SubCategory = SubCategory.name;
+    x.ParentCategory = ParentCategory.name;
     x.author = teacher;
     x.rating = ave;
     x.allRates = nFeedback.length;
@@ -102,6 +117,9 @@ const courseSearch = async (req, res, next) => {
     layout: "lmain-course",
     courses,
     all_sub_cate,
+    all_cate,
+    current_key: key,
+    current_cate_sub_id: cate_sub_id,
   });
 };
 
