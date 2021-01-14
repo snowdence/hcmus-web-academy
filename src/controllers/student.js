@@ -12,43 +12,37 @@ const mongoose = require('mongoose');
 mongoose.set('useFindAndModify', false);
 
 const wishlist = async (req, res , next) => {
-    const lim = 10;
-    const page = req.params.page || 1;
-    const nextpage = parseInt(page) + 1
-    const previouspage = parseInt(page) - 1
-    const top10Courses = await courseModel.find().lean().skip((lim * page) - lim).limit(lim)
-    const count = await courseModel.countDocuments()
-    let listpage = []
-    let prevActive = "true"
-    let nextActive = "true"
-    const totalpage = Math.ceil(count / lim)
-    for(let i = 0; i <= totalpage; i++)
+    let average = (array) => array.reduce((a, b) => a + b,0) / array.length;
+
+    let perPage = 5;
+    let page = req.params.page || 1;
+    let courses = await FavoriteModel.find({studentID:req.user._id}).skip(perPage * page - perPage).limit(perPage)
+    .lean()
+
+    console.log('course1: ', courses.map(c=>c.courseID))
+
+    courses = await courseModel.find({_id: {$in: courses.map(c=>c.courseID)}}).lean()
+    for(x of courses)
     {
-        listpage[i] = {class: "", i: page}
+        let nFeedback = await FeedbackModel.find({courseID: x._id}).lean()
+                var ave = (nFeedback.length>0) ? average(nFeedback.map(c=>c.rate)) : 0;
+
+                let teacher = await UserModel.findOne({_id: x.author_id}).lean()
+                let SubCategory = await SubCategoryModel.findOne({_id: x.sub_category}).lean()
+                x.SubCategory = SubCategory.name
+                x.author = teacher
+                x.rating = ave
+                x.allRates = nFeedback.length
     }
-    listpage[page]={class: "datatable-pager-link-active", i: page}
-    if(parseInt(page) === 1){
-        prevActive = "false"
-    }
-    if(parseInt(page) === (totalpage)){
-        nextActive = "false"
-    }
-    for(let i = 0; i< lim; i++){
-        top10Courses[i].page = previouspage
-        var d = new Date(top10Courses[i].updatedAt); 
-        top10Courses[i].updatedAt = d.toLocaleString()
-    }
-    res.render("pages/student/watchlist", {
-        title: "Watchlist",
-        top10Courses,
-        listpage,
-        page,
-        nextpage,
-        previouspage,
-        prevActive,
-        nextActive,
+    console.log('course: ', courses)
+    let count = await FavoriteModel.countDocuments({studentID:req.user._id})
+    res.render('pages/student/watchlist',{
+        courses,
+        currentPage: page, // page hiện tại
+        pageCount: count,
+        itemPerPage: perPage,
+        pages: Math.ceil(count / perPage), // tổng số các page
     })
-    
 }
 
 const review = async (req, res , next) => {
@@ -271,7 +265,7 @@ const favorite = async (req, res, next) =>{
     //&& !student.list_courses.includes(req.body.courseID)
     if (req.body.favorite == 'false' )
     {
-        FavoriteModel.findOne({studentID: req.user._id, courseID: req.body.courseID}).remove().exec();
+        FavoriteModel.findOne({studentID: req.user._id, courseID: req.body.courseID}).deleteOne().exec();
     }
   //  FeedbackModel.updateOne({studentID: req.user._id, courseID: req.body.courseID}, req.body, {upsert: true})
   //  .then(num => console.log(num))
