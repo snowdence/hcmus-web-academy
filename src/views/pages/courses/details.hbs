@@ -204,49 +204,148 @@
                 {{#if @index}}
                 <div class="separator separator-solid my-7"></div>
                 {{/if}}
-                
-                    <div class="ml-2 row justify-content-between">
-                        <div class="col-1 symbol symbol-50 symbol-3x ml-5">
-                            <div class="symbol-label">
-                                <img class="h-100" src="{{this.thumbnail}}" alt="photo">
-                            </div>
-                        </div>
-                        <div class="col-4">
-                            <div class=" text-dark-75 font-weight-bolder font-size-lg">
-                                {{this.name}}
-                            </div>
-                            <span>Updated: {{this.updatedAt}}</span>
-                        </div>
-                        <div class="col-1">
-                            <div class="text-dark-75 text-warning font-size-lg">
-                                4.7 
-                                <i class="fas fa-star text-warning"></i>
-                            </div>
-                        </div>
-                        <div class="col-1">
-                            <div class="text-dark-75 font-size-lg">
-                                67.000 &nbsp;<i class="fas fa-users "></i>
-                            </div>
-                        </div>
-                        <div class="col-1">
-                            <div class="d-flex text-dark-75 font-weight-bolder font-size-lg mb-0 ml-2">
-                                $ {{this.price}}
-                            </div>
-                        </div>
-                        <div class="col-1">
-                            <div class="text-dark-75 text-warning font-size-lg ">
-                                <a href="#" class="btn btn-light-danger btn-hover-danger"> 
-                                <i class="far fa-heart icon-2x text-danger ml-1 mt-1"></i>
-                                </a>
-                            </div>
+
+                <div class="ml-2 row justify-content-between">
+                    <div class="col-1 symbol symbol-50 symbol-3x ml-5">
+                        <div class="symbol-label">
+                            <img class="h-100" src="{{this.thumbnail}}" alt="photo">
                         </div>
                     </div>
-                
+                    <div class="col-4">
+                        <div class=" text-dark-75 font-weight-bolder font-size-lg">
+                            {{this.name}}
+                        </div>
+                        <span>Updated: {{this.updatedAt}}</span>
+                    </div>
+                    <div class="col-1">
+                        <div class="text-dark-75 text-warning font-size-lg">
+                            4.7
+                            <i class="fas fa-star text-warning"></i>
+                        </div>
+                    </div>
+                    <div class="col-1">
+                        <div class="text-dark-75 font-size-lg">
+                            67.000 &nbsp;<i class="fas fa-users "></i>
+                        </div>
+                    </div>
+                    <div class="col-1">
+                        <div class="d-flex text-dark-75 font-weight-bolder font-size-lg mb-0 ml-2">
+                            $ {{this.price}}
+                        </div>
+                    </div>
+                    <div class="col-1">
+                        <div class="text-dark-75 text-warning font-size-lg">
+                            <a href="#" class="btn btn-light-danger btn-hover-danger">
+                                <i class="far fa-heart icon-2x text-danger ml-1 mt-1"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
                 {{/each}}
                 <div class="separator separator-solid my-7"></div>
                 <h2>Instructors</h2>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-2 symbol symbol-circle symbol-60 symbol-xxl-100 mt-1">
+                            <div class="symbol-label" style="background-image:url({{teacher.avatar}})">
+                            </div>
+                        </div>
+                        <div class="font-size-lg col-2">
+                            <span class="text-primary font-weight-bolder font-size-h4">{{teacher.fullname}}</span><br>
+                            <i class="fas fa-star icon-md text-warning mt-1 mr-3"></i>4.9 Instructor Rating<br>
+                            <i class="fas fa-trophy icon-md text-warning mt-1 mr-3"></i>753,687 Reviews<br>
+                            <i class="fas fa-users icon-md text-warning mt-1 mr-3"></i>3,357,498 Students<br>
+                            <i class="fas fa-play-circle icon-md text-warning mt-1 mr-4"></i>20 Courses<br>
+                        </div>  
+                        <div class="col-6">Lorem ipsum dolor sit amet consectetur, adipisicing elit. At impedit quia reiciendis error iure, vero tempora possimus illo blanditiis ipsam quae, voluptates explicabo molestias necessitatibus aperiam mollitia asperiores autem assumenda?</div>
+                    </div>
+                </div>
                 <div class="separator separator-solid my-7"></div>
                 <h2>Student feedback</h2>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-2">
+                            <h1 class="ml-13 mt-4">4.7</h1>
+                            <i class="fas fa-star icon-lg text-warning mt-1"></i>
+                            <i class="fas fa-star icon-lg text-warning mt-1"></i>
+                            <i class="fas fa-star icon-lg text-warning mt-1"></i>
+                            <i class="fas fa-star icon-lg text-warning mt-1"></i>
+                            <i class="fas fa-star-half-alt icon-lg text-warning mt-1"></i>
+                            <div class="font-size-h4 text-warning mt-3">Course Rating</div>
+                        </div>
+                        <div class="col-8">
+                            <div class="progress mb-2 mt-2">
+                                <div class="progress-bar" role="progressbar" style="width: 25%" aria-valuenow="25"
+                                    aria-valuemin="0" aria-valuemax="100">
+                                </div>
+                            </div>
+                            <div class="progress mb-2 mt-2">
+                                <div class="progress-bar" role="progressbar" style="width: 25%" aria-valuenow="25"
+                                    aria-valuemin="0" aria-valuemax="100">
+                                </div>
+                            </div>
+                            <div class="progress mb-2 mt-2">
+                                <div class="progress-bar" role="progressbar" style="width: 25%" aria-valuenow="25"
+                                    aria-valuemin="0" aria-valuemax="100">
+                                </div>
+                            </div>
+                            <div class="progress mb-2 mt-2">
+                                <div class="progress-bar" role="progressbar" style="width: 25%" aria-valuenow="25"
+                                    aria-valuemin="0" aria-valuemax="100">
+                                </div>
+                            </div>
+                            <div class="progress mb-2 mt-2">
+                                <div class="progress-bar" role="progressbar" style="width: 25%" aria-valuenow="25"
+                                    aria-valuemin="0" aria-valuemax="100">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-2">
+                            <div>
+                                <i class="fas fa-star icon-md text-warning "></i>
+                                <i class="fas fa-star icon-md text-warning "></i>
+                                <i class="fas fa-star icon-md text-warning "></i>
+                                <i class="fas fa-star icon-md text-warning "></i>
+                                <i class="fas fa-star icon-md text-warning "></i>
+                                50%
+                            </div>
+                            <div>
+                                <i class="fas fa-star icon-md text-warning "></i>
+                                <i class="fas fa-star icon-md text-warning "></i>
+                                <i class="fas fa-star icon-md text-warning "></i>
+                                <i class="fas fa-star icon-md text-warning "></i>
+                                <i class="far fa-star icon-md text-warning "></i>
+                                50%
+                            </div>
+                            <div>
+                                <i class="fas fa-star icon-md text-warning "></i>
+                                <i class="fas fa-star icon-md text-warning "></i>
+                                <i class="fas fa-star icon-md text-warning "></i>
+                                <i class="far fa-star icon-md text-warning "></i>
+                                <i class="far fa-star icon-md text-warning "></i>
+                                50%
+                            </div>
+                            <div>
+                                <i class="fas fa-star icon-md text-warning "></i>
+                                <i class="fas fa-star icon-md text-warning "></i>
+                                <i class="far fa-star icon-md text-warning "></i>
+                                <i class="far fa-star icon-md text-warning "></i>
+                                <i class="far fa-star icon-md text-warning "></i>
+                                50%
+                            </div>
+                            <div>
+                                <i class="fas fa-star icon-md text-warning "></i>
+                                <i class="far fa-star icon-md text-warning "></i>
+                                <i class="far fa-star icon-md text-warning "></i>
+                                <i class="far fa-star icon-md text-warning "></i>
+                                <i class="far fa-star icon-md text-warning "></i>
+                                50%
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div class="separator separator-solid my-7"></div>
                 <h2>Reviews</h2>
             </div>
