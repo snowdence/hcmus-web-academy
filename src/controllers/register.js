@@ -29,7 +29,8 @@ const sendMail = async (req, res, next) => {
       useremail = to
       res.render("pages/otp",{
         layout: null,
-        title: "Verify"
+        title: "Verify",
+        noti: "Enter the code we've just sent to your email"
       })
     }
   } catch (error) {
@@ -40,21 +41,31 @@ const sendMail = async (req, res, next) => {
 const otpAuth = async (req, res)=>{
   const{digit1, digit2, digit3, digit4, digit5, digit6} = req.body
   const userOtp = `${digit1}${digit2}${digit3}${digit4}${digit5}${digit6}`
-  const user = UserModel.findOne({email: useremail})
+  const user = await UserModel.findOne({email: useremail})
   const Otp = user.otp
   userOtp.toLowerCase()
   if(userOtp === Otp){
-    const ver = UserModel.updateOne({email: useremail}, {verified: true})
+    await UserModel.updateOne({email: useremail}, {verified: true})
     res.redirect("/login")
   }else{
-    const otpcount = user.otp_count++;
+    const otpcount = user.otp_count + 1;
     if(otpcount === 3){
       await mailer.sendMail(useremail)
-      UserModel.updateOne({email: useremail}, {otp: mailer.otp})
-      UserModel.updateOne({email: useremail},{otp_count: 0})
-    } else
-      UserModel.updateOne({email: useremail},{otp_count: otpcount})
-    res.render("pages/otp")
+      await UserModel.updateOne({email: useremail}, {otp: mailer.otp})
+      await UserModel.updateOne({email: useremail},{otp_count: 0})
+      res.render("pages/otp", {
+        layout: null,
+        title: "Verify",
+        noti: "You entered your OTP incorrectly 3 times. We've just resent the code to your email"
+      })
+    } else {
+      await UserModel.updateOne({email: useremail},{otp_count: otpcount})
+      res.render("pages/otp", {
+        layout: null,
+        title: "Verify",
+        noti: "Wrong OTP! Please enter again"
+      })
+    }
   }
 }
 module.exports = {
