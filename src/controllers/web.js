@@ -71,10 +71,11 @@ const courseDetail = async (req, res, next) => {
 };
 
 const courseSearch = async (req, res, next) => {
-  const { key, sub_cate_id } = req.query;
-  let find_condition = {};
-  if (sub_cate_id) {
-    find_condition["sub_category"] = sub_cate_id;
+  const { key, cate_sub_id } = req.query;
+  let find_condition = { deleted: false };
+
+  if (cate_sub_id) {
+    find_condition["sub_category"] = cate_sub_id;
   }
   if (key) {
     find_condition = { ...find_condition, ...{ $text: { $search: key } } };
@@ -101,7 +102,13 @@ const courseSearch = async (req, res, next) => {
     let SubCategory = await SubCategoryModel.findOne({
       _id: x.sub_category,
     }).lean();
+
+    let ParentCategory = await CategoryModel.findOne({
+      _id: SubCategory.parent_category,
+    }).lean();
+
     x.SubCategory = SubCategory.name;
+    x.ParentCategory = ParentCategory.name;
     x.author = teacher;
     x.rating = ave;
     x.allRates = nFeedback.length;
@@ -111,6 +118,8 @@ const courseSearch = async (req, res, next) => {
     courses,
     all_sub_cate,
     all_cate,
+    current_key: key,
+    current_cate_sub_id: cate_sub_id,
   });
 };
 
