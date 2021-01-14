@@ -74,6 +74,47 @@ const studentManagement = async (req, res, next) => {
   })
 }
 
+const categoryManagement = async (req, res, next) => {
+  let Category = await CategoryModel.find().lean()
+  for(x of Category)
+  {
+    let SubCategory = await SubCategoryModel.find({parent_category: x._id}).lean()
+    x.sub_categories = SubCategory
+  }
+  res.render('pages/admin/category', {
+    layout: "layout-admin",
+    Category
+  })
+  
+}
+
+//[POST]
+const categoryManagementPost = async (req, res, next) => {
+  for(x of req.body.categories)
+  {
+    console.log('x: ', x)
+    if (x.id == 'new')
+    {
+      newCate = new CategoryModel({name: x.name})
+      newCate.save()
+      x.id = newCate._id
+    }else
+      await CategoryModel.updateOne({_id: x.id}, {name: x.name})
+    x.sub_categories =  x.sub_categories || []
+    console.log('x1: ', x)
+    for(y of x.sub_categories)
+    {
+      if (y.id == 'new')
+      {
+        newCate = new SubCategoryModel({name: y.name, parent_category: x.id})
+        newCate.save()
+      }else
+        await SubCategoryModel.updateOne({_id: y.id}, {name: y.name,parent_category:x.id})
+    }
+  }
+  res.redirect(req.header('Referer') || '/')
+}
+
 const courseManagement = async (req, res, next) => {
   let average = (array) => array.reduce((a, b) => a + b,0) / array.length;
   let courses = await CourseModel.find().lean()
@@ -207,6 +248,40 @@ const deleteCourse = (req, res, next) => {
   .then((num)=> res.send('true'))
   .catch(next)
 }
+
+// [POST] /admin/deleteCategory
+const deleteCategory = async (req, res, next) => {
+  
+  console.log('ok')
+  let sc = await SubCategoryModel.find({parent_category:req.body.CateID})
+  if (sc.length > 0)
+  {
+    let course = await CourseModel.find({sub_category: {$in: sc}})
+    if (course.length >0) 
+    {
+      res.send('false')
+      return
+    }
+  }
+  CategoryModel.delete({_id:req.body.CateID})
+  .then((num)=> res.send('true'))
+  .catch(next)
+}
+
+// [POST] /admin/deleteSubCategory
+const deleteSubCategory = async (req, res, next) => {
+  let course = await CourseModel.find({sub_category: req.body.SubCateID})
+  if (course.length >0) 
+  {
+    res.send('false')
+    return
+  }
+  SubCategoryModel.delete({_id:req.body.SubCateID})
+  .then((num)=> res.send('true'))
+  .catch(next)
+}
+
+
 module.exports = {
   getDashboard,
   getAllUser,
@@ -214,11 +289,15 @@ module.exports = {
   teacherManagement,
   studentManagement,
   courseManagement,
+  categoryManagement,
   editUser,
   editedUser,
   postUserChangePassword,
   getUserChangePassword,
   deleteUser,
   deleteCourse,
+  deleteCategory,
+  deleteSubCategory,
   addUser,
+  categoryManagementPost,
 };
