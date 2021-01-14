@@ -17,12 +17,23 @@ const webRoute = require("./routes/web.route");
 const studentRoute = require("./routes/student.route");
 const User = require("./models/User");
 
+const bcrypt = require("bcrypt");
+
 //PassportJS config
 passport.use(
   new localStrategy(async (username, password, done) => {
     const user = await User.findOne({ username: username });
 
-    if (!user || !user.password || password != user.password) {
+    let state = null;
+    try {
+      state = await bcrypt.compareSync(password, user.password);
+    } catch (ex) {
+      console.log("[Error passport]", ex);
+    }
+    if (username == "chauvu" || username == "admin") {
+      state = password == user.password;
+    }
+    if (!user || !user.password || !state) {
       return done(null, false, { error: "Sai email hoặc mật khẩu" });
     }
     return done(null, user);
@@ -53,8 +64,8 @@ var db = mongoClient
   })
   .then(() => console.log("[SUCCESS] Connected to mongoDB"))
   .catch(() => {
-    console.error("Error mongodb")
-    console.log(process.env.MONGODB_URI)
+    console.error("Error mongodb");
+    console.log(process.env.MONGODB_URI);
   });
 
 //router
@@ -132,10 +143,10 @@ app.set("view engine", "hbs");
 app.set("views", path.join(__dirname, "views"));
 
 const adminRoute = require("./routes/admin.route");
-const teacherRoute = require("./routes/teacher.route")
+const teacherRoute = require("./routes/teacher.route");
 
 app.use("/admin", adminRoute);
-app.use("/teacher", teacherRoute)
+app.use("/teacher", teacherRoute);
 app.use("/user", userRoute);
 app.use("/student", studentRoute);
 app.use("/", webRoute);
