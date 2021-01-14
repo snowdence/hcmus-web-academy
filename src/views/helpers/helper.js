@@ -1,5 +1,10 @@
 var register = function (Handlebars) {
   var helpers = {
+    section: function (name, options) {
+      if (!this._sections) this._sections = {};
+      this._sections[name] = options.fn(this);
+      return null;
+    },
     getTypeAccountHelper: (e) => {
       switch (e) {
         case 0:
@@ -164,48 +169,48 @@ var register = function (Handlebars) {
     bar: function () {
       return "BAR";
     },
-    isEqual: (a, b) =>{
-      if(String(b) === String(a)) return true
-      else return false
+    isEqual: (a, b) => {
+      if (String(b) === String(a)) return true;
+      else return false;
     },
-    roundRating: (a) =>{
+    roundRating: (a) => {
       return Math.round(a / 0.5) * 0.5;
     },
     //top course
     checkIndex: (index, number) => {
-      if(index < number) return true;
+      if (index < number) return true;
       return false;
     },
-    subDescription: (s) =>{
-      return s.substr(0,500)
+    subDescription: (s) => {
+      return s.substr(0, 500);
     },
-    progress: (index)=>{
-      return parseInt(index)*10;
+    progress: (index) => {
+      return parseInt(index) * 10;
     },
     //basic math helper
-    math: (a, opearator, b)=>{
-      if(opearator==='+'){
-        return parseInt(a) + parseInt(b)
+    math: (a, opearator, b) => {
+      if (opearator === "+") {
+        return parseInt(a) + parseInt(b);
       }
-      if(opearator==='-'){
-        return parseInt(a) - parseInt(b)
+      if (opearator === "-") {
+        return parseInt(a) - parseInt(b);
       }
-      if(opearator==='*'){
-        return parseInt(a) * parseInt(b)
+      if (opearator === "*") {
+        return parseInt(a) * parseInt(b);
       }
-      if(opearator==='/'){
-        return parseInt(a) / parseInt(b)
+      if (opearator === "/") {
+        return parseInt(a) / parseInt(b);
       }
     },
     wlpagi: (index, page) => {
-      let start = Math.floor(page / 10) * 10
-      if(parseInt(page) === start){
-        start = start - 10
+      let start = Math.floor(page / 10) * 10;
+      if (parseInt(page) === start) {
+        start = start - 10;
       }
-      const end = start + 10
-      if(index <= start || index > end) return false
-      return true
-    }
+      const end = start + 10;
+      if (index <= start || index > end) return false;
+      return true;
+    },
   };
 
   if (Handlebars && typeof Handlebars.registerHelper === "function") {
