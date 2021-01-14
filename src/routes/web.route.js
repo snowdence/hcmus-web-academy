@@ -33,7 +33,12 @@ router.route("/registry").get((req, res) => {
   });
 }).post(register.sendMail);
 
-router.route("/otp").post(register.otpAuth)
+router.route("/otp").post(register.otpAuth).get((req,res)=>{
+  res.render("pages/otp", {
+    layout: null,
+    noti: "You entered your OTP incorrectly 3 times.<br> We've just resent the code to your email"
+  })
+})
 
 router.route("/logout").get(function (req, res) {
   req.logout();

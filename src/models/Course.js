@@ -57,6 +57,10 @@ const CourseSchema = new mongoose.Schema({
   complete: {
     type: Boolean,
     default: false
+  },
+  teacher: {
+    type: Schema.Types.ObjectId,
+    ref: "User"
   }
 }, {timestamps:true});
 

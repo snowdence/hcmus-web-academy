@@ -54,7 +54,7 @@
                                 <div class="d-flex justify-content-center align-items-center container">
                                     <div class="card">
                                         <h5 class="mt-10">Email verification</h5>
-                                        <span class="mobile-text">Enter the code we've just sent to your email </span>
+                                        <span class="mobile-text">{{{noti}}}</span>
                                         <div class="d-flex flex-row mt-5">
                                             <input type="text" name="digit1" maxlength="1" minlength="1" class="form-control" autofocus="">
                                             <input type="text" name="digit2" maxlength="1" minlength="1" class="form-control">
@@ -97,3 +97,10 @@
 <!--end::Body-->
 
 </html>
+<script>
+    $(".form-control").keyup(function () {
+    if (this.value.length == this.maxLength) {
+      $(this).next('.form-control').focus();
+    }
+});
+</script>

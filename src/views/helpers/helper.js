@@ -184,8 +184,6 @@ var register = function (Handlebars) {
     },
     //basic math helper
     math: (a, opearator, b)=>{
-      console.log(a)
-      console.log(b)
       if(opearator==='+'){
         return parseInt(a) + parseInt(b)
       }
