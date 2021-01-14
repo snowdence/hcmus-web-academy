@@ -7,7 +7,7 @@ router.route("/user/:page").get(AdminController.getAllUser);
 
 router.route("/teacher-management/").get(AdminController.teacherManagement);
 router.route("/student-management/").get(AdminController.studentManagement);
-router.route("/course-management/:page").get(AdminController.courseManagement);
+router.route("/course-management/").get(AdminController.courseManagement);
 
 router.route("/editUser/:id").get(AdminController.editUser);
 router.route("/editUser/:id").post(AdminController.editedUser);

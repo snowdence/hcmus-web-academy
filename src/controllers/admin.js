@@ -60,24 +60,23 @@ const getAllCategory = async (req, res, next) => {
 };
 const teacherManagement = async (req, res, next) => {
   let teacher = await UserModel.find({role: 1}).lean()
-  res.render('pages/admin/teacher', {teacher})
+  res.render('pages/admin/teacher', {
+    layout: "layout-admin",
+    teacher
+  })
 }
 
 const studentManagement = async (req, res, next) => {
   let student = await UserModel.find({role: 2}).lean()
-  res.render('pages/admin/student', {student})
+  res.render('pages/admin/student', {
+    layout: "layout-admin",
+    student
+  })
 }
 
 const courseManagement = async (req, res, next) => {
-  let count = await CourseModel.countDocuments({})
-
-  let perPage = 5;
-  let page = req.params.page || 1;
   let average = (array) => array.reduce((a, b) => a + b,0) / array.length;
-  let courses = await CourseModel.find()
-                    .skip(perPage * page - perPage)
-                    .limit(perPage)
-                    .lean()
+  let courses = await CourseModel.find().lean()
   for( x of courses)
     {
         let nFeedback = await FeedbackModel.find({courseID: x._id}).lean()
@@ -91,11 +90,9 @@ const courseManagement = async (req, res, next) => {
         x.allRates = nFeedback.length
     }
   res.render('pages/admin/course', {
+    layout: "layout-admin",
     courses,
-    currentPage: page, // page hiện tại
-    pageCount: count,
-    itemPerPage: perPage,
-    pages: Math.ceil(count / perPage),})
+  })
 }
 
 //[GET]
