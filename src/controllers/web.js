@@ -1,13 +1,16 @@
 const UserModel = require("../models/User");
 const CategoryModel = require("../models/Category");
 const CourseModel = require("../models/Course");
-const FeedbackModel = require("../models/Feedback");
 const SubCategoryModel = require("../models/SubCategory");
+const ChapterModel = require("../models/Chapter")
+const FbModel = require("../models/Feedback")
+const LessonModel = require("../models/Lesson");
 
 const getHomePage = async (req, res, next) => {
   const limTop10 = 10;
   const limTop5 = 5;
   const top10Courses = await CourseModel.find().lean().limit(limTop10);
+  const top5cate = await SubCategoryModel.find().lean().limit(limTop5)
   const top5Courses = await CourseModel.find()
     .lean()
     .limit(limTop5)
@@ -32,7 +35,8 @@ const courseDetail = async (req, res, next) => {
   const top5 = await CourseModel.find({ sub_category: course.sub_category })
     .lean()
     .limit(limit);
-  const teacher = await UserModel.findOne({ _id: course.teacher }).lean();
+  const teacher = await UserModel.findOne({_id: course.author_id}).lean()
+  let chapters = []
   var d = new Date(course.updatedAt);
   course.updatedAt = d.toLocaleString();
   for (i = 0; i < 5; i++) {
@@ -40,26 +44,27 @@ const courseDetail = async (req, res, next) => {
     top5[i].updatedAt = temp.toLocaleString();
   }
   for (i = 0;i < course.chapters.length; i++){
-    chapters[i] = await chapterModel.findOne({_id: course.chapters[i]}).lean()
+    chapters[i] = await ChapterModel.findOne({_id: course.chapters[i]}).lean()
     for(j = 0; j < chapters[i].lessons.length; j++){
-      chapters[i].lessons[j] = await lessonModel.findOne({_id: chapters[i].lessons[j]}).lean()
+      chapters[i].lessons[j] = await LessonModel.findOne({_id: chapters[i].lessons[j]}).lean()
     }
 
   }
 
-  const fb = await fbModel.find({courseID: course._id}).lean()
+  const fb = await FbModel.find({courseID: course._id}).lean()
   for(i=0;i<fb.length;i++){
-    const t = await userModel.findOne({_id: fb[i].studentID}).lean()
+    const t = await UserModel.findOne({_id: fb[i].studentID}).lean()
     fb[i].studentID = t.fullname
     fb[i].ava = t.avatar
   }
-  console.log(fb)
 
   res.render("pages/courses/details", {
     course,
     top5,
     title: "Detail",
     teacher,
+    chapters,
+    fb
   });
 };
 
