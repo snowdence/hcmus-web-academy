@@ -19,7 +19,7 @@
               <h1 class="font-weight-bolder text-dark mb-0">Tìm kiếm khoá học</h1>
               <div class="font-size-h4 mb-8">Java, Marketing Online, AI</div>
               <!--begin::Form-->
-              <form class="d-flex flex-center py-2 px-6 bg-white rounded">
+              <form class="d-flex flex-center py-2 px-6 bg-white rounded" action="/search">
                 <span class="svg-icon svg-icon-lg svg-icon-primary">
                   <!--begin::Svg Icon | path:assets/media/svg/icons/General/Search.svg-->
                   <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
@@ -36,7 +36,8 @@
                   </svg>
                   <!--end::Svg Icon-->
                 </span>
-                <input type="text" class="form-control border-0 font-weight-bold pl-2" placeholder="Tìm kiếm">
+                <input type="text" class="form-control border-0 font-weight-bold pl-2" name="key"
+                  placeholder="Nhập từ khóa và ấn enter để tìm kiếm">
               </form>
               <!--end::Form-->
             </div>
@@ -289,7 +290,7 @@
           <div>
             <div class="d-flex flex-column justify-content-between align-items-center">
               <div class="mr-1 ml-1 mt-5 mb-8 pl-1 pr-1">
-                    <h6>{{this.name}}</h6><img src="{{this.thumbnail}}" style="width: 90%; height: 180px;">
+                <h6>{{this.name}}</h6><img src="{{this.thumbnail}}" style="width: 90%; height: 180px;">
               </div>
             </div>
           </div>
