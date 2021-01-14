@@ -280,7 +280,29 @@
           <span class="sr-only">Next</span>
         </a>
       </div>
+      <div class="mh-300 mt-15 mr-4 ml-4 pr-4 pl-4 card card-custom gutter-b card-stretch">
+        <u>
+          <h2 class="mt-7 ml-2">Top 5 categories in the week</h2>
+        </u>
 
+        <style>
+          .tooltip-detail {
+            text-align: left;
+          }
+        </style>
+        <div class="mt-7 d-flex flex-row ml-6">
+          {{#each top5cate}}
+          <div>
+            <div class="d-flex flex-column justify-content-between align-items-center">
+              <div class="mr-1 ml-1 mt-5 mb-8 pl-1 pr-1">
+                    <h6>{{this.name}}</h6><img src="{{this.thumbnail}}" style="width: 90%; height: 180px;">
+              </div>
+            </div>
+          </div>
+          {{/each}}
+
+        </div>
+      </div>
       <!--end::Container-->
     </div>
   </div>

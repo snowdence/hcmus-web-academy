@@ -3,7 +3,7 @@ const userModel = require("../models/User")
 const chapterModel = require("../models/Chapter")
 const fbModel = require("../models/Feedback")
 const lessonModel = require("../models/Lesson");
-const Feedback = require("../models/Feedback");
+const subModel = require("../models/SubCategory");
 
 const getHomePage = async (req, res, next) => {
   const limTop10 = 10;
@@ -11,11 +11,13 @@ const getHomePage = async (req, res, next) => {
   const top10Courses = await courseModel.find().lean().limit(limTop10);
   const top5Courses = await courseModel.find().lean().limit(limTop5).skip(limTop10);
   const top10NewCourses = await courseModel.find().lean().limit(limTop10).skip(limTop10+limTop5);
+  const top5cate = await subModel.find().lean().limit(limTop5)
   res.render("pages/home", {
     title: "Home",
     top10Courses,
     top5Courses,
     top10NewCourses,
+    top5cate
   });
 };
 
