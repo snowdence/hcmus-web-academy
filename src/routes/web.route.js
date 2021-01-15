@@ -7,7 +7,7 @@ const authenticationMiddleware = require("../middleware/authentication");
 
 router.route("/").get(webController.getHomePage);
 router.route("/search").get(webController.courseSearch);
-
+router.route("/check_email").get(webController.checkEmail);
 router
   .route("/login")
   .get((req, res) => {
