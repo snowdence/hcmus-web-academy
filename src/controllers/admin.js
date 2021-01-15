@@ -120,6 +120,10 @@ const categoryManagementPost = async (req, res, next) => {
 const courseManagement = async (req, res, next) => {
   let average = (array) => array.reduce((a, b) => a + b, 0) / array.length;
   let courses = await CourseModel.find().lean();
+  let all_teacher = await UserModel.find({ role: 1 }).lean();
+
+  let all_sub_cate = await SubCategoryModel.find().lean();
+  let all_cate = await CategoryModel.find().lean();
   for (x of courses) {
     let nFeedback = await FeedbackModel.find({ courseID: x._id }).lean();
     var ave = nFeedback.length > 0 ? average(nFeedback.map((c) => c.rate)) : 0;
@@ -128,7 +132,13 @@ const courseManagement = async (req, res, next) => {
     let SubCategory = await SubCategoryModel.findOne({
       _id: x.sub_category,
     }).lean();
+    let ParentCategory = await CategoryModel.findOne({
+      _id: SubCategory.parent_category,
+    }).lean();
+
     x.SubCategory = SubCategory.name;
+    x.ParentCategory = ParentCategory.name;
+
     x.author = teacher;
     x.rating = ave;
     x.allRates = nFeedback.length;
@@ -137,6 +147,9 @@ const courseManagement = async (req, res, next) => {
     layout: "layout-admin",
     cate: __statics.categories,
     courses,
+    all_teacher,
+    all_sub_cate,
+    all_cate,
   });
 };
 
