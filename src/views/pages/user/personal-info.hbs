@@ -1,3 +1,56 @@
+{{#section "script"}}
+<script>
+    jQuery('#btn-submit').click(function () {
+        let email = jQuery("#email").val();
+        if (!email || email == "") {
+            Swal.fire(
+                "Vui lòng điền email",
+                "",
+                "error"
+            );
+            return;
+        }
+        else {
+            $.get("/check_email?email=" + email, function (result) {
+                console.log(result);
+                if (result.status == true) {
+                    Swal.fire(
+                        "Email đã tồn tại hoặc bạn ",
+                        "",
+                        "error"
+                    );
+                }
+                else {
+                    $.post("",
+                        $("form#personal-info-form").serialize(),
+                        function (json) {
+                            if (json.status) {
+                                Swal.fire(
+                                    "Cập nhật thành công",
+                                    "",
+                                    "success"
+                                )
+                                window.location.reload();
+                            }
+                            else Swal.fire(
+                                "Có lỗi xảy ra",
+                                "",
+                                "error"
+                            )
+                            console.log(json);
+                        }, "json");
+                    console.log("Click");
+
+                }
+            })
+        }
+
+    });
+
+
+</script>
+
+{{/section}}
 <div class="d-flex flex-column-fluid">
     <!--begin::Container-->
     <div class="container">
@@ -43,7 +96,7 @@
                         <!--end::Contact-->
                         <!--begin::Nav-->
                         <div class="navi navi-bold navi-hover navi-active navi-link-rounded">
-                            
+
                             <div class="navi-item mb-2">
                                 <a href="/user/personal-info" class="navi-link py-4 active">
                                     <span class="navi-icon mr-2">
@@ -184,7 +237,7 @@
                                 <label class="col-xl-3 col-lg-3 col-form-label">Full Name</label>
                                 <div class="col-lg-9 col-xl-6">
                                     <input class="form-control form-control-lg form-control-solid" type="text"
-                                        value="{{userFullname}}" / name="fullname">
+                                        value="{{userFullname}}" / name="fullname" id="fullname" required>
                                 </div>
                             </div>
 
@@ -206,7 +259,8 @@
                                             </span>
                                         </div>
                                         <input type="text" class="form-control form-control-lg form-control-solid"
-                                            value="{{userPhone}}" placeholder="Phone" name="phone" />
+                                            value="{{userPhone}}" placeholder="Phone" name="phone" id="phone"
+                                            required />
                                     </div>
                                     <span class="form-text text-muted">We'll never share your email with anyone
                                         else.</span>
@@ -222,15 +276,16 @@
                                             </span>
                                         </div>
                                         <input type="text" class="form-control form-control-lg form-control-solid"
-                                            value="{{userEmail}}" placeholder="Email" name="email" />
+                                            value="{{userEmail}}" placeholder="Email" name="email" id="email"
+                                            required />
                                     </div>
                                 </div>
                             </div>
                             <div class="form-group-row">
                                 <div class="col col-lg-6 col-xl-6">
                                     <label class="col col-xl-6 col-lg-6 col-form-label"></label>
-                                    <button type="submit" class="btn btn-success ml-1" style="width:80px "
-                                        form="personal-info-form">
+                                    <button type="button" class="btn btn-success ml-1" style="width:80px "
+                                        form="personal-info-form" id="btn-submit">
                                         Save
                                     </button>
                                     <button type="reset" class="btn btn-secondary ml-2" style="width:80px"

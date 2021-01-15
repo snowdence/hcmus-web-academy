@@ -69,7 +69,17 @@ const courseDetail = async (req, res, next) => {
     fb,
   });
 };
-
+const checkEmail = async (req, res, next) => {
+  const { email } = req.query;
+  if (!email || email == "") {
+    return res.json({ status: true });
+  }
+  let user = await UserModel.findOne({ email: email }).lean();
+  if (user) {
+    return res.json({ status: true });
+  }
+  res.json({ status: false });
+};
 const courseSearch = async (req, res, next) => {
   const { key, cate_sub_id } = req.query;
   let find_condition = { deleted: false };
@@ -127,4 +137,5 @@ module.exports = {
   getHomePage,
   courseDetail,
   courseSearch,
+  checkEmail,
 };

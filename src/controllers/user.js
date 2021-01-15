@@ -6,7 +6,7 @@
  */
 
 const UserModel = require("../models/User");
-const bcrypt = require('bcrypt')
+const bcrypt = require("bcrypt");
 
 /**
  * get all user use promise style
@@ -47,42 +47,42 @@ const newUser = (req, res, next) => {
   });
 };
 
-const postUserProfile = (req, res, next) => {
-  UserModel.updateOne({ fullname: req.user.fullname }, req.body)
-    .then()
-    .catch((err) => next(err));
-
-  if (req.body.profile_avatar === "") {
-    res.render("pages/user/personal-info", {
-      userAvatar: req.user.avatar,
-      userFullname: req.body.fullname,
-      userPhone: req.body.phone,
-      userEmail: req.body.email,
-      isUpdateSuccessfully: true,
-    });
-  } else {
-    res.render("pages/user/personal-info", {
-      userAvatar: req.body.profile_avatar,
-      userFullname: req.body.fullname,
-      userPhone: req.body.phone,
-      userEmail: req.body.email,
-    });
+const postUserProfile = async (req, res, next) => {
+  try {
+    await UserModel.updateOne({ _id: req.user._id }, req.body);
+    res.json({ status: true });
+  } catch (ex) {
+    console.log("Exception ", ex);
+    res.json({ status: false });
   }
+  // if (req.body.profile_avatar === "") {
+  //   res.render("pages/user/personal-info", {
+  //     userAvatar: req.user.avatar,
+  //     userFullname: req.body.fullname,
+  //     userPhone: req.body.phone,
+  //     userEmail: req.body.email,
+  //     isUpdateSuccessfully: true,
+  //   });
+  // } else {
+  //   res.render("pages/user/personal-info", {
+  //     userAvatar: req.body.profile_avatar,
+  //     userFullname: req.body.fullname,
+  //     userPhone: req.body.phone,
+  //     userEmail: req.body.email,
+  //   });
+  // }
 };
 
 const postUserChangePassword = async (req, res, next) => {
-  const userPW = req.user.password
-  const pwOld = req.body.curPassword
-  const pwNew = req.body.password
+  const userPW = req.user.password;
+  const pwOld = req.body.curPassword;
+  const pwNew = req.body.password;
   const isMatch = await bcrypt.compare(pwOld, userPW);
-  console.log(isMatch)
-  if (
-    isMatch &&
-    req.body.password === req.body.verPassword
-  ) {
+  console.log(isMatch);
+  if (isMatch && req.body.password === req.body.verPassword) {
     const salt = 10;
-    const hashpw = await bcrypt.hash(pwNew, salt)
-    UserModel.updateOne({ username: req.user.username }, {password: hashpw})
+    const hashpw = await bcrypt.hash(pwNew, salt);
+    UserModel.updateOne({ username: req.user.username }, { password: hashpw })
       .then()
       .catch((err) => next(err));
     res.render("pages/user/change-password", {
@@ -121,9 +121,9 @@ const getUserProfile = (req, res, next) => {
     userFullname: req.user.fullname,
     userPhone: req.user.phone,
     userEmail: req.user.email,
-    title: "Personal Information"
+    title: "Personal Information",
   });
-}
+};
 
 const getUserChangePassword = (req, res, next) => {
   res.render("pages/user/change-password", {
@@ -133,7 +133,7 @@ const getUserChangePassword = (req, res, next) => {
     userEmail: req.user.email,
     title: "Change Password",
   });
-}
+};
 
 module.exports = {
   getIndex: getIndex,

@@ -69,14 +69,16 @@ const courseDetail = async(req, res, next) => {
     .lean()
     .then(async course => 
     {
-        let nFeedback = await FeedbackModel.find({courseID: course._id})
+        let nFeedback = await FeedbackModel.find({courseID: course._id}).lean()
         let average = (array) => array.reduce((a, b) => a + b,0) / array.length;
-        var ave = (nFeedback.length>0) ? average(nFeedback.map(x=>x.rate)) : 0;
-
+        var ave_ = (nFeedback.length>0) ? average(nFeedback.map(x=>x.rate)) : 0;
         myRate = await FeedbackModel.findOne({courseID: course._id, studentID: req.user._id})
         myRate = (myRate != null)? myRate.rate: 0
 
-
+        for(x of nFeedback)
+        {
+            x.student = await UserModel.findOne({_id: x.studentID}).lean()
+        }
         let sameCate = await courseModel.find({sub_category: course.sub_category})
         .sort({count_enroll: -1})
         .limit(5)
@@ -141,12 +143,13 @@ const courseDetail = async(req, res, next) => {
             author: teacher,
             course: course,
             chapters: newChapters,
-            rate: ave,
+            rate: ave_,
             nRate: nFeedback.length,
             myRate: myRate,
             favorite: fav != null,
             enroll: enroll != null,
-            sameCate: sameCate
+            sameCate: sameCate,
+            nFeedback: nFeedback,
         })  
     })
     .catch(next)
