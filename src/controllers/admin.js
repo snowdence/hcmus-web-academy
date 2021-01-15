@@ -60,7 +60,7 @@ const getAllCategory = async (req, res, next) => {
     });
 };
 const teacherManagement = async (req, res, next) => {
-  let teacher = await UserModel.find({ role: 1 }).lean();
+  let teacher = await UserModel.findWithDeleted({ role: 1 }).lean();
   res.render("pages/admin/teacher", {
     layout: "layout-admin",
     cate: __statics.categories,
@@ -69,7 +69,7 @@ const teacherManagement = async (req, res, next) => {
 };
 
 const studentManagement = async (req, res, next) => {
-  let student = await UserModel.find({ role: 2 }).lean();
+  let student = await UserModel.findWithDeleted({ role: 2 }).lean();
   res.render("pages/admin/student", {
     layout: "layout-admin",
     cate: __statics.categories,

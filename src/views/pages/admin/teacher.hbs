@@ -88,7 +88,7 @@
         id = jQuery(this).attr('name')
         console.log(id);
         Swal.fire({
-            title: "Bạn có chắc muốn xóa người dùng ?",
+            title: "Bạn có chắc muốn đình chỉ người dùng ?",
             text: "Bạn sẽ không thể hoàn tác",
             icon: "question",
             showCancelButton: true,
@@ -100,14 +100,14 @@
                 jQuery.post("/admin/deleteUser", { userID: id }, function (result) {
                     if (result = 'true') {
                         Swal.fire(
-                            "Xóa thành công",
+                            "Đình chỉ thành công",
                             "",
                             "success"
                         )
                         window.location.reload();
                     }
                     else Swal.fire(
-                        "Xóa không thành công",
+                        "Đình chỉ không thành công",
                         "",
                         "error"
                     )
@@ -117,7 +117,7 @@
                 // "close", and "timer"
             } else if (result.dismiss === "cancel") {
                 Swal.fire(
-                    "Hủy thao tác xóa",
+                    "Hủy thao tác đình chỉ",
                     "",
                     "error"
                 )
@@ -263,6 +263,7 @@
                                         {{/if}}
                                     </span>
                                 </td>
+                                {{#unless deleted}}
                                 <td data-field="Actions" data-autohide-disabled="false" aria-label="null"
                                     class="datatable-cell">
                                     <span style="overflow: visible; position: relative; width: 130px;">
@@ -285,6 +286,7 @@
                                         </span>
                                     </span>
                                 </td>
+                                {{/unless}}
                             </tr>
                             {{/each}}
 
