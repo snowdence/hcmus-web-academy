@@ -10,9 +10,9 @@ const adminMiddleware = () => {
   return (req, res, next) => {
     console.log(`session passport" + ${JSON.stringify(req.session.passport.user)} `);
     const { role } = req.session.passport.user;
-    console.log("Role is: ");
+    console.log("Role is: ", role);
 
-    if (req.isAuthenticated() && role && role == 0) {
+    if (req.isAuthenticated() && role == 0) {
       return next();
     }
     res.redirect("/");
@@ -25,7 +25,7 @@ const teacherMiddleware = () => {
     const { role } = req.session.passport.user;
     console.log("Role is: ");
 
-    if (req.isAuthenticated() && role && role <= 1) {
+    if (req.isAuthenticated() && role <= 1) {
       return next();
     }
     res.redirect("/");
