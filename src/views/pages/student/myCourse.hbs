@@ -72,6 +72,13 @@
 					<!--begin::Symbol-->
 					<div class="symbol symbol-120 symbol-2by3 col-2">
 						<div class="symbol symbol-50 symbol-lg-120">
+                            {{#unless complete}}
+                            <div class="ribbon ribbon-clip ribbon-left">
+                  <div class="ribbon-target" style="top: 12px;">
+                    <span class="ribbon-inner bg-danger "></span>Chưa hoàn thành
+                  </div>
+                </div>
+                {{/unless}}
                             <img alt="Pic" src="{{thumbnail}}">
                         </div>
 					</div>
