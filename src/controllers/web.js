@@ -194,7 +194,7 @@ const myCourse = async (req, res, next) => {
   } else if (req.user.role == 1) {
     res.redirect("/teacher/courses/1");
   } else if (req.user.role == 2) {
-    res.redirect("/student/myCourse/1");
+    res.redirect("/student/myCourses/1");
   }
 };
 module.exports = {
