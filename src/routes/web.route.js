@@ -3,7 +3,7 @@ const webController = require("../controllers/web");
 const router = express.Router();
 const passport = require("passport");
 const register = require("../controllers/register");
-const authenticationMiddleware = require("../middleware/authentication");
+const { authenticationMiddleware, adminMiddleware } = require("../middleware/authentication");
 
 router.route("/").get(webController.getHomePage);
 router.route("/search").get(webController.courseSearch);
@@ -55,7 +55,7 @@ router.route("/logout").get(function (req, res) {
   res.redirect("/");
 });
 
-router.route("/loginOK").get(authenticationMiddleware(), (req, res) => {
+router.route("/loginOK").get(adminMiddleware(), (req, res) => {
   res.send("Login thanh cong");
 });
 
