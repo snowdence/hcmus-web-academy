@@ -4,21 +4,21 @@ const { authenticationMiddleware, adminMiddleware, teacherMiddleware } = require
 
 const TeacherController = require("../controllers/teacher")
 
-router.get('/', TeacherController.getIndex)
+router.route('/').get(teacherMiddleware(), TeacherController.getIndex)
 
-router.get('/courses/:page', TeacherController.viewCourse)
+router.route('/courses/:page').get(teacherMiddleware(), TeacherController.viewCourse)
 
-router.get('/course/create', TeacherController.createCourse)
+router.route('/course/create').get(teacherMiddleware(), TeacherController.createCourse)
 
-router.post('/course/create', TeacherController.courseCreated)
+router.route('/course/create').post(teacherMiddleware(), TeacherController.courseCreated)
 
-router.get('/course/:slug', TeacherController.courseDetail)
+router.route('/course/:slug').get(teacherMiddleware(), TeacherController.courseDetail)
 
-router.get('/course/:slug/edit', TeacherController.courseEdit)
+router.route('/course/:slug/edit').get(teacherMiddleware(), TeacherController.courseEdit)
 
-router.post('/course/:slug/edit', TeacherController.editCourse)
+router.route('/course/:slug/edit').post(teacherMiddleware(), TeacherController.editCourse)
 
-router.post('/upload', TeacherController.upload)
+router.route('/upload').post(teacherMiddleware(), TeacherController.upload)
 
 module.exports = router;
 
