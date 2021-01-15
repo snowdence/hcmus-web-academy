@@ -14,7 +14,7 @@
                                 <div class="wizard-wrapper">
                                     <div class="wizard-number">1</div>
                                     <div class="wizard-label">
-                                        <div class="wizard-title"><a href="/student/all-courses"><u>All Courses</u></a>
+                                        <div class="wizard-title"><a href="/student/all-courses/1"><u>All Courses</u></a>
                                         </div>
                                     </div>
                                 </div>
@@ -113,8 +113,11 @@
 							class="datatable-cell">
 							<span style="overflow: visible; position: relative; width: 130px;">
 								
-                                    <i title="Xóa khỏi danh sách yêu thích" name="{{_id}}" id="watchlist" class="icon-xl text-danger fas fa-heart"></i>
-							</span>
+  {{#if favorite}}
+                                <i title="Xóa khỏi danh sách yêu thích" name="{{_id}}"  class="watchlist-btn icon-xl text-danger fas fa-heart"></i>
+                                {{else}}
+                                <i title="Thêm vào danh sách yêu thích" name="{{_id}}"  class="watchlist-btn icon-xl text-danger far fa-heart"></i>
+                                {{/if}}								</span>
 						</div>
 					</div>
 					<!--end::Info-->
@@ -167,19 +170,28 @@
 
 <script>
   
-
-    $('#watchlist').click(function(){
-    id = $(this).attr('name')
-  
-    $.post("/student/favorite", {favorite: false, courseID: id})
-    Swal.fire({
-    icon: "success",
-    title: "Đã xóa khóa học khỏi danh sách yêu thích",
-    showConfirmButton: false,
-    timer: 1500
+    $('.watchlist-btn').click(function () {
+        id = $(this).attr('name')
+        if ($(this).hasClass("far")) {
+            $(this).attr("class", "icon-xl text-danger fas fa-heart")
+            $.post("/student/favorite", { favorite: true, courseID: id })
+            Swal.fire({
+                icon: "success",
+                title: "Đã thêm khóa học vào danh sách yêu thích",
+                showConfirmButton: false,
+                timer: 1500
+            });
+        }
+        else {
+            $(this).attr("class", "icon-xl text-danger far fa-heart")
+            $.post("/student/favorite", { favorite: false, courseID: id })
+            Swal.fire({
+                icon: "success",
+                title: "Đã xóa khóa học khỏi danh sách yêu thích",
+                showConfirmButton: false,
+                timer: 1500
+            })
+        }
     })
-    $('#i'+id).remove()
-    
-})
 
 </script>

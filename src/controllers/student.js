@@ -46,7 +46,43 @@ const wishlist = async (req, res , next) => {
 
     })
 }
+const allCourses = async (req, res , next) => {
+    let average = (array) => array.reduce((a, b) => a + b,0) / array.length;
 
+    let perPage = 5;
+    let page = req.params.page || 1;
+    let courses = await courseModel.find().skip(perPage * page - perPage).limit(perPage)
+    .lean()
+
+    console.log('course1: ', courses.map(c=>c.courseID))
+
+  //  courses = await courseModel.find({_id: {$in: courses.map(c=>c.courseID)}}).lean()
+    for(x of courses)
+    {
+        let fav = await FavoriteModel.findOne({studentID: req.user._id, courseID: x._id}).lean()
+        x.favorite = fav != null
+        let nFeedback = await FeedbackModel.find({courseID: x._id}).lean()
+                var ave = (nFeedback.length>0) ? average(nFeedback.map(c=>c.rate)) : 0;
+
+                let teacher = await UserModel.findOne({_id: x.author_id}).lean()
+                let SubCategory = await SubCategoryModel.findOne({_id: x.sub_category}).lean()
+                x.SubCategory = SubCategory.name
+                x.author = teacher
+                x.rating = ave
+                x.allRates = nFeedback.length
+    }
+    console.log('course: ', courses)
+    let count = await courseModel.countDocuments()
+    res.render('pages/student/all-courses',{
+        courses,
+        currentPage: page, // page hiện tại
+        pageCount: count,
+        itemPerPage: perPage,
+        pages: Math.ceil(count / perPage), // tổng số các page
+        cate: __statics.categories,
+
+    })
+}
 const myCourse = async (req, res , next) => {
     let average = (array) => array.reduce((a, b) => a + b,0) / array.length;
 
@@ -61,8 +97,9 @@ const myCourse = async (req, res , next) => {
     for(x of courses)
     {
         let nFeedback = await FeedbackModel.find({courseID: x._id}).lean()
-                var ave = (nFeedback.length>0) ? average(nFeedback.map(c=>c.rate)) : 0;
-
+        let fav = await FavoriteModel.findOne({studentID: req.user._id, courseID: x._id}).lean()
+        x.favorite = fav != null
+        var ave = (nFeedback.length>0) ? average(nFeedback.map(c=>c.rate)) : 0;
                 let teacher = await UserModel.findOne({_id: x.author_id}).lean()
                 let SubCategory = await SubCategoryModel.findOne({_id: x.sub_category}).lean()
                 x.SubCategory = SubCategory.name
@@ -71,9 +108,11 @@ const myCourse = async (req, res , next) => {
                 x.allRates = nFeedback.length
     }
     console.log('course: ', courses)
-    let count = await FavoriteModel.countDocuments({studentID:req.user._id})
-    res.render('pages/student/watchlist',{
+    let count = await EnrollModel.countDocuments({studentID:req.user._id})
+
+    res.render('pages/student/myCourse',{
         courses,
+        
         currentPage: page, // page hiện tại
         pageCount: count,
         itemPerPage: perPage,
@@ -334,6 +373,7 @@ const enroll = async (req, res, next) =>{
 
 module.exports = {
     wishlist,
+    allCourses,
     myCourse,
     courseDetail,
     updateProgress,
