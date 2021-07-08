@@ -12,11 +12,15 @@ const multer = require('multer');
 
 // [GET] /teacher
 const getIndex =  (req, res, next) => {
-    res.render("pages/teacher/home")
+    res.render("pages/teacher/home",{
+        cate: __statics.categories,
+    })
 }
 
 // [GET] /teacher/course
 const viewCourse = (req, res, next) => {
+    console.log('global: ',__statics.categories)
+
     let average = (array) => array.reduce((a, b) => a + b,0) / array.length;
     let perPage = 5;
     let page = req.params.page || 1;
@@ -45,6 +49,8 @@ const viewCourse = (req, res, next) => {
                 pageCount: count,
                 itemPerPage: perPage,
                 pages: Math.ceil(count / perPage),
+                cate: __statics.categories,
+
             });
         })
     })
@@ -100,6 +106,7 @@ const courseDetail = async(req, res, next) => {
             chapters: newChapters,
             rate: ave,
             nRate: nFeedback.length,
+            cate: __statics.categories,
         })  
     })
     .catch(next)
@@ -136,6 +143,8 @@ const courseDetail = async(req, res, next) => {
                 chapters: newChapters,
                 SubCategorys: SubCategory,
                 sub: sub,
+                cate: __statics.categories,
+
                 })
             })
         }
@@ -244,7 +253,10 @@ const createCourse = async(req, res, next) =>{
         .lean()
         .then(SubCategorys => {
             console.log(SubCategorys)
-            res.render("pages/teacher/createCourse", {SubCategorys: SubCategorys}) 
+            res.render("pages/teacher/createCourse", {
+                SubCategorys: SubCategorys,
+                cate: __statics.categories,
+}) 
         })
 
  }

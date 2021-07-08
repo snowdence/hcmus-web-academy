@@ -19,56 +19,16 @@ const getHomePage = async (req, res, next) => {
     .limit(limTop10)
     .skip(limTop10 + limTop5);
   res.render("pages/home", {
+    cate: __statics.categories,
     title: "Home",
     top10Courses,
     top5Courses,
     top10NewCourses,
     top5cate,
+    cate: __statics.categories,
   });
 };
 
-const courseDetail = async (req, res, next) => {
-  const query = CourseModel.where({ _id: req.params.id });
-  const course = await query.findOne().lean();
-  const limit = 5;
-  const top5 = await CourseModel.find({ sub_category: course.sub_category })
-    .lean()
-    .limit(limit);
-  const teacher = await UserModel.findOne({ _id: course.author_id }).lean();
-  let chapters = [];
-  var d = new Date(course.updatedAt);
-  course.updatedAt = d.toLocaleString();
-  for (i = 0; i < 5; i++) {
-    var temp = new Date(top5[i].updatedAt);
-    top5[i].updatedAt = temp.toLocaleString();
-  }
-  for (i = 0; i < course.chapters.length; i++) {
-    chapters[i] = await ChapterModel.findOne({
-      _id: course.chapters[i],
-    }).lean();
-    for (j = 0; j < chapters[i].lessons.length; j++) {
-      chapters[i].lessons[j] = await LessonModel.findOne({
-        _id: chapters[i].lessons[j],
-      }).lean();
-    }
-  }
-
-  const fb = await FeedbackModel.find({ courseID: course._id }).lean();
-  for (i = 0; i < fb.length; i++) {
-    const t = await UserModel.findOne({ _id: fb[i].studentID }).lean();
-    fb[i].studentID = t.fullname;
-    fb[i].ava = t.avatar;
-  }
-
-  res.render("pages/courses/details", {
-    course,
-    top5,
-    title: "Detail",
-    teacher,
-    chapters,
-    fb,
-  });
-};
 const checkEmail = async (req, res, next) => {
   const { email } = req.query;
   if (!email || email == "") {
@@ -80,6 +40,100 @@ const checkEmail = async (req, res, next) => {
   }
   res.json({ status: false });
 };
+const courseDetail = async (req, res, next) => {
+  CourseModel.findOne({ _id: req.params.id })
+    .lean()
+    .then(async (course) => {
+      let nFeedback = await FeedbackModel.find({ courseID: course._id }).lean();
+      let average = (array) => array.reduce((a, b) => a + b, 0) / array.length;
+      var ave_ =
+        nFeedback.length > 0 ? average(nFeedback.map((x) => x.rate)) : 0;
+
+      for (x of nFeedback) {
+        x.student = await UserModel.findOne({ _id: x.studentID }).lean();
+      }
+      let sameCate = await CourseModel.find({
+        sub_category: course.sub_category,
+      })
+        .sort({ count_enroll: -1 })
+        .limit(5)
+        .lean();
+      for (x of sameCate) {
+        let nFeedback = await FeedbackModel.find({ courseID: x._id }).lean();
+        var ave =
+          nFeedback.length > 0 ? average(nFeedback.map((c) => c.rate)) : 0;
+
+        let teacher = await UserModel.findOne({ _id: x.author_id }).lean();
+        let SubCategory = await SubCategoryModel.findOne({
+          _id: x.sub_category,
+        }).lean();
+        x.SubCategory = SubCategory.name;
+        x.author = teacher;
+        x.rating = ave;
+        x.allRates = nFeedback.length;
+      }
+
+      CourseModel.findOneAndUpdate(
+        { slug: req.params.slug },
+        { $inc: { count_view: 1 } }
+      ).exec();
+
+      let SubCategory = await SubCategoryModel.findOne({
+        _id: course.sub_category,
+      }).lean();
+      var d = new Date(course.updatedAt);
+      updatedAt = d.toLocaleString();
+      d = new Date(course.createdAt);
+      createdAt = d.toLocaleString();
+
+      var newChapters = [];
+      if (course.chapters.length > 0) {
+        let chapters = await ChapterModel.find({
+          _id: { $in: course.chapters },
+        });
+
+        for (let chap of chapters) {
+          let lessons = [];
+          if (chap.lessons.length > 0) {
+            lessons = await LessonModel.find({
+              _id: { $in: chap.lessons },
+            }).lean();
+          }
+          for (var x of lessons) {
+            // console.log(x._id, req.user._id)
+            pr = await ProgressModel.findOne({
+              lessonID: x._id,
+              studentID: req.user._id,
+            });
+
+            if (pr != null) x.prog = pr.progress;
+            else x.prog = 0;
+          }
+          newChapters.push({
+            _id: chap._id,
+            name: chap.name,
+            lessons: lessons,
+          });
+        }
+      }
+      let teacher = await UserModel.findOne({ _id: course.author_id }).lean();
+      res.render("pages/courses/details", {
+        SubCategory: SubCategory.name,
+        createdAt: createdAt,
+        updatedAt: updatedAt,
+        author: teacher,
+        course: course,
+        chapters: newChapters,
+        rate: ave_,
+        nRate: nFeedback.length,
+        sameCate: sameCate,
+        nFeedback: nFeedback,
+        cate: __statics.categories,
+      });
+    })
+    .catch(next);
+};
+
 const courseSearch = async (req, res, next) => {
   const { key, cate_sub_id } = req.query;
   let find_condition = { deleted: false };
@@ -130,12 +184,23 @@ const courseSearch = async (req, res, next) => {
     all_cate,
     current_key: key,
     current_cate_sub_id: cate_sub_id,
+    cate: __statics.categories,
   });
 };
 
+const myCourse = async (req, res, next) => {
+  if (req.user.role == 0) {
+    res.redirect("/admin/course-management");
+  } else if (req.user.role == 1) {
+    res.redirect("/teacher/courses/1");
+  } else if (req.user.role == 2) {
+    res.redirect("/student/myCourses/1");
+  }
+};
 module.exports = {
   getHomePage,
   courseDetail,
   courseSearch,
+  myCourse,
   checkEmail,
 };

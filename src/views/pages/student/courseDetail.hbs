@@ -227,7 +227,7 @@
                         </span>
                         <div class="d-flex flex-column flex-lg-fill">
                             <span class="text-dark-75 font-weight-bolder font-size-sm">{{chapters.length}} chương</span>
-                            <a href="#" class="text-primary font-weight-bolder">Xem</a>
+                            <a href="#contentChap" class="text-primary font-weight-bolder">Xem</a>
                         </div>
                     </div>
                     <!--end: Item-->
@@ -238,7 +238,7 @@
                         </span>
                         <div class="d-flex flex-column">
                             <span class="text-dark-75 font-weight-bolder font-size-sm">{{nRate}} Đánh giá</span>
-                            <a href="#" class="text-primary font-weight-bolder">Xem</a>
+                            <a href="#feedback" class="text-primary font-weight-bolder">Xem</a>
                         </div>
                     </div>
                     <!--end: Item-->
@@ -493,7 +493,7 @@
                     </div>
                 </div>
                 <div class="col-lg-6 col-xl-7">
-                    <div class="card card-custom gutter-b example example-compact">
+                    <div id="contentChap" class="card card-custom gutter-b example example-compact">
                         <div class="card-header" style="background: linear-gradient(to right, #74ebd5, #acb6e5); ">
                             <div class="card-title" style="font-size:x-large; ">
                                 Đề cương khóa học
@@ -726,7 +726,7 @@
 
                 </div>
                 <div class="col-8">
-                    <div class="card card-custom gutter-b mx-10">
+                    <div id= "feedback" class="card card-custom gutter-b mx-10">
                         <!--begin::Header-->
                         <div class="card-header border-0 py-5">
                             <h1 class="font-weight-bolder text-dark " style="font-family: Bookman">Đánh giá của học viên
@@ -734,7 +734,7 @@
                         </div>
                         <!--end::Header-->
                         <!--begin::Body-->
-                        <div class="card-body pt-2 container-fluid" style="overflow: scroll; height:350px">
+                        <div class="card-body pt-2 container-fluid" style="overflow: scroll; height:300px">
                             {{#each nFeedback}}
                             <!--begin::Item-->
                             <div class="d-flex flex-wrap align-items-center mb-10 row">

@@ -58,6 +58,7 @@
               </a>
               <div class="menu-submenu menu-submenu-classic menu-submenu-left">
                 <ul class="menu-subnav">
+                  {{#each cate}}
                   <li class="menu-item menu-item-submenu" data-menu-toggle="click" aria-haspopup="true">
                     <a href="javascript:;" class="menu-link menu-toggle">
                       <span class="svg-icon menu-icon">
@@ -78,236 +79,26 @@
 
                         <!--end::Svg Icon-->
                       </span>
-                      <span class="menu-text">Business</span>
+                      <span class="menu-text">{{name}}</span>
                       <i class="menu-arrow"></i>
                     </a>
                     <div class="menu-submenu menu-submenu-classic menu-submenu-right">
                       <ul class="menu-subnav">
+                        {{#each sub_categories}}
                         <li class="menu-item" aria-haspopup="true">
-                          <a href="features/bootstrap/typography.html" class="menu-link">
+                          <a href="/search?cate_sub_id={{_id}}" class="menu-link">
                             <i class="menu-bullet menu-bullet-dot">
                               <span></span>
                             </i>
-                            <span class="menu-text">Typography</span>
+                            <span class="menu-text">{{name}}</span>
                           </a>
                         </li>
-                        <li class="menu-item" aria-haspopup="true">
-                          <a href="features/bootstrap/buttons.html" class="menu-link">
-                            <i class="menu-bullet menu-bullet-dot">
-                              <span></span>
-                            </i>
-                            <span class="menu-text">Buttons</span>
-                          </a>
-                        </li>
-                        <li class="menu-item" aria-haspopup="true">
-                          <a href="features/bootstrap/button-group.html" class="menu-link">
-                            <i class="menu-bullet menu-bullet-dot">
-                              <span></span>
-                            </i>
-                            <span class="menu-text">Button Group</span>
-                          </a>
-                        </li>
-                        <li class="menu-item" aria-haspopup="true">
-                          <a href="features/bootstrap/dropdown.html" class="menu-link">
-                            <i class="menu-bullet menu-bullet-dot">
-                              <span></span>
-                            </i>
-                            <span class="menu-text">Dropdown</span>
-                          </a>
-                        </li>
-                        <li class="menu-item" aria-haspopup="true">
-                          <a href="features/bootstrap/navs.html" class="menu-link">
-                            <i class="menu-bullet menu-bullet-dot">
-                              <span></span>
-                            </i>
-                            <span class="menu-text">Navs</span>
-                          </a>
-                        </li>
-                        <li class="menu-item" aria-haspopup="true">
-                          <a href="features/bootstrap/tables.html" class="menu-link">
-                            <i class="menu-bullet menu-bullet-dot">
-                              <span></span>
-                            </i>
-                            <span class="menu-text">Tables</span>
-                          </a>
-                        </li>
-                        <li class="menu-item" aria-haspopup="true">
-                          <a href="features/bootstrap/progress.html" class="menu-link">
-                            <i class="menu-bullet menu-bullet-dot">
-                              <span></span>
-                            </i>
-                            <span class="menu-text">Progress</span>
-                          </a>
-                        </li>
-                        <li class="menu-item" aria-haspopup="true">
-                          <a href="features/bootstrap/modal.html" class="menu-link">
-                            <i class="menu-bullet menu-bullet-dot">
-                              <span></span>
-                            </i>
-                            <span class="menu-text">Modal</span>
-                          </a>
-                        </li>
-                        <li class="menu-item" aria-haspopup="true">
-                          <a href="features/bootstrap/alerts.html" class="menu-link">
-                            <i class="menu-bullet menu-bullet-dot">
-                              <span></span>
-                            </i>
-                            <span class="menu-text">Alerts</span>
-                          </a>
-                        </li>
-                        <li class="menu-item" aria-haspopup="true">
-                          <a href="features/bootstrap/popover.html" class="menu-link">
-                            <i class="menu-bullet menu-bullet-dot">
-                              <span></span>
-                            </i>
-                            <span class="menu-text">Popover</span>
-                          </a>
-                        </li>
-                        <li class="menu-item" aria-haspopup="true">
-                          <a href="features/bootstrap/tooltip.html" class="menu-link">
-                            <i class="menu-bullet menu-bullet-dot">
-                              <span></span>
-                            </i>
-                            <span class="menu-text">Tooltip</span>
-                          </a>
-                        </li>
+                        {{/each}}
                       </ul>
                     </div>
                   </li>
-                  <li class="menu-item menu-item-submenu" data-menu-toggle="click" aria-haspopup="true">
-                    <a href="javascript:;" class="menu-link menu-toggle">
-                      <span class="svg-icon menu-icon">
+                  {{/each}}
 
-                        <!--begin::Svg Icon | path:assets/media/svg/icons/Files/Pictures1.svg-->
-                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
-                          height="24px" viewBox="0 0 24 24" version="1.1">
-                          <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                            <rect x="0" y="0" width="24" height="24" />
-                            <path
-                              d="M3.5,21 L20.5,21 C21.3284271,21 22,20.3284271 22,19.5 L22,8.5 C22,7.67157288 21.3284271,7 20.5,7 L10,7 L7.43933983,4.43933983 C7.15803526,4.15803526 6.77650439,4 6.37867966,4 L3.5,4 C2.67157288,4 2,4.67157288 2,5.5 L2,19.5 C2,20.3284271 2.67157288,21 3.5,21 Z"
-                              fill="#000000" opacity="0.3" />
-                            <polygon fill="#000000" opacity="0.3" points="4 19 10 11 16 19" />
-                            <polygon fill="#000000" points="11 19 15 14 19 19" />
-                            <path
-                              d="M18,12 C18.8284271,12 19.5,11.3284271 19.5,10.5 C19.5,9.67157288 18.8284271,9 18,9 C17.1715729,9 16.5,9.67157288 16.5,10.5 C16.5,11.3284271 17.1715729,12 18,12 Z"
-                              fill="#000000" opacity="0.3" />
-                          </g>
-                        </svg>
-
-                        <!--end::Svg Icon-->
-                      </span>
-                      <span class="menu-text">IT</span>
-                      <i class="menu-arrow"></i>
-                    </a>
-                    <div class="menu-submenu menu-submenu-classic menu-submenu-right">
-                      <ul class="menu-subnav">
-                        <li class="menu-item" aria-haspopup="true">
-                          <a href="features/custom/utilities.html" class="menu-link">
-                            <i class="menu-bullet menu-bullet-dot">
-                              <span></span>
-                            </i>
-                            <span class="menu-text">Web Development</span>
-                          </a>
-                        </li>
-                        <li class="menu-item" aria-haspopup="true">
-                          <a href="features/custom/accordions.html" class="menu-link">
-                            <i class="menu-bullet menu-bullet-dot">
-                              <span></span>
-                            </i>
-                            <span class="menu-text">Moblile Development</span>
-                          </a>
-                        </li>
-                        {{!-- <li class="menu-item" aria-haspopup="true">
-                          <a href="features/custom/label.html" class="menu-link">
-                            <i class="menu-bullet menu-bullet-dot">
-                              <span></span>
-                            </i>
-                            <span class="menu-text">Label</span>
-                          </a>
-                        </li>
-                        <li class="menu-item" aria-haspopup="true">
-                          <a href="features/custom/pulse.html" class="menu-link">
-                            <i class="menu-bullet menu-bullet-dot">
-                              <span></span>
-                            </i>
-                            <span class="menu-text">Pulse</span>
-                          </a>
-                        </li>
-                        <li class="menu-item" aria-haspopup="true">
-                          <a href="features/custom/line-tabs.html" class="menu-link">
-                            <i class="menu-bullet menu-bullet-dot">
-                              <span></span>
-                            </i>
-                            <span class="menu-text">Line Tabs</span>
-                          </a>
-                        </li>
-                        <li class="menu-item" aria-haspopup="true">
-                          <a href="features/custom/advance-navs.html" class="menu-link">
-                            <i class="menu-bullet menu-bullet-dot">
-                              <span></span>
-                            </i>
-                            <span class="menu-text">Advance Navigations</span>
-                          </a>
-                        </li>
-                        <li class="menu-item" aria-haspopup="true">
-                          <a href="features/custom/timeline.html" class="menu-link">
-                            <i class="menu-bullet menu-bullet-dot">
-                              <span></span>
-                            </i>
-                            <span class="menu-text">Timeline</span>
-                          </a>
-                        </li>
-                        <li class="menu-item" aria-haspopup="true">
-                          <a href="features/custom/pagination.html" class="menu-link">
-                            <i class="menu-bullet menu-bullet-dot">
-                              <span></span>
-                            </i>
-                            <span class="menu-text">Pagination</span>
-                          </a>
-                        </li>
-                        <li class="menu-item" aria-haspopup="true">
-                          <a href="features/custom/symbol.html" class="menu-link">
-                            <i class="menu-bullet menu-bullet-dot">
-                              <span></span>
-                            </i>
-                            <span class="menu-text">Symbol</span>
-                          </a>
-                        </li>
-                        <li class="menu-item" aria-haspopup="true">
-                          <a href="features/custom/spinners.html" class="menu-link">
-                            <i class="menu-bullet menu-bullet-dot">
-                              <span></span>
-                            </i>
-                            <span class="menu-text">Spinners</span>
-                          </a>
-                        </li>
-                        <li class="menu-item" aria-haspopup="true">
-                          <a href="features/custom/iconbox.html" class="menu-link">
-                            <i class="menu-bullet menu-bullet-dot">
-                              <span></span>
-                            </i>
-                            <span class="menu-text">Iconbox</span>
-                          </a>
-                        </li>
-                        <li class="menu-item" aria-haspopup="true">
-                          <a href="features/custom/callout.html" class="menu-link">
-                            <i class="menu-bullet menu-bullet-dot">
-                              <span></span>
-                            </i>
-                            <span class="menu-text">Callout</span>
-                          </a>
-                        </li>
-                        <li class="menu-item" aria-haspopup="true">
-                          <a href="features/custom/ribbons.html" class="menu-link">
-                            <i class="menu-bullet menu-bullet-dot">
-                              <span></span>
-                            </i>
-                            <span class="menu-text">Ribbons</span>
-                          </a>
-                        </li> --}}
-                      </ul>
-                    </div>
-                  </li>
                 </ul>
               </div>
             </li>
@@ -327,112 +118,46 @@
       <div class="dropdown">
 
         <!--begin::Toggle-->
-        <div class="topbar-item" data-toggle="dropdown" data-offset="10px,0px">
+        <div class="topbar-item" data-offset="10px,0px">
           <div class="btn btn-icon btn-hover-transparent-white btn-lg btn-dropdown mr-1">
-            <span class="svg-icon svg-icon-xl">
+            <a href="/search">
+              <span class="svg-icon svg-icon-xl">
 
-              <!--begin::Svg Icon | path:assets/media/svg/icons/General/Search.svg-->
-              <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
-                height="24px" viewBox="0 0 24 24" version="1.1">
-                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                  <rect x="0" y="0" width="24" height="24" />
-                  <path
-                    d="M14.2928932,16.7071068 C13.9023689,16.3165825 13.9023689,15.6834175 14.2928932,15.2928932 C14.6834175,14.9023689 15.3165825,14.9023689 15.7071068,15.2928932 L19.7071068,19.2928932 C20.0976311,19.6834175 20.0976311,20.3165825 19.7071068,20.7071068 C19.3165825,21.0976311 18.6834175,21.0976311 18.2928932,20.7071068 L14.2928932,16.7071068 Z"
-                    fill="#000000" fill-rule="nonzero" opacity="0.3" />
-                  <path
-                    d="M11,16 C13.7614237,16 16,13.7614237 16,11 C16,8.23857625 13.7614237,6 11,6 C8.23857625,6 6,8.23857625 6,11 C6,13.7614237 8.23857625,16 11,16 Z M11,18 C7.13400675,18 4,14.8659932 4,11 C4,7.13400675 7.13400675,4 11,4 C14.8659932,4 18,7.13400675 18,11 C18,14.8659932 14.8659932,18 11,18 Z"
-                    fill="#000000" fill-rule="nonzero" />
-                </g>
-              </svg>
+                <!--begin::Svg Icon | path:assets/media/svg/icons/General/Search.svg-->
+                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
+                  height="24px" viewBox="0 0 24 24" version="1.1">
+                  <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                    <rect x="0" y="0" width="24" height="24" />
+                    <path
+                      d="M14.2928932,16.7071068 C13.9023689,16.3165825 13.9023689,15.6834175 14.2928932,15.2928932 C14.6834175,14.9023689 15.3165825,14.9023689 15.7071068,15.2928932 L19.7071068,19.2928932 C20.0976311,19.6834175 20.0976311,20.3165825 19.7071068,20.7071068 C19.3165825,21.0976311 18.6834175,21.0976311 18.2928932,20.7071068 L14.2928932,16.7071068 Z"
+                      fill="#000000" fill-rule="nonzero" opacity="0.3" />
+                    <path
+                      d="M11,16 C13.7614237,16 16,13.7614237 16,11 C16,8.23857625 13.7614237,6 11,6 C8.23857625,6 6,8.23857625 6,11 C6,13.7614237 8.23857625,16 11,16 Z M11,18 C7.13400675,18 4,14.8659932 4,11 C4,7.13400675 7.13400675,4 11,4 C14.8659932,4 18,7.13400675 18,11 C18,14.8659932 14.8659932,18 11,18 Z"
+                      fill="#000000" fill-rule="nonzero" />
+                  </g>
+                </svg>
 
-              <!--end::Svg Icon-->
-            </span>
+                <!--end::Svg Icon-->
+              </span>
+            </a>
           </div>
         </div>
 
         <!--end::Toggle-->
 
-        <!--begin::Dropdown-->
-        <div class="dropdown-menu p-0 m-0 dropdown-menu-right dropdown-menu-anim-up dropdown-menu-lg">
-
-          <!--[html-partial:include:{"file":"partials/_extras/dropdown/search-dropdown.html"}]/-->
-        </div>
-
-        <!--end::Dropdown-->
       </div>
 
       <!--end::Search-->
 
-      <!--begin::Admin-->
-      <div class="dropdown">
 
-        <!--begin::Toggle-->
-        <div class="topbar-item" data-toggle="dropdown" data-offset="10px,0px">
-          <div class="btn btn-icon btn-hover-transparent-white btn-dropdown btn-lg mr-1 pulse pulse-primary">
-            <span class="svg-icon svg-icon-xl">
-
-              <!--begin::Svg Icon | path:assets/media/svg/icons/Code/Compiling.svg-->
-              <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
-                height="24px" viewBox="0 0 24 24" version="1.1">
-                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                  <rect x="0" y="0" width="24" height="24" />
-                  <path
-                    d="M2.56066017,10.6819805 L4.68198052,8.56066017 C5.26776695,7.97487373 6.21751442,7.97487373 6.80330086,8.56066017 L8.9246212,10.6819805 C9.51040764,11.267767 9.51040764,12.2175144 8.9246212,12.8033009 L6.80330086,14.9246212 C6.21751442,15.5104076 5.26776695,15.5104076 4.68198052,14.9246212 L2.56066017,12.8033009 C1.97487373,12.2175144 1.97487373,11.267767 2.56066017,10.6819805 Z M14.5606602,10.6819805 L16.6819805,8.56066017 C17.267767,7.97487373 18.2175144,7.97487373 18.8033009,8.56066017 L20.9246212,10.6819805 C21.5104076,11.267767 21.5104076,12.2175144 20.9246212,12.8033009 L18.8033009,14.9246212 C18.2175144,15.5104076 17.267767,15.5104076 16.6819805,14.9246212 L14.5606602,12.8033009 C13.9748737,12.2175144 13.9748737,11.267767 14.5606602,10.6819805 Z"
-                    fill="#000000" opacity="0.3" />
-                  <path
-                    d="M8.56066017,16.6819805 L10.6819805,14.5606602 C11.267767,13.9748737 12.2175144,13.9748737 12.8033009,14.5606602 L14.9246212,16.6819805 C15.5104076,17.267767 15.5104076,18.2175144 14.9246212,18.8033009 L12.8033009,20.9246212 C12.2175144,21.5104076 11.267767,21.5104076 10.6819805,20.9246212 L8.56066017,18.8033009 C7.97487373,18.2175144 7.97487373,17.267767 8.56066017,16.6819805 Z M8.56066017,4.68198052 L10.6819805,2.56066017 C11.267767,1.97487373 12.2175144,1.97487373 12.8033009,2.56066017 L14.9246212,4.68198052 C15.5104076,5.26776695 15.5104076,6.21751442 14.9246212,6.80330086 L12.8033009,8.9246212 C12.2175144,9.51040764 11.267767,9.51040764 10.6819805,8.9246212 L8.56066017,6.80330086 C7.97487373,6.21751442 7.97487373,5.26776695 8.56066017,4.68198052 Z"
-                    fill="#000000" />
-                </g>
-              </svg>
-
-              <!--end::Svg Icon-->
-            </span>
-            <span class="pulse-ring"></span>
-          </div>
-        </div>
-
-        <!--end::Toggle-->
-
-        <!--begin::Dropdown-->
-        <div class="dropdown-menu p-0 m-0 dropdown-menu-right dropdown-menu-anim-up dropdown-menu-lg">
-          {{>extras/dropdown/quick-action}}
-          <!--[html-partial:include:{"file":"partials/_extras/dropdown/quick-actions.html"}]/-->
-        </div>
-
-        <!--end::Dropdown-->
-
-
-      </div>
-
-      <!--end::Admin-->
 
       <!--begin::Statis-->
       <div class="dropdown">
 
-        <!--begin::Toggle-->
-        <div class="topbar-item" data-toggle="dropdown" data-offset="10px,0px">
-          <div class="btn btn-icon btn-hover-transparent-white btn-dropdown btn-lg mr-1">
-            <span class="svg-icon svg-icon-xl">
 
-              <!--begin::Svg Icon | path:assets/media/svg/icons/Media/Equalizer.svg-->
-              <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
-                height="24px" viewBox="0 0 24 24" version="1.1">
-                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                  <rect x="0" y="0" width="24" height="24" />
-                  <rect fill="#000000" opacity="0.3" x="13" y="4" width="3" height="16" rx="1.5" />
-                  <rect fill="#000000" x="8" y="9" width="3" height="11" rx="1.5" />
-                  <rect fill="#000000" x="18" y="11" width="3" height="9" rx="1.5" />
-                  <rect fill="#000000" x="3" y="13" width="3" height="7" rx="1.5" />
-                </g>
-              </svg>
-
-              <!--end::Svg Icon-->
-            </span>
-          </div>
-        </div>
 
         <!--end::Toggle-->
-        <div class="topbar-item" >
+        <div class="topbar-item">
           <a href="/student/watchlist/1">
             <button type="button" class="btn btn-icon btn-hover-transparent-white btn-lg mr-1">
               <span class="fas fa-heart"></span>
@@ -440,7 +165,7 @@
           </a>
         </div>
         <!--begin::Dropdown-->
-        
+
 
         <!--end::Dropdown-->
       </div>

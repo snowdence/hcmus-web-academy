@@ -3,12 +3,9 @@ const router = express.Router();
 const studentController = require("../controllers/student");
 
 router.route("/watchlist/:page").get(studentController.wishlist);
+router.route("/myCourses/:page").get(studentController.myCourse);
+router.route("/all-courses/:page").get(studentController.allCourses);
 
-router.route("/all-courses").get((req, res)=>{
-    res.render("pages/student/all-courses", {
-        title: "All Courses"
-    })
-});
 
 router.route("/review-courses").get(studentController.review);
 
@@ -25,7 +22,6 @@ router.post('/rate', studentController.rate)
 router.post('/feedback', studentController.feedback)
 router.post('/favorite', studentController.favorite)
 router.post('/enroll', studentController.enroll)
-
 
 //router.route("/archived").get(studentController.archived);
 module.exports = router;

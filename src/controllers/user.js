@@ -91,6 +91,8 @@ const postUserChangePassword = async (req, res, next) => {
       userPhone: req.user.phone,
       userEmail: req.user.email,
       isUpdateSuccessfully: true,
+      cate: __statics.categories,
+
     });
   } else {
     if (req.user.password !== req.body.curPassword) {
@@ -101,6 +103,8 @@ const postUserChangePassword = async (req, res, next) => {
         userEmail: req.user.email,
         isFail: true,
         message: "Wrong password! Please enter again!",
+        cate: __statics.categories,
+
       });
     } else {
       res.render("pages/user/change-password", {
@@ -110,6 +114,8 @@ const postUserChangePassword = async (req, res, next) => {
         userEmail: req.user.email,
         isFail: true,
         message: "Verified password doesn't match! Check it again",
+        cate: __statics.categories,
+
       });
     }
   }
@@ -132,6 +138,8 @@ const getUserChangePassword = (req, res, next) => {
     userPhone: req.user.phone,
     userEmail: req.user.email,
     title: "Change Password",
+    cate: __statics.categories,
+
   });
 };
 

@@ -40,12 +40,12 @@ passport.use(
   })
 );
 
-passport.serializeUser((user, done) => {
-  done(null, user.username);
+passport.serializeUser((_user, done) => {
+  done(null, _user);
 });
 
-passport.deserializeUser(async (username, done) => {
-  const user = await User.findOne({ username: username });
+passport.deserializeUser(async (_user, done) => {
+  const user = await User.findOne({ username: _user.username });
   if (!user) {
     return done(null, false);
   }
@@ -150,6 +150,11 @@ app.use("/teacher", teacherRoute);
 app.use("/user", userRoute);
 app.use("/student", studentRoute);
 app.use("/", webRoute);
+
+require("./controllers/global")().then((result) => {
+  global.__statics = {}
+  global.__statics.categories = result
+})
 
 app.listen(port, () => {
   console.log(`HWA listen att http://localhost:${port}`);

@@ -25,6 +25,7 @@ const getAllUser = async (req, res, next) => {
         //console.log("Type: " + typeof (students[0]));
         res.render("pages/admin/category/all-category", {
           layout: "main-admin",
+          cate: __statics.categories,
           students: students, // sản phẩm trên một page
           currentPage: page, // page hiện tại
           pageCount: count,
@@ -48,6 +49,7 @@ const getAllCategory = async (req, res, next) => {
         //console.log("Type: " + typeof (students[0]));
         res.render("pages/admin/category/all-category", {
           layout: "main-admin",
+          cate: __statics.categories,
           catgories: catgories, // sản phẩm trên một page
           currentPage: page, // page hiện tại
           pageCount: count,
@@ -58,17 +60,19 @@ const getAllCategory = async (req, res, next) => {
     });
 };
 const teacherManagement = async (req, res, next) => {
-  let teacher = await UserModel.find({ role: 1 }).lean();
+  let teacher = await UserModel.findWithDeleted({ role: 1 }).lean();
   res.render("pages/admin/teacher", {
     layout: "layout-admin",
+    cate: __statics.categories,
     teacher,
   });
 };
 
 const studentManagement = async (req, res, next) => {
-  let student = await UserModel.find({ role: 2 }).lean();
+  let student = await UserModel.findWithDeleted({ role: 2 }).lean();
   res.render("pages/admin/student", {
     layout: "layout-admin",
+    cate: __statics.categories,
     student,
   });
 };
@@ -83,6 +87,7 @@ const categoryManagement = async (req, res, next) => {
   }
   res.render("pages/admin/category", {
     layout: "layout-admin",
+    cate: __statics.categories,
     Category,
   });
 };
@@ -140,6 +145,7 @@ const courseManagement = async (req, res, next) => {
   }
   res.render("pages/admin/course", {
     layout: "layout-admin",
+    cate: __statics.categories,
     courses,
     all_teacher,
     all_sub_cate,
@@ -150,7 +156,10 @@ const courseManagement = async (req, res, next) => {
 //[GET]
 
 const addUser = async (req, res, next) => {
-  res.render("pages/admin/addUser");
+  res.render("pages/admin/addUser",{
+    cate: __statics.categories,
+
+  });
 };
 // [POST]
 const addUserPost = async (req, res, next) => {
@@ -189,7 +198,10 @@ const editUser = async (req, res, next) => {
   let user = await UserModel.findOne({ _id: req.params.id }).lean();
 
   console.log("user: ", user);
-  res.render("pages/admin/editUserInfo", { user });
+  res.render("pages/admin/editUserInfo", { 
+    user,
+    cate: __statics.categories,
+  });
 };
 
 //[POST] /admin/user edit
@@ -234,6 +246,8 @@ const postUserChangePassword = async (req, res, next) => {
       userPhone: req.user.phone,
       userEmail: req.user.email,
       isUpdateSuccessfully: true,
+      cate: __statics.categories,
+
     });
   } else {
     if (req.user.password !== req.body.curPassword) {
@@ -244,6 +258,8 @@ const postUserChangePassword = async (req, res, next) => {
         userEmail: req.user.email,
         isFail: true,
         message: "Wrong password! Please enter again!",
+        cate: __statics.categories,
+
       });
     } else {
       res.render("pages/user/change-password", {
@@ -253,6 +269,8 @@ const postUserChangePassword = async (req, res, next) => {
         userEmail: req.user.email,
         isFail: true,
         message: "Verified password doesn't match! Check it again",
+        cate: __statics.categories,
+
       });
     }
   }
@@ -268,6 +286,8 @@ const getUserChangePassword = (req, res, next) => {
     userPhone: user.phone,
     userEmail: user.email,
     title: "Change Password",
+    cate: __statics.categories,
+
   });
 };
 

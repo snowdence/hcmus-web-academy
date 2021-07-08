@@ -21,7 +21,7 @@
                             </div>
                             <!--end::Wizard Step 1 Nav-->
                             <!--begin::Wizard Step 2 Nav-->
-                            <div class="wizard-step" data-wizard-state="current">
+                            <div class="wizard-step" data-wizard-state="pending">
                                 <div class="wizard-wrapper">
                                     <div class="wizard-number">2</div>
                                     <div class="wizard-label">
@@ -31,11 +31,12 @@
                             </div>
                             <!--end::Wizard Step 2 Nav-->
                             <!--begin::Wizard Step 3 Nav-->
-                            <div class="wizard-step" data-wizard-type="step" data-wizard-state="pending">
+                            <div class="wizard-step" data-wizard-type="step" data-wizard-state="current">
                                 <div class="wizard-wrapper">
                                     <div class="wizard-number">3</div>
                                     <div class="wizard-label">
-                                        <div class="wizard-title"><a href="/student/myCourses/1"><u>My courses</u></a></div>
+                                        <div class="wizard-title"><a href="/student/myCourses/1"><u>My Course
+                                                    </u></a></div>
                                     </div>
                                 </div>
                             </div>
@@ -71,6 +72,13 @@
 					<!--begin::Symbol-->
 					<div class="symbol symbol-120 symbol-2by3 col-2">
 						<div class="symbol symbol-50 symbol-lg-120">
+                            {{#unless complete}}
+                            <div class="ribbon ribbon-clip ribbon-left">
+                  <div class="ribbon-target" style="top: 12px;">
+                    <span class="ribbon-inner bg-danger "></span>Chưa hoàn thành
+                  </div>
+                </div>
+                {{/unless}}
                             <img alt="Pic" src="{{thumbnail}}">
                         </div>
 					</div>
@@ -112,15 +120,18 @@
 							class="datatable-cell">
 							<span style="overflow: visible; position: relative; width: 130px;">
 								
-                                    <i title="Xóa khỏi danh sách yêu thích" name="{{_id}}"  class="watchlist-btn icon-xl text-danger fas fa-heart"></i>
-							</span>
+  {{#if favorite}}
+                                <i title="Xóa khỏi danh sách yêu thích" name="{{_id}}"  class="watchlist-btn icon-xl text-danger fas fa-heart"></i>
+                                {{else}}
+                                <i title="Thêm vào danh sách yêu thích" name="{{_id}}"  class="watchlist-btn icon-xl text-danger far fa-heart"></i>
+                                {{/if}}								</span>
 						</div>
 					</div>
 					<!--end::Info-->
 				</div>
 				<!--end::Item-->
 				{{else}}
-				<h3>Bạn chưa có khóa học yêu thích nào</h3>
+				<h3>Bạn chưa mua khóa học nào</h3>
 				
 				{{/each}}
 			</div>
@@ -166,19 +177,28 @@
 
 <script>
   
-
-    $('.watchlist-btn').click(function(){
-    id = $(this).attr('name')
-  
-    $.post("/student/favorite", {favorite: false, courseID: id})
-    Swal.fire({
-    icon: "success",
-    title: "Đã xóa khóa học khỏi danh sách yêu thích",
-    showConfirmButton: false,
-    timer: 1500
+    $('.watchlist-btn').click(function () {
+        id = $(this).attr('name')
+        if ($(this).hasClass("far")) {
+            $(this).attr("class", "icon-xl text-danger fas fa-heart")
+            $.post("/student/favorite", { favorite: true, courseID: id })
+            Swal.fire({
+                icon: "success",
+                title: "Đã thêm khóa học vào danh sách yêu thích",
+                showConfirmButton: false,
+                timer: 1500
+            });
+        }
+        else {
+            $(this).attr("class", "icon-xl text-danger far fa-heart")
+            $.post("/student/favorite", { favorite: false, courseID: id })
+            Swal.fire({
+                icon: "success",
+                title: "Đã xóa khóa học khỏi danh sách yêu thích",
+                showConfirmButton: false,
+                timer: 1500
+            })
+        }
     })
-    $('#i'+id).remove()
-    
-})
 
 </script>
